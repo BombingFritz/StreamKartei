@@ -1,0 +1,10 @@
+{
+  "name": "stream-kartei",
+  "private": true,
+  "description": "Statische Website der Stream-Kartei (GitHub Pages). Keine Abhängigkeiten, kein Build-Schritt.",
+  "license": "MIT",
+  "scripts": {
+    "test": "node test/format-test.js",
+    "start": "node tools/serve.js"
+  }
+}
