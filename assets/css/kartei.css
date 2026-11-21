@@ -1,0 +1,542 @@
+/*
+ * Stream-Kartei – Gestaltung
+ * Nüchtern, Marine der 1940er: Papier, Tinte, Marineblau, Messing.
+ * Nur Systemschriften (keine Schriften von fremden Servern).
+ */
+
+:root {
+    --papier: #efeadf;
+    --flaeche: #fbf8f1;
+    --flaeche-2: #f4efe3;
+    --tinte: #1d252c;
+    --tinte-2: #4c5862;
+    --linie: #cfc6b3;
+    --marine: #1f3247;
+    --marine-2: #2c4661;
+    --auf-marine: #ece6d8;
+    --auf-marine-2: #b9c3cd;
+    --messing: #8f6f33;
+    --messing-hell: #c7a462;
+    --bord: #2f5d45;
+    --bord-grund: #dfeadf;
+    --reserve: #5a5f66;
+    --reserve-grund: #e4e2dc;
+    --wunde: #8a2b22;
+    --wunde-grund: #f4dfd9;
+    --hinweis-grund: #e6edf3;
+    --hinweis-rand: #6b8aa6;
+    --warn-grund: #f6ead0;
+    --warn-rand: #b08a3a;
+    --fehler-grund: #f5e0dc;
+    --fehler-rand: #a8483b;
+    --beispiel-grund: #fff2bf;
+    --beispiel-rand: #b58b00;
+    --tafel-grund: #1b232b;
+    --tafel-flaeche: #222c36;
+    --tafel-schrift: #e9e3d4;
+    --tafel-schrift-2: #a9b2ba;
+    --schatten: 0 1px 2px rgba(29, 37, 44, .08), 0 2px 8px rgba(29, 37, 44, .06);
+
+    --schrift: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    --schrift-titel: Bahnschrift, "DIN Alternate", "DIN 1451", "Arial Narrow", "Roboto Condensed", system-ui, sans-serif;
+    --schrift-tafel: Georgia, "Times New Roman", "Noto Serif", serif;
+    --schrift-akte: ui-monospace, "Cascadia Mono", Consolas, "Courier New", monospace;
+
+    color-scheme: light dark;
+}
+
+@media (prefers-color-scheme: dark) {
+    :root {
+        --papier: #0f151b;
+        --flaeche: #172029;
+        --flaeche-2: #1c2731;
+        --tinte: #e6e1d6;
+        --tinte-2: #a4adb5;
+        --linie: #2d3a46;
+        --marine: #14212e;
+        --marine-2: #1d3043;
+        --auf-marine: #ece6d8;
+        --auf-marine-2: #a9b5c1;
+        --messing: #cfae6c;
+        --messing-hell: #cfae6c;
+        --bord: #8fc4a3;
+        --bord-grund: #1d3428;
+        --reserve: #b3b8be;
+        --reserve-grund: #2a3038;
+        --wunde: #f0a497;
+        --wunde-grund: #45211c;
+        --hinweis-grund: #182a3a;
+        --hinweis-rand: #5f86a8;
+        --warn-grund: #352b17;
+        --warn-rand: #b8954a;
+        --fehler-grund: #3a1f1b;
+        --fehler-rand: #c46a5c;
+        --beispiel-grund: #3a3110;
+        --beispiel-rand: #d0a82a;
+        --tafel-grund: #0a0e12;
+        --tafel-flaeche: #121920;
+        --schatten: 0 1px 2px rgba(0, 0, 0, .4);
+    }
+}
+
+*, *::before, *::after { box-sizing: border-box; }
+[hidden] { display: none !important; }
+
+html { -webkit-text-size-adjust: 100%; }
+
+body {
+    margin: 0;
+    background: var(--papier);
+    color: var(--tinte);
+    font-family: var(--schrift);
+    font-size: 1rem;
+    line-height: 1.5;
+}
+
+a { color: var(--marine-2); }
+@media (prefers-color-scheme: dark) { a { color: #9cc0e0; } }
+a:focus-visible, button:focus-visible, input:focus-visible + span, input[type="search"]:focus-visible {
+    outline: 3px solid var(--messing-hell);
+    outline-offset: 2px;
+}
+
+/* ------------------------------------------------------------ Kopf */
+
+.kopf {
+    background: var(--marine);
+    color: var(--auf-marine);
+    border-bottom: 4px solid var(--messing);
+}
+.kopf-innen {
+    max-width: 72rem;
+    margin: 0 auto;
+    padding: 1.5rem 1rem 1.25rem;
+}
+.kopf-marke {
+    margin: 0 0 .25rem;
+    font-family: var(--schrift-titel);
+    font-size: .8rem;
+    letter-spacing: .18em;
+    text-transform: uppercase;
+    color: var(--messing-hell);
+}
+.kopf-marke a { color: inherit; text-decoration: none; }
+.kopf-marke a:hover { text-decoration: underline; }
+.kopf h1 {
+    margin: 0;
+    font-family: var(--schrift-titel);
+    font-weight: 600;
+    font-size: clamp(1.7rem, 5vw, 2.6rem);
+    line-height: 1.1;
+    letter-spacing: .02em;
+}
+.kopf-unter {
+    display: block;
+    font-weight: 400;
+    font-size: .55em;
+    letter-spacing: .12em;
+    text-transform: uppercase;
+    color: var(--auf-marine-2);
+    margin-top: .2rem;
+}
+.kopf-satz { margin: .6rem 0 0; max-width: 42rem; color: var(--auf-marine-2); }
+
+.kopf-stand {
+    display: flex;
+    flex-wrap: wrap;
+    gap: .4rem 2rem;
+    margin: 1rem 0 0;
+    font-size: .95rem;
+}
+.kopf-stand div { display: flex; flex-direction: column; }
+.kopf-stand dt {
+    font-family: var(--schrift-titel);
+    font-size: .72rem;
+    letter-spacing: .14em;
+    text-transform: uppercase;
+    color: var(--auf-marine-2);
+}
+.kopf-stand dd { margin: 0; font-variant-numeric: tabular-nums; }
+.kopf-stand .alter { color: var(--auf-marine-2); }
+
+/* ------------------------------------------------------------ Inhalt */
+
+.inhalt {
+    max-width: 72rem;
+    margin: 0 auto;
+    padding: 1.25rem 1rem 2rem;
+}
+
+.abschnitt-titel {
+    font-family: var(--schrift-titel);
+    font-weight: 600;
+    font-size: 1.35rem;
+    letter-spacing: .04em;
+    text-transform: uppercase;
+    margin: 1.25rem 0 .75rem;
+    padding-bottom: .35rem;
+    border-bottom: 2px solid var(--tinte);
+}
+.anzahl {
+    font-family: var(--schrift);
+    font-weight: 400;
+    font-size: .8em;
+    letter-spacing: 0;
+    text-transform: none;
+    color: var(--tinte-2);
+}
+
+.laedt { color: var(--tinte-2); font-style: italic; }
+.leer { color: var(--tinte-2); font-style: italic; margin: 1rem 0; }
+
+.sprung { display: flex; gap: 1.25rem; flex-wrap: wrap; font-size: .95rem; margin: .25rem 0 0; }
+
+/* ------------------------------------------------------------ Hinweise */
+
+.hinweis {
+    margin: 0 0 .75rem;
+    padding: .75rem 1rem;
+    border-left: 5px solid var(--hinweis-rand);
+    background: var(--hinweis-grund);
+    border-radius: 2px;
+}
+.hinweis strong { font-weight: 700; }
+.hinweis-warnung { border-color: var(--warn-rand); background: var(--warn-grund); }
+.hinweis-fehler { border-color: var(--fehler-rand); background: var(--fehler-grund); }
+.hinweis-beispiel {
+    border-color: var(--beispiel-rand);
+    background: var(--beispiel-grund);
+    background-image: repeating-linear-gradient(-45deg, transparent 0 12px, rgba(181, 139, 0, .08) 12px 24px);
+}
+.hinweis-beispiel strong {
+    font-family: var(--schrift-titel);
+    text-transform: uppercase;
+    letter-spacing: .12em;
+}
+.hinweis-aktionen { margin: .6rem 0 0; display: flex; flex-wrap: wrap; gap: .5rem 1rem; align-items: center; }
+
+.knopf {
+    font: inherit;
+    padding: .4rem .9rem;
+    border: 1px solid var(--marine-2);
+    background: var(--marine-2);
+    color: #fff;
+    border-radius: 3px;
+    cursor: pointer;
+}
+.knopf:hover { background: var(--marine); }
+
+/* ------------------------------------------------------------ Startseite */
+
+.kacheln {
+    display: grid;
+    gap: 1rem;
+    grid-template-columns: repeat(auto-fill, minmax(16rem, 1fr));
+}
+.kachel {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    min-height: 9rem;
+    padding: 1.1rem 1.2rem 1rem;
+    background: var(--flaeche);
+    border: 1px solid var(--linie);
+    border-top: 6px solid var(--marine-2);
+    border-radius: 3px;
+    box-shadow: var(--schatten);
+    color: inherit;
+    text-decoration: none;
+}
+a.kachel:hover { border-color: var(--messing); border-top-color: var(--messing); }
+a.kachel:hover .kachel-pfeil { text-decoration: underline; }
+.kachel-titel {
+    margin: 0 0 .4rem;
+    font-family: var(--schrift-titel);
+    font-size: 1.6rem;
+    font-weight: 600;
+    letter-spacing: .06em;
+}
+.kachel-stand, .kachel-alter { margin: 0; }
+.kachel-alter { color: var(--tinte-2); font-size: .9rem; }
+.kachel-pfeil {
+    margin-top: auto;
+    padding-top: .75rem;
+    font-family: var(--schrift-titel);
+    letter-spacing: .08em;
+    text-transform: uppercase;
+    font-size: .85rem;
+    color: var(--messing);
+}
+.kachel-ohne-seite { border-top-color: var(--linie); }
+.kachel-ohne-seite .kachel-pfeil { color: var(--tinte-2); }
+
+/* ------------------------------------------------------------ Filter */
+
+.filter {
+    display: flex;
+    flex-wrap: wrap;
+    gap: .75rem 1.5rem;
+    align-items: flex-end;
+    margin: 0 0 .5rem;
+    padding: .75rem 1rem;
+    background: var(--flaeche-2);
+    border: 1px solid var(--linie);
+    border-radius: 3px;
+}
+.filter-label {
+    display: block;
+    font-family: var(--schrift-titel);
+    font-size: .72rem;
+    letter-spacing: .14em;
+    text-transform: uppercase;
+    color: var(--tinte-2);
+    margin-bottom: .2rem;
+    padding: 0;
+}
+.filter-suche { flex: 1 1 14rem; }
+.filter-suche input {
+    width: 100%;
+    font: inherit;
+    font-size: 1rem; /* verhindert Zoom auf iOS */
+    padding: .5rem .7rem;
+    border: 1px solid var(--linie);
+    border-radius: 3px;
+    background: var(--flaeche);
+    color: var(--tinte);
+}
+.filter-ort { border: 0; margin: 0; padding: 0; min-width: 0; }
+.filter-ort label { display: inline-block; margin: 0 .15rem .15rem 0; }
+.filter-ort input { position: absolute; opacity: 0; width: 1px; height: 1px; }
+.filter-ort span {
+    display: inline-block;
+    padding: .45rem .8rem;
+    border: 1px solid var(--linie);
+    border-radius: 3px;
+    background: var(--flaeche);
+    cursor: pointer;
+    user-select: none;
+}
+.filter-ort input:checked + span {
+    background: var(--marine-2);
+    border-color: var(--marine-2);
+    color: #fff;
+}
+@media (prefers-color-scheme: dark) {
+    .filter-ort input:checked + span { background: var(--messing); border-color: var(--messing); color: #12181e; }
+}
+.filter-ergebnis { min-height: 1.5em; margin: 0 0 .5rem; color: var(--tinte-2); font-size: .95rem; }
+
+/* ------------------------------------------------------------ Gruppen und Karten */
+
+.gruppe { margin: 0 0 1.75rem; }
+.gruppe-titel {
+    display: flex;
+    align-items: baseline;
+    gap: .5rem;
+    margin: 1rem 0 .6rem;
+    font-family: var(--schrift-titel);
+    font-weight: 600;
+    font-size: 1.05rem;
+    letter-spacing: .12em;
+    text-transform: uppercase;
+    color: var(--marine-2);
+}
+@media (prefers-color-scheme: dark) { .gruppe-titel { color: var(--messing); } }
+.gruppe-titel::after {
+    content: "";
+    flex: 1;
+    border-bottom: 1px solid var(--linie);
+    transform: translateY(-.3em);
+}
+
+.karten {
+    display: grid;
+    gap: .9rem;
+    grid-template-columns: repeat(auto-fill, minmax(17.5rem, 1fr));
+}
+.gruppe-kommandant .karten { grid-template-columns: minmax(0, 32rem); }
+
+.karte {
+    display: flex;
+    flex-direction: column;
+    gap: .45rem;
+    padding: .9rem 1rem 1rem;
+    background: var(--flaeche);
+    border: 1px solid var(--linie);
+    border-left: 5px solid var(--bord);
+    border-radius: 3px;
+    box-shadow: var(--schatten);
+}
+.karte-reserve { border-left-color: var(--reserve); }
+.karte-verwundet { border-left-color: var(--wunde); }
+.gruppe-kommandant .karte { border-left-color: var(--messing); }
+
+.karte-kopf {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: .25rem .75rem;
+}
+.karte-name {
+    margin: 0;
+    font-family: var(--schrift-titel);
+    font-size: 1.25rem;
+    font-weight: 600;
+    letter-spacing: .02em;
+    overflow-wrap: anywhere;
+}
+.karte-dienst {
+    margin: 0;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: 0 .75rem;
+    color: var(--tinte-2);
+}
+.karte-jahrgang { font-variant-numeric: tabular-nums; }
+.karte-stufe {
+    margin: 0;
+    display: flex;
+    flex-wrap: wrap;
+    gap: .2rem .9rem;
+    font-family: var(--schrift-akte);
+    font-size: .9rem;
+}
+.karte-stufe b { font-weight: 700; }
+.wert-plus { color: var(--bord); }
+.karte-auszeichnung { margin: 0; display: flex; align-items: center; gap: .5rem; font-size: .92rem; }
+
+.spangen { display: inline-flex; gap: 2px; }
+.spangen i {
+    display: inline-block;
+    width: 1.1rem;
+    height: .55rem;
+    border: 1px solid rgba(0, 0, 0, .35);
+    /* neutrale Spange: Marineblau und Messing, bewusst ohne historische Ordensfarben */
+    background: linear-gradient(90deg, #2c4661 0 35%, #c7a462 35% 65%, #2c4661 65%);
+}
+
+.zustand { list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; gap: .3rem; }
+.plakette {
+    font-size: .78rem;
+    font-weight: 600;
+    letter-spacing: .04em;
+    padding: .1rem .5rem;
+    border-radius: 2px;
+    border: 1px solid currentColor;
+    white-space: nowrap;
+}
+.plakette-bord { color: var(--bord); background: var(--bord-grund); }
+.plakette-reserve, .plakette-sonst { color: var(--reserve); background: var(--reserve-grund); }
+.plakette-wunde { color: var(--wunde); background: var(--wunde-grund); }
+
+.merkmale { margin: 0; }
+.merkmale-titel {
+    margin: .15rem 0 .25rem;
+    font-family: var(--schrift-titel);
+    font-weight: 400;
+    font-size: .7rem;
+    letter-spacing: .14em;
+    text-transform: uppercase;
+    color: var(--tinte-2);
+}
+.marken { list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; gap: .3rem; }
+.marken li {
+    font-size: .85rem;
+    padding: .1rem .5rem;
+    border-radius: 2px;
+    border: 1px solid var(--linie);
+    background: var(--flaeche-2);
+}
+.marken-charakter li { border-style: dashed; }
+
+/* ------------------------------------------------------------ Ehrentafel */
+
+.ehrentafel {
+    margin: 2.5rem 0 0;
+    padding: 1.75rem 1rem 2rem;
+    background: var(--tafel-grund);
+    color: var(--tafel-schrift);
+    border-top: 3px solid var(--messing-hell);
+    border-bottom: 3px solid var(--messing-hell);
+    text-align: center;
+}
+.ehrentafel h2 {
+    margin: 0;
+    font-family: var(--schrift-tafel);
+    font-weight: 400;
+    font-size: clamp(1.6rem, 4vw, 2.2rem);
+    letter-spacing: .3em;
+    text-transform: uppercase;
+    color: var(--messing-hell);
+}
+.ehrentafel h2::before, .ehrentafel h2::after {
+    content: "";
+    display: block;
+    width: 6rem;
+    margin: .5rem auto;
+    border-top: 1px solid var(--messing-hell);
+    opacity: .6;
+}
+.ehrentafel-satz { margin: .25rem 0 1.5rem; font-family: var(--schrift-tafel); font-style: italic; color: var(--tafel-schrift-2); }
+.ehrentafel-liste {
+    list-style: none;
+    margin: 0 auto;
+    padding: 0;
+    max-width: 56rem;
+    display: grid;
+    gap: 1rem;
+    grid-template-columns: repeat(auto-fill, minmax(15rem, 1fr));
+}
+.tafel {
+    padding: 1rem .75rem 1.1rem;
+    background: var(--tafel-flaeche);
+    border: 1px solid rgba(199, 164, 98, .35);
+}
+.tafel p { margin: 0; }
+.tafel-name {
+    font-family: var(--schrift-tafel);
+    font-size: 1.3rem;
+    font-variant: small-caps;
+    letter-spacing: .06em;
+    overflow-wrap: anywhere;
+}
+.tafel-dienst { margin-top: .2rem !important; color: var(--tafel-schrift-2); font-size: .9rem; }
+.tafel-tod {
+    margin-top: .5rem !important;
+    font-family: var(--schrift-tafel);
+    font-style: italic;
+}
+.tafel-tod time { font-style: normal; color: var(--messing-hell); }
+.tafel-merkmale { margin-top: .5rem !important; color: var(--tafel-schrift-2); font-size: .8rem; }
+.tafel-ohne { font-family: var(--schrift-tafel); font-style: italic; color: var(--tafel-schrift-2); margin: 0; }
+
+/* ------------------------------------------------------------ Fuß */
+
+.fuss {
+    max-width: 72rem;
+    margin: 0 auto;
+    padding: 1rem 1rem 2.5rem;
+    border-top: 1px solid var(--linie);
+    color: var(--tinte-2);
+    font-size: .88rem;
+}
+.fuss p { margin: .3rem 0; }
+
+/* ------------------------------------------------------------ Handy */
+
+@media (max-width: 30rem) {
+    .kopf-innen { padding: 1.1rem 1rem 1rem; }
+    .kopf-stand { gap: .4rem 1.25rem; }
+    .filter { padding: .6rem .75rem; }
+    .filter-ort { width: 100%; }
+    .filter-ort label { margin-right: 0; }
+    .karten { grid-template-columns: 1fr; }
+    .ehrentafel { margin-left: -1rem; margin-right: -1rem; }
+}
+
+@media print {
+    .filter, .filter-ergebnis, .sprung, .hinweis-aktionen { display: none !important; }
+    .karte, .tafel { break-inside: avoid; box-shadow: none; }
+}
