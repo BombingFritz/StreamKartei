@@ -6,11 +6,12 @@
 
 - **Startseite** (`/`): Auswahl des Spiels, je Spiel „Spielstand vom …“.
 - **UBOAT** (`/uboat/`):
-  - das Boot mit Kennzahlen, die Karriere (Treffer, Tiefe, Stunden auf See …) und die Gedenktafeln,
-  - die ganze Besatzung (Kommandant, Offiziere, Matrosen) mit Suche und Filter; je Person Orden und eine aufklappbare Akte mit Lebenslauf und Leistungen (nach Art gruppiert),
+  - oben das Boot mit der Nummer der laufenden bzw. letzten Feindfahrt und Kennzahlen,
+  - die ganze Besatzung in den Gruppen Kommandant, Offiziere, Matrosen; die Gruppen sind beim Laden zugeklappt. In jeder Gruppe steht die Reserve am Ende. Filter nach Aufenthalt; je Person Orden und eine aufklappbare Akte mit Lebenslauf und Leistungen (nach Art gruppiert),
+  - darunter die Karriere (Treffer, Tiefe, Stunden auf See …),
   - die Liste der Versenkungen (am Handy als Karten),
   - die Ehrentafel der Gefallenen.
-  - Die zurückgelegte Strecke (`distanceTravelled`) zeigt die Seite noch nicht, solange die Einheit ungeklärt ist.
+  - Nicht angezeigt: die zurückgelegte Strecke (`distanceTravelled`, Einheit ungeklärt) und die Gedenktafeln (`plaques`, Wunsch des Nutzers).
 - **RimWorld** folgt später als eigene Seite.
 
 Rein statisch: HTML, CSS und Vanilla-JavaScript, kein Build-Schritt, keine Abhängigkeiten. Keine Cookies, kein Tracking, keine fremden Skripte oder Schriften. Twitch-Namen stehen nie auf der Seite, nur die Namen im Spiel.
@@ -42,8 +43,6 @@ Weitere Hinweise auf der Seite:
 - Spielstand älter als 7 Tage: „Länger nicht gespielt“.
 - `schemaVersion` größer als 1: „Neueres Datenformat“; die Seite zeigt trotzdem, was sie kennt.
 
-Eine Suche lässt sich als Link teilen: `/uboat/#suche=Möwe`.
-
 ## Aufbau
 
 | Pfad | Inhalt |
@@ -52,7 +51,7 @@ Eine Suche lässt sich als Link teilen: `/uboat/#suche=Möwe`.
 | `uboat/index.html` | UBOAT-Seite |
 | `assets/css/kartei.css` | Gestaltung im Stil der Marine der 1940er: Schreibtisch, Akten, Soldbuch-Formular, Seekarte, Stempel; nur CSS, ohne Bilder und ohne Hoheitszeichen (hell und dunkel nach Systemeinstellung, Handy und PC) |
 | `assets/fonts/` | Frakturschrift UnifrakturMaguntia für Vordrucke und Titel (SIL Open Font License 1.1, Lizenz daneben); liegt hier, damit kein fremder Server abgerufen wird |
-| `assets/js/kartei.js` | Gemeinsame Hilfen: Laden mit Beispiel-Rückfall, Aufbereiten, Datum, Suche; läuft auch in Node für die Tests |
+| `assets/js/kartei.js` | Gemeinsame Hilfen: Laden mit Beispiel-Rückfall, Aufbereiten, Datum, Sortierung; läuft auch in Node für die Tests |
 | `assets/js/start.js`, `assets/js/uboat.js` | Aufbau der beiden Seiten |
 | `beispiel/` | Erfundene Beispieldaten |
 | `test/format-test.js` | Prüft Beispieldaten und Hilfen |
