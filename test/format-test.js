@@ -55,6 +55,8 @@ function pruefePerson(p, wo, gefallen) {
     pruefe(istTextListe(p.traits), wo + ': traits Textliste');
     pruefe(istTextListe(p.skills), wo + ': skills Textliste');
     pruefeVerboten(p, wo);
+    // Stufe 1c: Feindfahrten der Person (Anzahl, 0 möglich; null ohne Verlauf)
+    pruefe(p.patrols === null || (Number.isInteger(p.patrols) && p.patrols >= 0), wo + ': patrols ganze Zahl ab 0 oder null');
     // Stufe 1b: Akte
     pruefe(p.background === null || (typeof p.background === 'string' && p.background.trim() !== ''), wo + ': background Text oder null');
     pruefe(istTextListe(p.decorationNames), wo + ': decorationNames Textliste');
@@ -149,6 +151,11 @@ function pruefeCrewDatei(datei, alsBeispiel) {
         pruefe(crew.some(p => p.accomplishments.some(a => !['Sunk Ship Freighter', 'Sunk Ship Tanker', 'Sunk Ship Destroyer', 'Sunk Ship Participation',
             'Torpedo Course', 'Assignment Completed', 'Medical'].includes(a.kind))), name + ': Leistung unbekannter Art');
         pruefe(j.boat && j.career && j.plaques.length > 0, name + ': mit Boot, Karriere und Gedenktafel');
+        // Stufe 1c: alle Fälle von patrols
+        const fahrten = crew.map(p => p.patrols);
+        pruefe(fahrten.includes(0) && fahrten.includes(1) && fahrten.some(n => n > 1) && fahrten.includes(null), name + ': patrols mit 0, 1, mehreren und null');
+        pruefe(crew.every(p => p.patrols === null || p.patrols <= j.career.currentPatrol), name + ': niemand hat mehr Feindfahrten als das Boot');
+        pruefe((j.fallen || []).every(p => 'patrols' in p), name + ': auch Gefallene haben patrols');
         const s = j.sinkings || [];
         pruefe(s.length >= 8, name + ': mehrere Versenkungen');
         pruefe(s.some(x => x.name === null) && s.some(x => x.damagedOnly) && s.some(x => x.date === null) && s.some(x => x.convoy === null) && s.some(x => x.kindLabel === null),
@@ -281,6 +288,12 @@ if (extra[1]) pruefeIndexDatei(path.resolve(extra[1]));
     const alt = K.normalisiereUboat({ schemaVersion: 1, crew: [{ name: 'A', typeLabel: 'Matrose', decorations: 1 }] });
     pruefe(alt.boat === null && alt.career === null && alt.plaques.length === 0 && alt.sinkings.length === 0, 'ohne Boot und Karriere: null bzw. leer');
     pruefe(alt.crew[0].lebenslauf.length === 0 && alt.crew[0].decorationNames.length === 0 && alt.crew[0].accomplishments.length === 0, 'ohne Akte: leer');
+
+    // Stufe 1c: Feindfahrten je Person
+    pruefe(alt.crew[0].patrols === null, 'ohne patrols: null');
+    const pf = K.normalisiereUboat({ crew: [{ name: 'A', patrols: 3 }, { name: 'B', patrols: 0 }, { name: 'C', patrols: -1 }, { name: 'D', patrols: 1.5 }, { name: 'E', patrols: '2' }] }).crew.map(p => p.patrols);
+    pruefe(pf.join(',') === '3,0,,,2', 'patrols: ganze Zahlen ab 0, sonst null (' + pf.join(',') + ')');
+    pruefe(K.feindfahrtenText(3) === '3 Feindfahrten' && K.feindfahrtenText(1) === '1 Feindfahrt' && K.feindfahrtenText(0) === 'noch keine Feindfahrt' && K.feindfahrtenText(null) === null, 'Feindfahrten als Text');
 
     // Lebenslauf: _x000D_ aus dem Spiel und Zeilenumbrüche
     const abs = K.absaetze('Erster Satz._x000D__x000D__x000D_\r\nZweiter   Absatz.\n\n_x000D_');

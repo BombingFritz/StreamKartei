@@ -7,7 +7,7 @@
 - **Startseite** (`/`): Auswahl des Spiels, je Spiel „Spielstand vom …“.
 - **UBOAT** (`/uboat/`):
   - oben das Boot mit der Nummer der laufenden bzw. letzten Feindfahrt und Kennzahlen,
-  - die ganze Besatzung in den Gruppen Kommandant, Offiziere, Matrosen; die Gruppen sind beim Laden zugeklappt. In jeder Gruppe steht die Reserve am Ende. Filter nach Aufenthalt; je Person Orden und eine aufklappbare Akte mit Lebenslauf und Leistungen (nach Art gruppiert),
+  - die ganze Besatzung in den Gruppen Kommandant, Offiziere, Matrosen; die Gruppen sind beim Laden zugeklappt. In jeder Gruppe steht die Reserve am Ende. Filter nach Aufenthalt; je Person die Zahl der eigenen Feindfahrten (gut sichtbar unter dem Namen), Orden und eine aufklappbare Akte mit Lebenslauf und Leistungen (nach Art gruppiert),
   - darunter die Karriere (Treffer, Tiefe, Stunden auf See …),
   - die Liste der Versenkungen (am Handy als Karten),
   - die Ehrentafel der Gefallenen.
