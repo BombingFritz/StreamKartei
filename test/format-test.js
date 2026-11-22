@@ -55,6 +55,12 @@ function pruefePerson(p, wo, gefallen) {
     pruefe(istTextListe(p.traits), wo + ': traits Textliste');
     pruefe(istTextListe(p.skills), wo + ': skills Textliste');
     pruefeVerboten(p, wo);
+    // Stufe 1b: Akte
+    pruefe(p.background === null || (typeof p.background === 'string' && p.background.trim() !== ''), wo + ': background Text oder null');
+    pruefe(istTextListe(p.decorationNames), wo + ': decorationNames Textliste');
+    pruefe(Array.isArray(p.decorationNames) && p.decorations !== null && p.decorationNames.length <= p.decorations, wo + ': nicht mehr Ordensnamen als decorations');
+    pruefe(Array.isArray(p.accomplishments) && p.accomplishments.every(a =>
+        a && typeof a === 'object' && istTextOderNull(a.kind) && typeof a.text === 'string' && a.text.trim() !== ''), wo + ': accomplishments [{kind, text}]');
     if (gefallen) {
         pruefe(istTag(p.died), wo + ': died JJJJ-MM-TT');
     } else {
@@ -67,6 +73,38 @@ function pruefePerson(p, wo, gefallen) {
 }
 
 function rang(p) { return TYPEN.indexOf(p.typeLabel); }
+
+const BOOT_ZAHLEN = ['tonnageSunk', 'merchantShipsSunk', 'warshipsSunk', 'aircraftShotDown'];
+const KARRIERE_ZAHLEN = ['currentPatrol', 'torpedoesFired', 'torpedoHits', 'farthestTorpedoHitM', 'deckGunShots', 'deckGunHits',
+    'flakShots', 'flakHits', 'distanceTravelled', 'fuelConsumedLitres', 'maximumDepthM', 'hoursUnderWater', 'hoursAtSea', 'casualties'];
+
+/** Stufe 1b: boat, career, plaques, sinkings. */
+function pruefeBootUndKarriere(j, name) {
+    const b = j.boat;
+    pruefe(b === null || (typeof b === 'object' && !Array.isArray(b)), name + ': boat Objekt oder null');
+    if (b) {
+        pruefe(istTextOderNull(b.name) && istTextOderNull(b.typeLabel), name + ': boat name/typeLabel Text oder null');
+        pruefe(b.commissioned === null || istTag(b.commissioned), name + ': boat.commissioned JJJJ-MM-TT oder null');
+        BOOT_ZAHLEN.forEach(f => pruefe(istZahlOderNull(b[f]), name + ': boat.' + f + ' Zahl oder null'));
+    }
+    const c = j.career;
+    pruefe(c === null || (typeof c === 'object' && !Array.isArray(c)), name + ': career Objekt oder null');
+    if (c) {
+        pruefe(c.startDate === null || istTag(c.startDate), name + ': career.startDate JJJJ-MM-TT oder null');
+        KARRIERE_ZAHLEN.forEach(f => pruefe(istZahlOderNull(c[f]), name + ': career.' + f + ' Zahl oder null'));
+        pruefe(c.torpedoHits === null || c.torpedoesFired === null || c.torpedoHits <= c.torpedoesFired, name + ': nicht mehr Torpedotreffer als Schüsse');
+    }
+    pruefe(Array.isArray(j.plaques) && j.plaques.every(t => t && istTextOderNull(t.boat) && istTextOderNull(t.port)), name + ': plaques [{boat, port}]');
+    pruefe(Array.isArray(j.sinkings), name + ': sinkings Liste');
+    (j.sinkings || []).forEach((s, i) => {
+        const wo = name + ' sinkings[' + i + ']';
+        pruefe(istTextOderNull(s.name), wo + ': name Text oder null');
+        pruefe(istZahlOderNull(s.grt) && istZahlOderNull(s.patrol), wo + ': grt/patrol Zahl oder null');
+        ['kindLabel', 'cargoLabel', 'convoy', 'destination'].forEach(f => pruefe(istTextOderNull(s[f]), wo + ': ' + f + ' Text oder null'));
+        pruefe(s.date === null || istTag(s.date), wo + ': date JJJJ-MM-TT oder null');
+        pruefe(typeof s.damagedOnly === 'boolean', wo + ': damagedOnly Wahrheitswert');
+    });
+}
 
 function pruefeCrewDatei(datei, alsBeispiel) {
     const name = path.relative(WURZEL, datei) || datei;
@@ -82,6 +120,7 @@ function pruefeCrewDatei(datei, alsBeispiel) {
     pruefeVerboten(j, name);
     (j.crew || []).forEach((p, i) => pruefePerson(p, name + ' crew[' + i + '] ' + p.name, false));
     (j.fallen || []).forEach((p, i) => pruefePerson(p, name + ' fallen[' + i + '] ' + p.name, true));
+    pruefeBootUndKarriere(j, name);
 
     // Sortierung laut Spec: Kommandant, Offiziere, Matrosen; innerhalb nach Name.
     const crew = j.crew || [];
@@ -101,6 +140,22 @@ function pruefeCrewDatei(datei, alsBeispiel) {
         pruefe(crew.some(p => p.typeLabel === 'Kommandant'), name + ': mit Kommandant');
         pruefe(crew.some(p => p.statusLabel === 'in Reserve'), name + ': mit Reserve');
         pruefe(crew.some(p => p.woundLabel === 'verwundet') && crew.some(p => p.woundLabel === 'im Krankenhaus'), name + ': mit beiden Verwundungen');
+        // Stufe 1b: die Beispiele decken die Sonderfälle ab
+        const kommandant = crew.find(p => p.typeLabel === 'Kommandant');
+        pruefe(kommandant && kommandant.accomplishments.length >= 20, name + ': Kommandant mit langer Liste von Leistungen');
+        pruefe(crew.some(p => p.background) && crew.some(p => p.background === null), name + ': mit und ohne Lebenslauf');
+        pruefe(crew.some(p => p.background && p.background.includes('\n')), name + ': Lebenslauf mit Absätzen');
+        pruefe(crew.some(p => p.decorations > 0 && p.decorationNames.length === 0), name + ': Orden ohne Namen (Rückfall auf Anzahl)');
+        pruefe(crew.some(p => p.accomplishments.some(a => !['Sunk Ship Freighter', 'Sunk Ship Tanker', 'Sunk Ship Destroyer', 'Sunk Ship Participation',
+            'Torpedo Course', 'Assignment Completed', 'Medical'].includes(a.kind))), name + ': Leistung unbekannter Art');
+        pruefe(j.boat && j.career && j.plaques.length > 0, name + ': mit Boot, Karriere und Gedenktafel');
+        const s = j.sinkings || [];
+        pruefe(s.length >= 8, name + ': mehrere Versenkungen');
+        pruefe(s.some(x => x.name === null) && s.some(x => x.damagedOnly) && s.some(x => x.date === null) && s.some(x => x.convoy === null) && s.some(x => x.kindLabel === null),
+            name + ': Versenkungen mit fehlenden Werten und nur beschädigt');
+        const versenkt = s.filter(x => !x.damagedOnly);
+        pruefe(j.boat.tonnageSunk === versenkt.reduce((a, x) => a + (x.grt || 0), 0), name + ': Tonnage passt zu den Versenkungen');
+        pruefe(K.summeBrt(K.normalisiereUboat(j).sinkings) === j.boat.tonnageSunk, name + ': summeBrt passt');
     }
     if (fehler === vorher) ok(name + ' (' + crew.length + ' Crew, ' + (j.fallen || []).length + ' Gefallene)');
     return j;
@@ -207,6 +262,42 @@ if (extra[1]) pruefeIndexDatei(path.resolve(extra[1]));
 
     pruefe(K.auszeichnungenText(0) === null && K.auszeichnungenText(1) === '1 Auszeichnung' && K.auszeichnungenText(3) === '3 Auszeichnungen', 'Auszeichnungen');
     pruefe(K.beispielErzwungen('?beispiel') && K.beispielErzwungen('?a=1&beispiel=1') && !K.beispielErzwungen('?x=1'), 'Beispielmodus aus der Adresse');
+
+    // Stufe 1b: alte Daten ohne die neuen Felder bleiben lesbar
+    const alt = K.normalisiereUboat({ schemaVersion: 1, crew: [{ name: 'A', typeLabel: 'Matrose', decorations: 1 }] });
+    pruefe(alt.boat === null && alt.career === null && alt.plaques.length === 0 && alt.sinkings.length === 0, 'ohne Boot und Karriere: null bzw. leer');
+    pruefe(alt.crew[0].lebenslauf.length === 0 && alt.crew[0].decorationNames.length === 0 && alt.crew[0].accomplishments.length === 0, 'ohne Akte: leer');
+
+    // Lebenslauf: _x000D_ aus dem Spiel und Zeilenumbrüche
+    const abs = K.absaetze('Erster Satz._x000D__x000D__x000D_\r\nZweiter   Absatz.\n\n_x000D_');
+    pruefe(abs.length === 2 && abs[0] === 'Erster Satz.' && abs[1] === 'Zweiter Absatz.', 'Lebenslauf: _x000D_ entfernt, Absätze getrennt');
+    pruefe(K.absaetze(null).length === 0 && K.absaetze('   ').length === 0, 'Lebenslauf leer');
+
+    // Leistungen gruppieren
+    const lg = K.gruppiereLeistungen([
+        { kind: 'Torpedo Course', text: 'T1' }, { kind: 'Sunk Ship Freighter', text: 'V1' },
+        { kind: 'Assignment Completed', text: 'Auftrag abgeschlossen.' }, { kind: 'Assignment Completed', text: 'Auftrag abgeschlossen.' },
+        { kind: 'Sunk Ship Participation', text: 'B1' }, { kind: 'Sunk Ship Submarine', text: 'V2' },
+        { kind: 'Neu', text: 'X' }, { kind: null, text: 'Y' }, { kind: 'Medical', text: 'M' }
+    ]);
+    pruefe(lg.map(g => g.schluessel).join(',') === 'versenkung,beteiligung,torpedo,auftrag,medizin,weitere', 'Leistungen: feste Reihenfolge, Unbekanntes zuletzt');
+    pruefe(lg[0].anzahl === 2, 'Leistungen: neue „Sunk Ship …“-Arten zählen als Versenkung');
+    pruefe(lg[3].anzahl === 2 && lg[3].eintraege.length === 1 && lg[3].eintraege[0].anzahl === 2, 'Leistungen: gleiche Texte zusammengefasst');
+    pruefe(lg[5].anzahl === 2, 'Leistungen: unbekannte und fehlende Art unter „Weitere“');
+    const leist = K.normalisiereUboat({ crew: [{ name: 'A', accomplishments: [null, { kind: 'X' }, { kind: 'Y', text: ' ok ' }, 'Unsinn'] }] }).crew[0].accomplishments;
+    pruefe(leist.length === 1 && leist[0].text === 'ok', 'Leistungen ohne Text werden übersprungen');
+
+    // Boot, Karriere, Versenkungen
+    const bk = K.normalisiereUboat({ boat: { name: 'U-1', commissioned: 'Unsinn', tonnageSunk: '12' }, career: [], plaques: [null, {}, { port: 'Kiel' }],
+        sinkings: [{ name: null, grt: null, damagedOnly: 'ja' }, { name: 'B', grt: 100 }, { name: 'C', grt: 50, damagedOnly: true }, 'Unsinn'] });
+    pruefe(bk.boat.name === 'U-1' && bk.boat.commissioned === null && bk.boat.tonnageSunk === 12, 'Boot: Werte aufbereitet');
+    pruefe(bk.career === null, 'Karriere als Liste wird null');
+    pruefe(bk.plaques.length === 1 && bk.plaques[0].port === 'Kiel', 'Gedenktafeln: leere Einträge entfallen');
+    pruefe(bk.sinkings.length === 3 && bk.sinkings[0].damagedOnly === false, 'Versenkungen: damagedOnly nur bei true');
+    pruefe(K.schiffsname(bk.sinkings[0]) === 'unbekanntes Schiff' && K.schiffsname(bk.sinkings[1]) === 'B', 'Schiff ohne Namen');
+    pruefe(K.summeBrt(bk.sinkings) === 100, 'BRT ohne beschädigte und unbekannte');
+    pruefe(K.formatZahl(1057.4, 1) === '1.057,4' && K.formatZahl(209034) === '209.034' && K.formatZahl(null) === '–', 'Zahlen deutsch');
+    pruefe(K.quote(35, 51) === 69 && K.quote(1, 0) === null && K.quote(null, 5) === null, 'Trefferquote');
 
     if (fehler === vorher) ok('Hilfen in assets/js/kartei.js');
 })();
