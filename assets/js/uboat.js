@@ -1,4 +1,4 @@
-/* UBOAT-Seite: Besatzung und Ehrentafel aus uboat/crew.json. */
+/* UBOAT-Seite: Boot, Besatzung, Karriere, Versenkungen und Ehrentafel aus uboat/crew.json. */
 (function () {
     'use strict';
     var K = window.Kartei;
@@ -9,7 +9,6 @@
     var seite = document.getElementById('seite');
     var gruppenZiel = document.getElementById('gruppen');
     var gefalleneZiel = document.getElementById('gefallene');
-    var suche = document.getElementById('suche');
     var filterForm = document.getElementById('filter');
     var ergebnisZeile = document.getElementById('filter-ergebnis');
     var crewAnzahl = document.getElementById('crew-anzahl');
@@ -20,9 +19,8 @@
         if (a) a.setAttribute('href', K.mitModus('../'));
     });
 
-    var karten = [];      // {knoten, suchtext, ort, gruppe}
-    var tafeln = [];      // {knoten, suchtext}
-    var gruppenKnoten = []; // {knoten, zaehler, schluessel}
+    var karten = [];        // {knoten, ort, gruppe, reserve}
+    var gruppenKnoten = []; // {knoten, zaehler, schluessel, gesamt, trenner}
 
     // ------------------------------------------------------------ Kopf
 
@@ -118,17 +116,14 @@
             .concat(inhalt));
     }
 
-    /** Aufenthalt und Verwundung als Stempel. */
+    /**
+     * Stempel nur für die Verwundung. „an Bord“ und „in Reserve“ zeigt die
+     * Sortierung mit der Trennlinie (Wunsch des Nutzers, 22.11.2026).
+     */
     function stempel(p) {
-        var reihe = el('ul', { className: 'stempel-reihe' });
-        if (p.statusLabel) {
-            var art = p.statusLabel === 'an Bord' ? 'bord' : (p.statusLabel === 'in Reserve' ? 'reserve' : 'sonst');
-            reihe.appendChild(el('li', { className: 'stempel stempel-' + art, text: p.statusLabel }));
-        }
-        if (p.woundLabel) {
-            reihe.appendChild(el('li', { className: 'stempel stempel-wunde', text: p.woundLabel }));
-        }
-        return reihe.childNodes.length ? reihe : null;
+        if (!p.woundLabel) return null;
+        return el('ul', { className: 'stempel-reihe' },
+            el('li', { className: 'stempel stempel-wunde', text: p.woundLabel }));
     }
 
     /** Personenkarte im Stil einer Soldbuchseite. */
@@ -139,6 +134,7 @@
         if (stufe) zeilen.push(['Stufe', stufe]);
         var orden = ordenWert(p);
         if (orden) zeilen.push(['Orden', orden]);
+        // Leere Listen (z. B. noch nicht aufgedeckte Charakterzüge) ohne Zeile.
         if (p.traits.length) zeilen.push(['Charakter', p.traits.join(', ')]);
         if (p.skills.length) zeilen.push(['Fähigkeiten', p.skills.join(', ')]);
         var formular = el('dl', { className: 'formular' });
@@ -194,39 +190,52 @@
         };
     }
 
+    /**
+     * Boot oben: Nummer der laufenden bzw. letzten Feindfahrt (career.currentPatrol)
+     * prominent, darunter Name, Typ und Kennzahlen. Gedenktafeln (plaques) zeigt
+     * die Seite nicht (Wunsch des Nutzers, 22.11.2026).
+     */
     function zeigeBoot(daten) {
         var b = daten.boat;
-        var c = daten.career;
+        var feindfahrt = daten.career ? daten.career.currentPatrol : null;
         var bootKarte = document.getElementById('boot-karte');
-        var karriereZiel = document.getElementById('karriere');
         bootKarte.textContent = '';
-        karriereZiel.textContent = '';
+        var sichtbar = !!b || feindfahrt !== null;
+        document.getElementById('boot').hidden = !sichtbar;
+        document.getElementById('sprung-boot').hidden = !sichtbar;
+        if (!sichtbar) return;
 
-        if (b) {
-            var zeilen = [];
-            if (b.typeLabel) zeilen.push(b.typeLabel);
-            if (b.commissioned) zeilen.push('in Dienst gestellt am ' + K.formatKalenderdatum(b.commissioned));
-            var zahlen = el('dl', { className: 'kennzahlen' });
-            if (b.tonnageSunk !== null) zahlen.appendChild(kennzahl('Versenkte Tonnage', K.formatZahl(b.tonnageSunk), 'BRT'));
-            if (b.merchantShipsSunk !== null) zahlen.appendChild(kennzahl('Handelsschiffe versenkt', K.formatZahl(b.merchantShipsSunk)));
-            if (b.warshipsSunk !== null) zahlen.appendChild(kennzahl('Kriegsschiffe versenkt', K.formatZahl(b.warshipsSunk)));
-            if (b.aircraftShotDown !== null) zahlen.appendChild(kennzahl('Flugzeuge abgeschossen', K.formatZahl(b.aircraftShotDown)));
-            bootKarte.appendChild(el('p', { className: 'boot-name', text: b.name || 'Boot ohne Namen' }));
-            if (zeilen.length) bootKarte.appendChild(el('p', { className: 'boot-zeile', text: zeilen.join(' · ') }));
-            if (zahlen.childNodes.length) bootKarte.appendChild(zahlen);
-            bootKarte.hidden = false;
-        } else {
-            bootKarte.hidden = true;
+        if (feindfahrt !== null) {
+            bootKarte.appendChild(el('p', { className: 'boot-feindfahrt' },
+                el('span', { className: 'boot-feindfahrt-nr', text: K.formatZahl(feindfahrt) + '.' }),
+                ' ', el('span', { className: 'boot-feindfahrt-wort', text: 'Feindfahrt' })));
         }
+        if (!b) return;
+        var zeilen = [];
+        if (b.typeLabel) zeilen.push(b.typeLabel);
+        if (b.commissioned) zeilen.push('in Dienst gestellt am ' + K.formatKalenderdatum(b.commissioned));
+        var zahlen = el('dl', { className: 'kennzahlen' });
+        if (b.tonnageSunk !== null) zahlen.appendChild(kennzahl('Versenkte Tonnage', K.formatZahl(b.tonnageSunk), 'BRT'));
+        if (b.merchantShipsSunk !== null) zahlen.appendChild(kennzahl('Handelsschiffe versenkt', K.formatZahl(b.merchantShipsSunk)));
+        if (b.warshipsSunk !== null) zahlen.appendChild(kennzahl('Kriegsschiffe versenkt', K.formatZahl(b.warshipsSunk)));
+        if (b.aircraftShotDown !== null) zahlen.appendChild(kennzahl('Flugzeuge abgeschossen', K.formatZahl(b.aircraftShotDown)));
+        bootKarte.appendChild(el('p', { className: 'boot-name', text: b.name || 'Boot ohne Namen' }));
+        if (zeilen.length) bootKarte.appendChild(el('p', { className: 'boot-zeile', text: zeilen.join(' · ') }));
+        if (zahlen.childNodes.length) bootKarte.appendChild(zahlen);
+    }
 
+    /** Karriere als eigener Abschnitt unter der Besatzung. */
+    function zeigeKarriere(c) {
+        var abschnitt = document.getElementById('karriere');
+        var ziel = document.getElementById('karriere-inhalt');
+        ziel.textContent = '';
+        var liste = el('dl', { className: 'kennzahlen kennzahlen-klein' });
         if (c) {
-            var liste = el('dl', { className: 'kennzahlen kennzahlen-klein' });
             var dazu = function (beschriftung, wert, zusatz) {
                 if (wert === null || wert === undefined) return;
                 liste.appendChild(kennzahl(beschriftung, wert, zusatz));
             };
             dazu('Karriere seit', c.startDate ? K.formatKalenderdatum(c.startDate) : null);
-            dazu('Auftrag Nr.', c.currentPatrol !== null ? K.formatZahl(c.currentPatrol) : null);
             var torpedo = trefferText(c.torpedoHits, c.torpedoesFired);
             if (torpedo) dazu('Torpedotreffer', torpedo.wert, torpedo.zusatz);
             dazu('Weitester Torpedotreffer', c.farthestTorpedoHitM !== null ? K.formatZahl(c.farthestTorpedoHitM) : null, 'm');
@@ -240,29 +249,14 @@
             dazu('Treibstoff verbraucht', c.fuelConsumedLitres !== null ? K.formatZahl(c.fuelConsumedLitres) : null, 'l');
             dazu('Verluste', c.casualties !== null ? K.formatZahl(c.casualties) : null);
             // distanceTravelled: Einheit laut Spec noch ungeklärt, daher nicht angezeigt.
-            if (liste.childNodes.length) {
-                karriereZiel.appendChild(el('h3', { className: 'unter-titel', text: 'Karriere' }));
-                karriereZiel.appendChild(liste);
-                karriereZiel.appendChild(el('p', { className: 'fussnote', text: 'Stunden auf See bis zum letzten Einlaufen, ohne die laufende Fahrt.' }));
-            }
-            karriereZiel.hidden = !liste.childNodes.length;
-        } else {
-            karriereZiel.hidden = true;
         }
-
-        var tafelnZiel = document.getElementById('gedenktafeln');
-        var tafelnListe = document.getElementById('gedenktafeln-liste');
-        tafelnListe.textContent = '';
-        daten.plaques.forEach(function (t) {
-            tafelnListe.appendChild(el('li', null,
-                el('span', { className: 'gedenktafel-boot', text: t.boat || 'Boot unbekannt' }),
-                t.port ? el('span', { className: 'gedenktafel-ort', text: t.port }) : null));
-        });
-        tafelnZiel.hidden = daten.plaques.length === 0;
-
-        var sichtbar = !bootKarte.hidden || !karriereZiel.hidden || !tafelnZiel.hidden;
-        document.getElementById('boot').hidden = !sichtbar;
-        document.getElementById('sprung-boot').hidden = !sichtbar;
+        var sichtbar = liste.childNodes.length > 0;
+        if (sichtbar) {
+            ziel.appendChild(liste);
+            ziel.appendChild(el('p', { className: 'fussnote', text: 'Stunden auf See bis zum letzten Einlaufen, ohne die laufende Fahrt.' }));
+        }
+        abschnitt.hidden = !sichtbar;
+        document.getElementById('sprung-karriere').hidden = !sichtbar;
     }
 
     // ------------------------------------------------------ Versenkungen
@@ -310,13 +304,17 @@
                 zelle('Ladung', s.cargoLabel),
                 zelle('Geleitzug', s.convoy || 'Einzelfahrer'),
                 zelle('Ziel', s.destination),
-                zelle('Auftrag', s.patrol !== null ? K.formatZahl(s.patrol) : null, 'zahl'));
+                zelle('Feindfahrt', s.patrol !== null ? K.formatZahl(s.patrol) : null, 'zahl'));
             ziel.appendChild(zeile);
         });
     }
 
     // ------------------------------------------------------- Aufbau
 
+    /**
+     * Besatzung in Gruppen; jede Gruppe ist beim Laden zugeklappt und lässt
+     * sich aufklappen (Wunsch des Nutzers, 22.11.2026).
+     */
     function zeigeCrew(crew) {
         gruppenZiel.textContent = '';
         karten = [];
@@ -331,8 +329,9 @@
         K.gruppiereCrew(crew).forEach(function (g) {
             var zaehler = el('span', { className: 'anzahl' });
             var raster = el('div', { className: 'karten' });
-            var abschnitt = el('section', { className: 'gruppe gruppe-' + g.schluessel, 'aria-label': g.titel },
-                el('h3', { className: 'gruppe-titel' }, el('span', { text: g.titel }), ' ', zaehler),
+            var abschnitt = el('details', { className: 'gruppe gruppe-' + g.schluessel },
+                el('summary', { className: 'gruppe-kopf' },
+                    el('h3', { className: 'gruppe-titel' }, el('span', { text: g.titel }), ' ', zaehler)),
                 raster);
             // Die Reserve steht am Ende der Gruppe (Sortierung in gruppiereCrew),
             // davor eine Trennlinie, wenn es auch Leute an Bord gibt.
@@ -345,17 +344,16 @@
                 }
                 var k = karte(p);
                 raster.appendChild(k);
-                karten.push({ knoten: k, suchtext: K.suchform(p.name), ort: p.statusLabel, gruppe: g.schluessel, reserve: reserve });
+                karten.push({ knoten: k, ort: p.statusLabel, gruppe: g.schluessel, reserve: reserve });
             });
             gruppenKnoten.push({ knoten: abschnitt, zaehler: zaehler, schluessel: g.schluessel, gesamt: g.personen.length, trenner: trenner });
             gruppenZiel.appendChild(abschnitt);
         });
-        gruppenZiel.appendChild(el('p', { className: 'leer', id: 'crew-leer', hidden: true, text: 'Niemand passt zu dieser Suche.' }));
+        gruppenZiel.appendChild(el('p', { className: 'leer', id: 'crew-leer', hidden: true, text: 'Niemand passt zu diesem Filter.' }));
     }
 
     function zeigeGefallene(fallen) {
         gefalleneZiel.textContent = '';
-        tafeln = [];
         var vorhandenerLeer = document.getElementById('tafel-leer');
         if (vorhandenerLeer) vorhandenerLeer.remove();
         if (!fallen.length) {
@@ -365,14 +363,11 @@
         }
         gefalleneZiel.hidden = false;
         K.sortiereGefallene(fallen).forEach(function (p) {
-            var e = tafelEintrag(p);
-            gefalleneZiel.appendChild(e);
-            tafeln.push({ knoten: e, suchtext: K.suchform(p.name) });
+            gefalleneZiel.appendChild(tafelEintrag(p));
         });
-        gefalleneZiel.parentNode.appendChild(el('p', { className: 'tafel-ohne', id: 'tafel-leer', hidden: true, text: 'Kein Gefallener passt zu dieser Suche.' }));
     }
 
-    // ------------------------------------------------------- Filter
+    // ------------------------------------------------------- Filter (Aufenthalt)
 
     function aktuellerOrt() {
         var gewaehlt = filterForm.querySelector('input[name="ort"]:checked');
@@ -380,13 +375,12 @@
     }
 
     function filtere() {
-        var s = K.suchform(suche.value);
         var ort = aktuellerOrt();
         var sichtbar = 0;
         var jeGruppe = {};
         var reserveJeGruppe = {};
         karten.forEach(function (k) {
-            var passt = (!s || k.suchtext.indexOf(s) >= 0) && (!ort || k.ort === ort);
+            var passt = !ort || k.ort === ort;
             k.knoten.hidden = !passt;
             if (passt) {
                 sichtbar++;
@@ -404,37 +398,17 @@
         });
         var leer = document.getElementById('crew-leer');
         if (leer) leer.hidden = sichtbar > 0 || !karten.length;
-
-        var tafelSichtbar = 0;
-        tafeln.forEach(function (t) {
-            var passt = !s || t.suchtext.indexOf(s) >= 0;
-            t.knoten.hidden = !passt;
-            if (passt) tafelSichtbar++;
-        });
-        var tafelLeer = document.getElementById('tafel-leer');
-        if (tafelLeer && tafeln.length) tafelLeer.hidden = tafelSichtbar > 0;
-
-        var aktiv = s || ort;
-        if (!aktiv) {
-            ergebnisZeile.textContent = '';
-        } else {
-            var satz = sichtbar + ' von ' + karten.length + ' in der Besatzung';
-            if (s && tafeln.length) satz += ', ' + tafelSichtbar + ' von ' + tafeln.length + ' auf der Ehrentafel';
-            ergebnisZeile.textContent = satz + '.';
-        }
+        ergebnisZeile.textContent = ort ? sichtbar + ' von ' + karten.length + ' in der Besatzung.' : '';
+        return ort;
     }
 
-    filterForm.addEventListener('submit', function (e) { e.preventDefault(); suche.blur(); });
-    filterForm.addEventListener('input', filtere);
-    filterForm.addEventListener('change', filtere);
-
-    // Suche aus der Adresse übernehmen (#suche=Name), damit man einen Link teilen kann.
-    function sucheAusAdresse() {
-        var m = /(?:^|[#&])suche=([^&]*)/.exec(location.hash);
-        if (m) {
-            try { suche.value = decodeURIComponent(m[1].replace(/\+/g, ' ')); } catch (e) { /* ungültig: ignorieren */ }
+    filterForm.addEventListener('submit', function (e) { e.preventDefault(); });
+    filterForm.addEventListener('change', function () {
+        // Wer gezielt filtert, will das Ergebnis sehen: passende Gruppen aufklappen.
+        if (filtere()) {
+            gruppenKnoten.forEach(function (g) { if (!g.knoten.hidden) g.knoten.open = true; });
         }
-    }
+    });
 
     // ------------------------------------------------------- Laden
 
@@ -454,10 +428,10 @@
         zeigeKopf(daten);
         zeigeBoot(daten);
         zeigeCrew(daten.crew);
+        zeigeKarriere(daten.career);
         zeigeVersenkungen(daten.sinkings);
         zeigeGefallene(daten.fallen);
         seite.hidden = false;
-        sucheAusAdresse();
         filtere();
     }
 

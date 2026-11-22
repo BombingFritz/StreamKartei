@@ -388,19 +388,6 @@ a.kachel:hover .kachel-pfeil { text-decoration: underline; }
     margin-bottom: .2rem;
     padding: 0;
 }
-.filter-suche { flex: 1 1 14rem; }
-.filter-suche input {
-    width: 100%;
-    font-family: var(--schrift-maschine);
-    font-size: 1rem; /* verhindert Zoom auf iOS */
-    font-weight: 700;
-    padding: .45rem .2rem;
-    border: 0;
-    border-bottom: 2px solid var(--form-linie);
-    background: transparent;
-    color: var(--blau);
-}
-.filter-suche input::placeholder { color: var(--tinte-2); font-weight: 400; opacity: .7; }
 .filter-ort { border: 0; margin: 0; padding: 0; min-width: 0; }
 .filter-ort label { display: inline-block; margin: 0 .15rem .15rem 0; }
 .filter-ort input { position: absolute; opacity: 0; width: 1px; height: 1px; }
@@ -424,12 +411,34 @@ a.kachel:hover .kachel-pfeil { text-decoration: underline; }
 
 /* ------------------------------------------------------------ Gruppen */
 
-.gruppe { margin: 0 0 2rem; }
+/* Gruppen als aufklappbare Mappen, beim Laden zu */
+.gruppe { margin: 0 0 .6rem; }
+.gruppe[open] { margin-bottom: 2rem; }
+.gruppe-kopf {
+    cursor: pointer;
+    list-style: none;
+    display: flex;
+    align-items: baseline;
+    gap: .6rem;
+    padding: .35rem 0;
+}
+.gruppe-kopf::-webkit-details-marker { display: none; }
+.gruppe-kopf::before {
+    content: "▸";
+    color: var(--messing-hell);
+    font-size: 1.1rem;
+    transition: transform .15s;
+}
+.gruppe[open] > .gruppe-kopf::before { transform: rotate(90deg); }
+.gruppe-kopf:hover .gruppe-titel > span:first-child { text-decoration: underline; text-decoration-thickness: 1px; }
+.gruppe-kopf:focus-visible { outline: 3px solid var(--messing-hell); outline-offset: 2px; }
+.gruppe[open] > .karten { margin-top: .5rem; }
 .gruppe-titel {
+    flex: 1;
     display: flex;
     align-items: baseline;
     gap: .5rem;
-    margin: 1.25rem 0 .8rem;
+    margin: 0;
     font-family: var(--schrift-schablone);
     font-weight: 700;
     font-size: 1rem;
@@ -652,13 +661,28 @@ a.kachel:hover .kachel-pfeil { text-decoration: underline; }
     color: var(--form);
 }
 
-.boot-raster {
-    display: grid;
-    gap: 1.25rem;
-    grid-template-columns: minmax(0, 1fr) minmax(0, 1.6fr);
-    align-items: start;
-}
 .boot-karte, .karriere { padding: 1.1rem 1.2rem; }
+.boot-karte { max-width: 44rem; }
+
+/* Nummer der Feindfahrt, prominent oben auf der Seekarte */
+.boot-feindfahrt {
+    display: flex;
+    align-items: baseline;
+    gap: .4rem;
+    margin: 0 0 .7rem;
+    color: var(--stempel-rot);
+}
+.boot-feindfahrt-nr {
+    font-family: var(--schrift-schablone);
+    font-weight: 700;
+    font-size: clamp(2.4rem, 7vw, 3.4rem);
+    line-height: 1;
+}
+.boot-feindfahrt-wort {
+    font-family: var(--schrift-fraktur);
+    font-size: clamp(1.8rem, 5vw, 2.5rem);
+    line-height: 1;
+}
 
 /* Seekarte mit Gradnetz */
 .boot-karte {
@@ -712,25 +736,6 @@ a.kachel:hover .kachel-pfeil { text-decoration: underline; }
 .kennzahl-zusatz { color: var(--tinte-2); font-size: .85rem; }
 .fussnote { margin: .8rem 0 0; font-size: .78rem; font-style: italic; color: var(--tinte-2); }
 
-/* Gedenktafeln aus Messing */
-.gedenktafeln { margin-top: 1.25rem; }
-.gedenktafeln .unter-titel { color: var(--messing-hell); }
-.gedenktafeln-liste { list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; gap: .75rem; }
-.gedenktafeln-liste li {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    min-width: 11rem;
-    padding: .55rem 1.1rem;
-    color: #2d2412;
-    background: linear-gradient(135deg, #e3c77f 0%, #b48d3e 45%, #d9bb6d 60%, #9c7631 100%);
-    border: 1px solid #6e5320;
-    border-radius: 3px;
-    box-shadow: inset 0 1px 0 rgba(255, 255, 255, .5), inset 0 -1px 0 rgba(0, 0, 0, .3), 0 3px 8px rgba(0, 0, 0, .45);
-    text-shadow: 0 1px 0 rgba(255, 240, 200, .5);
-}
-.gedenktafel-boot { font-family: var(--schrift-schablone); font-weight: 700; font-size: 1.1rem; letter-spacing: .14em; }
-.gedenktafel-ort { font-family: var(--schrift); font-size: .85rem; font-style: italic; }
 
 /* ------------------------------------------------------------ Versenkungen: Kladde */
 
@@ -773,7 +778,6 @@ a.kachel:hover .kachel-pfeil { text-decoration: underline; }
 .nur-beschaedigt td { font-weight: 400; }
 
 @media (max-width: 48rem) {
-    .boot-raster { grid-template-columns: 1fr; }
 }
 
 /* Versenkungen am Handy: jede Zeile als kleiner Karteizettel */
@@ -900,7 +904,6 @@ a.kachel:hover .kachel-pfeil { text-decoration: underline; }
 .abschnitt-titel .anzahl { font-size: .6em; }
 .gruppe-titel > span:first-child { font-size: 1.45rem; }
 .unter-titel { font-size: 1.4rem; }
-.gedenktafeln .unter-titel { color: var(--messing-hell); }
 .karte-formular { font-size: 1.15rem; margin-top: 0; }
 .zeile dt { font-size: .95rem; line-height: 1.15; }
 .merkmale-titel { font-size: 1.05rem; }

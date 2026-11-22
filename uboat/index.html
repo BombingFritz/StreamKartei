@@ -29,30 +29,20 @@
             <nav class="sprung" aria-label="Auf dieser Seite">
                 <a href="#boot" id="sprung-boot" hidden>Boot</a>
                 <a href="#besatzung">Besatzung</a>
+                <a href="#karriere" id="sprung-karriere" hidden>Karriere</a>
                 <a href="#versenkungen" id="sprung-versenkungen" hidden>Versenkungen</a>
                 <a href="#ehrentafel">Ehrentafel</a>
             </nav>
 
             <section id="boot" class="boot" aria-labelledby="boot-titel" hidden>
                 <h2 id="boot-titel" class="abschnitt-titel">Das Boot</h2>
-                <div class="boot-raster">
-                    <div class="boot-karte" id="boot-karte" hidden></div>
-                    <div class="karriere" id="karriere" hidden></div>
-                </div>
-                <div class="gedenktafeln" id="gedenktafeln" hidden>
-                    <h3 class="unter-titel">Gedenktafeln</h3>
-                    <ul class="gedenktafeln-liste" id="gedenktafeln-liste"></ul>
-                </div>
+                <div class="boot-karte" id="boot-karte"></div>
             </section>
 
             <section id="besatzung" aria-labelledby="besatzung-titel">
                 <h2 id="besatzung-titel" class="abschnitt-titel">Besatzung <span class="anzahl" id="crew-anzahl"></span></h2>
 
-                <form class="filter" id="filter" role="search">
-                    <label class="filter-suche">
-                        <span class="filter-label">Name suchen</span>
-                        <input type="search" id="suche" autocomplete="off" spellcheck="false" placeholder="z. B. Möwe" enterkeyhint="search">
-                    </label>
+                <form class="filter" id="filter">
                     <fieldset class="filter-ort">
                         <legend class="filter-label">Aufenthalt</legend>
                         <label><input type="radio" name="ort" value="" checked> <span>alle</span></label>
@@ -63,6 +53,11 @@
                 <p class="filter-ergebnis" id="filter-ergebnis" aria-live="polite"></p>
 
                 <div id="gruppen"></div>
+            </section>
+
+            <section id="karriere" class="karriere-abschnitt" aria-labelledby="karriere-titel" hidden>
+                <h2 id="karriere-titel" class="abschnitt-titel">Karriere</h2>
+                <div class="karriere" id="karriere-inhalt"></div>
             </section>
 
             <section id="versenkungen" class="versenkungen" aria-labelledby="versenkungen-titel" hidden>
@@ -80,7 +75,7 @@
                                 <th scope="col">Ladung</th>
                                 <th scope="col">Geleitzug</th>
                                 <th scope="col">Ziel</th>
-                                <th scope="col" class="zahl">Auftrag</th>
+                                <th scope="col" class="zahl">Feindfahrt</th>
                             </tr>
                         </thead>
                         <tbody id="versenkungen-liste"></tbody>
@@ -90,7 +85,7 @@
 
             <section id="ehrentafel" class="ehrentafel" aria-labelledby="ehrentafel-titel">
                 <h2 id="ehrentafel-titel">Ehrentafel</h2>
-                <p class="ehrentafel-satz">Besatzungsmitglieder, die in diesem Spielstand gefallen sind.</p>
+                <p class="ehrentafel-satz">Gefallene Besatzungsmitglieder</p>
                 <ol class="ehrentafel-liste" id="gefallene"></ol>
             </section>
         </div>
