@@ -13,13 +13,13 @@
 
 ## Regeln für die Seite
 - Rein statisch: HTML, CSS, Vanilla-JS, kein Build-Schritt, keine npm-Abhängigkeiten.
-- **Kein Tracking, keine Cookies, kein `localStorage`**, keine Analyse- oder Werbedienste, keine fremden Skripte. Auch keine Schriften von fremden Servern (z. B. Google Fonts), weil dabei die IP-Adresse der Zuschauer abfließt; nur Systemschriften.
+- **Kein Tracking, keine Cookies, kein `localStorage`**, keine Analyse- oder Werbedienste, keine fremden Skripte. Auch keine Schriften von fremden Servern (z. B. Google Fonts), weil dabei die IP-Adresse der Zuschauer abfließt. Erlaubt sind Systemschriften und freie Schriften, die mit Lizenz in `assets/fonts/` liegen (derzeit UnifrakturMaguntia, nur für kurze Beschriftungen).
 - **Keine Twitch-Anbindung** und **keine Twitch-Namen**. Es stehen nur die Namen im Spiel auf der Seite.
 - Texte aus den Daten nur per `textContent` bzw. `Kartei.el()` einsetzen, **nie** per `innerHTML` o. Ä. Die Daten kommen aus dem Spiel und sind nicht vertrauenswürdig.
 - Unbekannte Felder ignorieren. `schemaVersion` größer als unterstützt: Hinweis zeigen, nicht abbrechen.
 - Ohne Daten oder bei Ladefehler: freundlicher Hinweis, nie eine leere Seite.
 - Beispieldaten in `beispiel/` sind erfunden (ausgedachte Namen), im Format des Vertrags, und werden mit „Beispieldaten“ gekennzeichnet.
-- Handy und PC, hell und dunkel. Gestaltung im Stil der Marine der 1940er als Schreibtisch mit Akten, Formularen (Soldbuch), Seekarte, Stempeln und Schreibmaschinenschrift, nur mit CSS. Ohne Markenlogos oder Spielgrafiken und **ohne Hoheitszeichen, Adler, Hakenkreuze, Ordensbilder oder Farben historischer Orden**; Ordensnamen aus den Daten nur als Text.
+- Handy und PC, hell und dunkel. Gestaltung im Stil der Marine der 1940er als Schreibtisch mit Akten, Formularen (Soldbuch), Seekarte, Stempeln und Schreibmaschinenschrift, nur mit CSS. Ohne Markenlogos oder Spielgrafiken und **ohne Hoheitszeichen, Adler, Hakenkreuze, Ordensbilder oder Farben historischer Orden**; Ordensnamen aus den Daten nur als Text. Hakenkreuze niemals verwenden oder anzeigen, auch nicht in Bildern, Schriften oder Vorlagen (Nutzer, 22.11.2026).
 
 ## Arbeitsweise
 - Eigener Branch vom aktuellen `main` (`git checkout --no-track -b <name> origin/main`), kleine Commits.

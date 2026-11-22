@@ -10,6 +10,16 @@
  * fremden Servern).
  */
 
+/* Frakturschrift für Vordrucke und Titel, liegt im Repository (SIL Open Font License 1.1,
+   siehe assets/fonts/OFL-UnifrakturMaguntia.txt). Kein Abruf von fremden Servern. */
+@font-face {
+    font-family: "UnifrakturMaguntia";
+    src: url("../fonts/UnifrakturMaguntia-Book.ttf") format("truetype");
+    font-weight: 400;
+    font-style: normal;
+    font-display: swap;
+}
+
 :root {
     /* Schreibtisch */
     --tisch: #3a3128;
@@ -53,6 +63,7 @@
     --schrift-maschine: "Courier New", Courier, "Nimbus Mono PS", "Liberation Mono", ui-monospace, monospace;
     --schrift-schablone: Bahnschrift, "DIN Alternate", "DIN 1451", "Arial Narrow", "Roboto Condensed", system-ui, sans-serif;
     --schrift-ui: system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
+    --schrift-fraktur: "UnifrakturMaguntia", Georgia, "Times New Roman", serif;
 
     color-scheme: light;
 }
@@ -484,7 +495,7 @@ a.kachel:hover .kachel-pfeil { text-decoration: underline; }
 }
 .zeile {
     display: grid;
-    grid-template-columns: 6.6rem minmax(0, 1fr);
+    grid-template-columns: 7.1rem minmax(0, 1fr);
     border-top: 1px solid var(--form-linie);
 }
 .zeile:first-child { border-top: 0; }
@@ -498,7 +509,6 @@ a.kachel:hover .kachel-pfeil { text-decoration: underline; }
     line-height: 1.25;
     color: var(--form);
     hyphens: auto;
-    overflow-wrap: anywhere;
 }
 .zeile dt > span:last-child { min-width: 0; }
 .zeile-nr { min-width: .9rem; color: var(--form); opacity: .75; font-variant-numeric: tabular-nums; }
@@ -847,6 +857,44 @@ a.kachel:hover .kachel-pfeil { text-decoration: underline; }
 .akte-tafel .lebenslauf p, .akte-tafel .leistungen-liste, .akte-tafel .leistungen-titel { color: var(--tafel-schrift); }
 .akte-tafel .leistung-mal { color: var(--messing-hell); }
 
+/* ------------------------------------------------------------ Fraktur für Vordrucke und Titel
+   Nur für kurze Beschriftungen, nie für Fließtext, Namen oder Zahlen.
+   Fraktur ohne Großbuchstaben-Satz und ohne Sperrung, sonst unleserlich. */
+
+.abschnitt-titel,
+.gruppe-titel > span:first-child,
+.unter-titel,
+.karte-formular,
+.zeile dt,
+.merkmale-titel,
+.kennzahl dt,
+.tabelle-versenkungen th,
+.tabelle-versenkungen td::before,
+.kopf-unter,
+.kopf-stand dt,
+.filter-label,
+.ehrentafel h2 {
+    font-family: var(--schrift-fraktur);
+    font-weight: 400;
+    text-transform: none;
+    letter-spacing: .01em;
+}
+.abschnitt-titel { font-size: 1.55rem; padding: .2rem 1rem .25rem; }
+.abschnitt-titel .anzahl { font-size: .6em; }
+.gruppe-titel > span:first-child { font-size: 1.45rem; }
+.unter-titel { font-size: 1.4rem; }
+.gedenktafeln .unter-titel { color: var(--messing-hell); }
+.karte-formular { font-size: 1.15rem; margin-top: 0; }
+.zeile dt { font-size: .95rem; line-height: 1.15; }
+.merkmale-titel { font-size: 1.05rem; }
+.kennzahl dt { font-size: .95rem; line-height: 1.15; }
+.tabelle-versenkungen th { font-size: .98rem; }
+.tabelle-versenkungen td::before { font-size: .9rem; }
+.kopf-unter { font-size: .55em; margin-top: .2rem; }
+.kopf-stand dt { font-size: 1rem; }
+.filter-label { font-size: 1rem; }
+.ehrentafel h2 { font-size: clamp(2.2rem, 6vw, 3rem); }
+
 /* ------------------------------------------------------------ Fuß */
 
 .fuss {
@@ -869,7 +917,7 @@ a.kachel:hover .kachel-pfeil { text-decoration: underline; }
     .filter { padding: .6rem .75rem; }
     .filter-ort { width: 100%; }
     .karten { grid-template-columns: 1fr; }
-    .zeile { grid-template-columns: 6.2rem minmax(0, 1fr); }
+    .zeile { grid-template-columns: 6.8rem minmax(0, 1fr); }
     .ehrentafel { margin-left: -1rem; margin-right: -1rem; }
 }
 
