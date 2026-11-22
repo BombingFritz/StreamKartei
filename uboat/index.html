@@ -27,9 +27,23 @@
 
         <div id="seite" hidden>
             <nav class="sprung" aria-label="Auf dieser Seite">
+                <a href="#boot" id="sprung-boot" hidden>Boot</a>
                 <a href="#besatzung">Besatzung</a>
+                <a href="#versenkungen" id="sprung-versenkungen" hidden>Versenkungen</a>
                 <a href="#ehrentafel">Ehrentafel</a>
             </nav>
+
+            <section id="boot" class="boot" aria-labelledby="boot-titel" hidden>
+                <h2 id="boot-titel" class="abschnitt-titel">Das Boot</h2>
+                <div class="boot-raster">
+                    <div class="boot-karte" id="boot-karte" hidden></div>
+                    <div class="karriere" id="karriere" hidden></div>
+                </div>
+                <div class="gedenktafeln" id="gedenktafeln" hidden>
+                    <h3 class="unter-titel">Gedenktafeln</h3>
+                    <ul class="gedenktafeln-liste" id="gedenktafeln-liste"></ul>
+                </div>
+            </section>
 
             <section id="besatzung" aria-labelledby="besatzung-titel">
                 <h2 id="besatzung-titel" class="abschnitt-titel">Besatzung <span class="anzahl" id="crew-anzahl"></span></h2>
@@ -49,6 +63,29 @@
                 <p class="filter-ergebnis" id="filter-ergebnis" aria-live="polite"></p>
 
                 <div id="gruppen"></div>
+            </section>
+
+            <section id="versenkungen" class="versenkungen" aria-labelledby="versenkungen-titel" hidden>
+                <h2 id="versenkungen-titel" class="abschnitt-titel">Versenkungen <span class="anzahl" id="versenkungen-anzahl"></span></h2>
+                <p class="versenkungen-satz" id="versenkungen-satz"></p>
+                <div class="tabelle-rahmen">
+                    <table class="tabelle-versenkungen">
+                        <thead>
+                            <tr>
+                                <th scope="col">Nr.</th>
+                                <th scope="col">Datum</th>
+                                <th scope="col">Schiff</th>
+                                <th scope="col">Art</th>
+                                <th scope="col" class="zahl">BRT</th>
+                                <th scope="col">Ladung</th>
+                                <th scope="col">Geleitzug</th>
+                                <th scope="col">Ziel</th>
+                                <th scope="col" class="zahl">Auftrag</th>
+                            </tr>
+                        </thead>
+                        <tbody id="versenkungen-liste"></tbody>
+                    </table>
+                </div>
             </section>
 
             <section id="ehrentafel" class="ehrentafel" aria-labelledby="ehrentafel-titel">

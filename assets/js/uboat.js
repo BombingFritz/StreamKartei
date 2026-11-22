@@ -80,6 +80,50 @@
         return el.apply(null, ['p', { className: 'karte-stufe' }].concat(kinder));
     }
 
+    /** Orden mit Namen; ohne Namen nur die Anzahl wie bisher. */
+    function orden(p) {
+        if (p.decorationNames.length) {
+            var block = marken('Orden', p.decorationNames, 'orden');
+            if (p.decorations !== null && p.decorations > p.decorationNames.length) {
+                block.appendChild(el('p', { className: 'merkmale-zusatz', text: 'insgesamt ' + K.auszeichnungenText(p.decorations) }));
+            }
+            return block;
+        }
+        return auszeichnungen(p);
+    }
+
+    function leistungsGruppe(g) {
+        return el('div', { className: 'leistungen leistungen-' + g.schluessel },
+            el('h5', { className: 'leistungen-titel' }, g.titel, ' ', el('span', { className: 'anzahl', text: '(' + g.anzahl + ')' })),
+            el.apply(null, ['ul', { className: 'leistungen-liste' }].concat(g.eintraege.map(function (e) {
+                return el('li', null,
+                    e.anzahl > 1 ? el('span', { className: 'leistung-mal', text: e.anzahl + ' × ' }) : null,
+                    el('span', { text: e.text }));
+            }))));
+    }
+
+    /** Aufklappbare Akte: Lebenslauf und Leistungen. Null, wenn nichts da ist. */
+    function akte(p) {
+        var hatLebenslauf = p.lebenslauf.length > 0;
+        var anzahl = p.accomplishments.length;
+        if (!hatLebenslauf && !anzahl) return null;
+        var teile = [];
+        if (hatLebenslauf) teile.push('Lebenslauf');
+        if (anzahl) teile.push(anzahl === 1 ? '1 Leistung' : anzahl + ' Leistungen');
+        var inhalt = [];
+        if (hatLebenslauf) {
+            inhalt.push(el.apply(null, ['div', { className: 'lebenslauf' }, el('h4', { className: 'merkmale-titel', text: 'Lebenslauf' })]
+                .concat(p.lebenslauf.map(function (absatz) { return el('p', { text: absatz }); }))));
+        }
+        if (anzahl) {
+            inhalt.push(el.apply(null, ['div', { className: 'leistungen-block' }, el('h4', { className: 'merkmale-titel', text: 'Leistungen' })]
+                .concat(K.gruppiereLeistungen(p.accomplishments).map(leistungsGruppe))));
+        }
+        return el.apply(null, ['details', { className: 'akte' },
+            el('summary', null, el('span', { className: 'akte-wort', text: 'Akte' }), ' ', el('span', { className: 'akte-inhalt', text: teile.join(' · ') }))]
+            .concat(inhalt));
+    }
+
     function auszeichnungen(p) {
         var t = K.auszeichnungenText(p.decorations);
         if (!t) return null;
@@ -111,24 +155,169 @@
         if (p.woundLabel) klasse += ' karte-verwundet';
         if (p.statusLabel === 'in Reserve') klasse += ' karte-reserve';
         return el('article', { className: klasse },
-            kopf, dienst, stufeZeile(p), auszeichnungen(p),
+            kopf, dienst, stufeZeile(p), orden(p),
             marken('Charakter', p.traits, 'charakter'),
-            marken('Fähigkeiten', p.skills, 'faehigkeit'));
+            marken('Fähigkeiten', p.skills, 'faehigkeit'),
+            akte(p));
     }
 
     function tafelEintrag(p) {
         var zeile = [dienstText(p)];
         if (p.born) zeile.push('Jahrgang ' + p.born.jahr);
         var t = K.auszeichnungenText(p.decorations);
-        if (t) zeile.push(t);
+        if (t && !p.decorationNames.length) zeile.push(t);
         var merkmale = p.traits.concat(p.skills);
+        var tafelAkte = akte(p);
+        if (tafelAkte) tafelAkte.className += ' akte-tafel';
         return el('li', { className: 'tafel' },
             el('p', { className: 'tafel-name', text: p.name }),
             el('p', { className: 'tafel-dienst', text: zeile.join(' · ') }),
             el('p', { className: 'tafel-tod' }, 'gefallen am ',
                 el('time', { datetime: p.died ? [p.died.jahr, ('0' + p.died.monat).slice(-2), ('0' + p.died.tag).slice(-2)].join('-') : null,
                     text: K.formatKalenderdatum(p.died) })),
-            merkmale.length ? el('p', { className: 'tafel-merkmale', text: merkmale.join(', ') }) : null);
+            p.decorationNames.length ? el('p', { className: 'tafel-orden', text: p.decorationNames.join(' · ') }) : null,
+            merkmale.length ? el('p', { className: 'tafel-merkmale', text: merkmale.join(', ') }) : null,
+            tafelAkte);
+    }
+
+    // ------------------------------------------------- Boot und Karriere
+
+    /** Kennzahl: großer Wert, kleine Beschriftung, optional Zusatz. */
+    function kennzahl(beschriftung, wert, zusatz) {
+        return el('div', { className: 'kennzahl' },
+            el('dt', { text: beschriftung }),
+            el('dd', null, el('span', { className: 'kennzahl-wert', text: wert }),
+                zusatz ? el('span', { className: 'kennzahl-zusatz', text: ' ' + zusatz }) : null));
+    }
+
+    function trefferText(treffer, gesamt) {
+        if (treffer === null && gesamt === null) return null;
+        var q = K.quote(treffer, gesamt);
+        return {
+            wert: K.formatZahl(treffer) + ' von ' + K.formatZahl(gesamt),
+            zusatz: q === null ? null : '(' + q + ' %)'
+        };
+    }
+
+    function zeigeBoot(daten) {
+        var b = daten.boat;
+        var c = daten.career;
+        var bootKarte = document.getElementById('boot-karte');
+        var karriereZiel = document.getElementById('karriere');
+        bootKarte.textContent = '';
+        karriereZiel.textContent = '';
+
+        if (b) {
+            var zeilen = [];
+            if (b.typeLabel) zeilen.push(b.typeLabel);
+            if (b.commissioned) zeilen.push('in Dienst gestellt am ' + K.formatKalenderdatum(b.commissioned));
+            var zahlen = el('dl', { className: 'kennzahlen' });
+            if (b.tonnageSunk !== null) zahlen.appendChild(kennzahl('Versenkte Tonnage', K.formatZahl(b.tonnageSunk), 'BRT'));
+            if (b.merchantShipsSunk !== null) zahlen.appendChild(kennzahl('Handelsschiffe versenkt', K.formatZahl(b.merchantShipsSunk)));
+            if (b.warshipsSunk !== null) zahlen.appendChild(kennzahl('Kriegsschiffe versenkt', K.formatZahl(b.warshipsSunk)));
+            if (b.aircraftShotDown !== null) zahlen.appendChild(kennzahl('Flugzeuge abgeschossen', K.formatZahl(b.aircraftShotDown)));
+            bootKarte.appendChild(el('p', { className: 'boot-name', text: b.name || 'Boot ohne Namen' }));
+            if (zeilen.length) bootKarte.appendChild(el('p', { className: 'boot-zeile', text: zeilen.join(' · ') }));
+            if (zahlen.childNodes.length) bootKarte.appendChild(zahlen);
+            bootKarte.hidden = false;
+        } else {
+            bootKarte.hidden = true;
+        }
+
+        if (c) {
+            var liste = el('dl', { className: 'kennzahlen kennzahlen-klein' });
+            var dazu = function (beschriftung, wert, zusatz) {
+                if (wert === null || wert === undefined) return;
+                liste.appendChild(kennzahl(beschriftung, wert, zusatz));
+            };
+            dazu('Karriere seit', c.startDate ? K.formatKalenderdatum(c.startDate) : null);
+            dazu('Auftrag Nr.', c.currentPatrol !== null ? K.formatZahl(c.currentPatrol) : null);
+            var torpedo = trefferText(c.torpedoHits, c.torpedoesFired);
+            if (torpedo) dazu('Torpedotreffer', torpedo.wert, torpedo.zusatz);
+            dazu('Weitester Torpedotreffer', c.farthestTorpedoHitM !== null ? K.formatZahl(c.farthestTorpedoHitM) : null, 'm');
+            var deck = trefferText(c.deckGunHits, c.deckGunShots);
+            if (deck) dazu('Treffer Deckgeschütz', deck.wert, deck.zusatz);
+            var flak = trefferText(c.flakHits, c.flakShots);
+            if (flak) dazu('Treffer Flak', flak.wert, flak.zusatz);
+            dazu('Größte Tiefe', c.maximumDepthM !== null ? K.formatZahl(c.maximumDepthM) : null, 'm');
+            dazu('Stunden auf See', c.hoursAtSea !== null ? K.formatZahl(c.hoursAtSea, 1) : null, 'h');
+            dazu('davon getaucht', c.hoursUnderWater !== null ? K.formatZahl(c.hoursUnderWater, 1) : null, 'h');
+            dazu('Treibstoff verbraucht', c.fuelConsumedLitres !== null ? K.formatZahl(c.fuelConsumedLitres) : null, 'l');
+            dazu('Verluste', c.casualties !== null ? K.formatZahl(c.casualties) : null);
+            // distanceTravelled: Einheit laut Spec noch ungeklärt, daher nicht angezeigt.
+            if (liste.childNodes.length) {
+                karriereZiel.appendChild(el('h3', { className: 'unter-titel', text: 'Karriere' }));
+                karriereZiel.appendChild(liste);
+                karriereZiel.appendChild(el('p', { className: 'fussnote', text: 'Stunden auf See bis zum letzten Einlaufen, ohne die laufende Fahrt.' }));
+            }
+            karriereZiel.hidden = !liste.childNodes.length;
+        } else {
+            karriereZiel.hidden = true;
+        }
+
+        var tafelnZiel = document.getElementById('gedenktafeln');
+        var tafelnListe = document.getElementById('gedenktafeln-liste');
+        tafelnListe.textContent = '';
+        daten.plaques.forEach(function (t) {
+            tafelnListe.appendChild(el('li', null,
+                el('span', { className: 'gedenktafel-boot', text: t.boat || 'Boot unbekannt' }),
+                t.port ? el('span', { className: 'gedenktafel-ort', text: t.port }) : null));
+        });
+        tafelnZiel.hidden = daten.plaques.length === 0;
+
+        var sichtbar = !bootKarte.hidden || !karriereZiel.hidden || !tafelnZiel.hidden;
+        document.getElementById('boot').hidden = !sichtbar;
+        document.getElementById('sprung-boot').hidden = !sichtbar;
+    }
+
+    // ------------------------------------------------------ Versenkungen
+
+    function zelle(beschriftung, inhalt, klasse) {
+        var td = el('td', { 'data-label': beschriftung, className: klasse || null });
+        if (inhalt === null || inhalt === undefined || inhalt === '') {
+            td.appendChild(el('span', { className: 'leer-wert', text: '–' }));
+            td.className = (td.className ? td.className + ' ' : '') + 'zelle-leer';
+        } else if (typeof inhalt === 'string') {
+            td.textContent = inhalt;
+        } else {
+            td.appendChild(inhalt);
+        }
+        return td;
+    }
+
+    function zeigeVersenkungen(liste) {
+        var abschnitt = document.getElementById('versenkungen');
+        var ziel = document.getElementById('versenkungen-liste');
+        ziel.textContent = '';
+        document.getElementById('sprung-versenkungen').hidden = liste.length === 0;
+        abschnitt.hidden = liste.length === 0;
+        if (!liste.length) return;
+
+        var versenkt = liste.filter(function (s) { return !s.damagedOnly; }).length;
+        var beschaedigt = liste.length - versenkt;
+        document.getElementById('versenkungen-anzahl').textContent = '(' + liste.length + ')';
+        var satz = (versenkt === 1 ? '1 Schiff' : versenkt + ' Schiffe') + ' versenkt';
+        if (beschaedigt) satz += ', ' + beschaedigt + ' beschädigt';
+        var brt = K.summeBrt(liste);
+        if (brt) satz += ', zusammen ' + K.formatZahl(brt) + ' BRT mit bekannter Größe';
+        document.getElementById('versenkungen-satz').textContent = satz + '. Reihenfolge wie im Spielstand.';
+
+        liste.forEach(function (s, i) {
+            var schiff = el('span', { className: s.name ? 'schiff-name' : 'schiff-name schiff-unbekannt', text: K.schiffsname(s) });
+            var schiffZelle = el('span', null, schiff,
+                s.damagedOnly ? el('span', { className: 'plakette plakette-beschaedigt', text: 'beschädigt' }) : null);
+            var zeile = el('tr', { className: s.damagedOnly ? 'nur-beschaedigt' : null },
+                zelle('Nr.', String(i + 1), 'zahl spalte-nr'),
+                zelle('Datum', s.date ? K.formatKalenderdatum(s.date) : null, 'spalte-datum'),
+                zelle('Schiff', schiffZelle, 'spalte-schiff'),
+                zelle('Art', s.kindLabel),
+                zelle('BRT', s.grt !== null ? K.formatZahl(s.grt) : null, 'zahl'),
+                zelle('Ladung', s.cargoLabel),
+                zelle('Geleitzug', s.convoy || 'Einzelfahrer'),
+                zelle('Ziel', s.destination),
+                zelle('Auftrag', s.patrol !== null ? K.formatZahl(s.patrol) : null, 'zahl'));
+            ziel.appendChild(zeile);
+        });
     }
 
     // ------------------------------------------------------- Aufbau
@@ -252,7 +441,9 @@
         }
 
         zeigeKopf(daten);
+        zeigeBoot(daten);
         zeigeCrew(daten.crew);
+        zeigeVersenkungen(daten.sinkings);
         zeigeGefallene(daten.fallen);
         seite.hidden = false;
         sucheAusAdresse();

@@ -451,6 +451,220 @@ a.kachel:hover .kachel-pfeil { text-decoration: underline; }
 }
 .marken-charakter li { border-style: dashed; }
 
+.merkmale-zusatz { margin: .2rem 0 0; font-size: .8rem; color: var(--tinte-2); }
+.marken-orden li { border-color: var(--messing); }
+
+/* ------------------------------------------------------------ Akte (aufklappbar) */
+
+.akte {
+    margin-top: .25rem;
+    border-top: 1px dashed var(--linie);
+    padding-top: .45rem;
+}
+.akte summary {
+    cursor: pointer;
+    list-style: none;
+    display: flex;
+    align-items: baseline;
+    gap: .5rem;
+    color: var(--marine-2);
+    font-size: .9rem;
+}
+@media (prefers-color-scheme: dark) { .akte summary { color: var(--messing); } }
+.akte summary::-webkit-details-marker { display: none; }
+.akte summary::before {
+    content: "▸";
+    display: inline-block;
+    width: .8em;
+    transition: transform .15s;
+}
+.akte[open] summary::before { transform: rotate(90deg); }
+.akte summary:hover .akte-wort { text-decoration: underline; }
+.akte summary:focus-visible { outline: 3px solid var(--messing-hell); outline-offset: 2px; }
+.akte-wort {
+    font-family: var(--schrift-titel);
+    font-weight: 600;
+    letter-spacing: .12em;
+    text-transform: uppercase;
+    font-size: .78rem;
+}
+.akte-inhalt { color: var(--tinte-2); }
+.akte[open] > :not(summary) { margin-top: .6rem; }
+
+.lebenslauf p {
+    margin: 0 0 .5rem;
+    font-family: var(--schrift-tafel);
+    font-size: .95rem;
+    line-height: 1.55;
+    hyphens: auto;
+}
+.leistungen { margin: 0 0 .6rem; }
+.leistungen-titel {
+    margin: .3rem 0 .2rem;
+    font-size: .85rem;
+    font-weight: 600;
+}
+.leistungen-titel .anzahl { font-size: .9em; }
+.leistungen-liste {
+    margin: 0;
+    padding-left: 1.1rem;
+    font-size: .88rem;
+}
+.leistungen-liste li { margin: .1rem 0; }
+.leistung-mal { font-variant-numeric: tabular-nums; font-weight: 600; }
+
+/* ------------------------------------------------------------ Boot und Karriere */
+
+.unter-titel {
+    margin: 0 0 .6rem;
+    font-family: var(--schrift-titel);
+    font-weight: 600;
+    font-size: 1.05rem;
+    letter-spacing: .12em;
+    text-transform: uppercase;
+    color: var(--marine-2);
+}
+@media (prefers-color-scheme: dark) { .unter-titel { color: var(--messing); } }
+
+.boot-raster {
+    display: grid;
+    gap: 1rem;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1.6fr);
+    align-items: start;
+}
+.boot-karte, .karriere, .gedenktafeln {
+    padding: 1rem 1.1rem;
+    background: var(--flaeche);
+    border: 1px solid var(--linie);
+    border-radius: 3px;
+    box-shadow: var(--schatten);
+}
+.boot-karte {
+    border-top: 6px solid var(--marine-2);
+}
+.boot-name {
+    margin: 0;
+    font-family: var(--schrift-titel);
+    font-size: clamp(1.8rem, 5vw, 2.4rem);
+    font-weight: 600;
+    letter-spacing: .06em;
+    line-height: 1.1;
+}
+.boot-zeile { margin: .25rem 0 .75rem; color: var(--tinte-2); }
+
+.kennzahlen {
+    margin: 0;
+    display: grid;
+    gap: .6rem 1rem;
+    grid-template-columns: repeat(auto-fill, minmax(8.5rem, 1fr));
+}
+.kennzahl { padding-top: .35rem; border-top: 1px solid var(--linie); display: flex; flex-direction: column; }
+.kennzahl dd { margin-top: auto !important; }
+.kennzahl dt {
+    font-family: var(--schrift-titel);
+    font-size: .7rem;
+    letter-spacing: .12em;
+    text-transform: uppercase;
+    color: var(--tinte-2);
+}
+.kennzahl dd { margin: 0; font-variant-numeric: tabular-nums; }
+.kennzahl-wert { font-size: 1.25rem; font-weight: 600; }
+.kennzahlen-klein .kennzahl-wert { font-size: 1.05rem; }
+.kennzahl-zusatz { color: var(--tinte-2); font-size: .9rem; }
+.fussnote { margin: .75rem 0 0; font-size: .8rem; color: var(--tinte-2); }
+
+.gedenktafeln { margin-top: 1rem; }
+.gedenktafeln-liste { list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; gap: .5rem; }
+.gedenktafeln-liste li {
+    display: flex;
+    flex-direction: column;
+    padding: .4rem .8rem;
+    border: 1px solid var(--messing);
+    border-radius: 2px;
+    background: var(--flaeche-2);
+}
+.gedenktafel-boot { font-family: var(--schrift-titel); font-weight: 600; letter-spacing: .06em; }
+.gedenktafel-ort { font-size: .85rem; color: var(--tinte-2); }
+
+/* ------------------------------------------------------------ Versenkungen */
+
+.versenkungen { margin: 1rem 0 0; }
+.versenkungen-satz { margin: 0 0 .75rem; color: var(--tinte-2); }
+.tabelle-rahmen {
+    background: var(--flaeche);
+    border: 1px solid var(--linie);
+    border-radius: 3px;
+    box-shadow: var(--schatten);
+    overflow-x: auto;
+}
+.tabelle-versenkungen {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: .9rem;
+}
+.tabelle-versenkungen th, .tabelle-versenkungen td {
+    padding: .45rem .6rem;
+    text-align: left;
+    vertical-align: top;
+    border-bottom: 1px solid var(--linie);
+}
+.tabelle-versenkungen th {
+    font-family: var(--schrift-titel);
+    font-weight: 600;
+    font-size: .72rem;
+    letter-spacing: .12em;
+    text-transform: uppercase;
+    color: var(--tinte-2);
+    background: var(--flaeche-2);
+    white-space: nowrap;
+}
+.tabelle-versenkungen tbody tr:last-child td { border-bottom: 0; }
+.tabelle-versenkungen tbody tr:nth-child(even) { background: var(--flaeche-2); }
+.tabelle-versenkungen .zahl { text-align: right; font-variant-numeric: tabular-nums; }
+.spalte-datum { white-space: nowrap; }
+.schiff-name { font-weight: 600; }
+.schiff-unbekannt { font-weight: 400; font-style: italic; color: var(--tinte-2); }
+.leer-wert { color: var(--tinte-2); }
+.plakette-beschaedigt { margin-left: .4rem; color: var(--warn-rand); background: var(--warn-grund); font-size: .72rem; }
+.nur-beschaedigt .schiff-name { font-weight: 400; }
+
+@media (max-width: 48rem) {
+    .boot-raster { grid-template-columns: 1fr; }
+}
+
+/* Versenkungen am Handy: jede Zeile als kleine Karte */
+@media (max-width: 40rem) {
+    .tabelle-rahmen { background: none; border: 0; box-shadow: none; overflow: visible; }
+    .tabelle-versenkungen thead { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); }
+    .tabelle-versenkungen, .tabelle-versenkungen tbody, .tabelle-versenkungen tr, .tabelle-versenkungen td { display: block; width: 100%; }
+    .tabelle-versenkungen tr {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: .15rem .75rem;
+        margin: 0 0 .6rem;
+        padding: .6rem .8rem;
+        background: var(--flaeche) !important;
+        border: 1px solid var(--linie);
+        border-left: 4px solid var(--marine-2);
+        border-radius: 3px;
+    }
+    .tabelle-versenkungen tr.nur-beschaedigt { border-left-color: var(--warn-rand); }
+    .tabelle-versenkungen td { padding: 0; border: 0; text-align: left !important; }
+    .tabelle-versenkungen td::before {
+        content: attr(data-label);
+        display: block;
+        font-family: var(--schrift-titel);
+        font-size: .65rem;
+        letter-spacing: .12em;
+        text-transform: uppercase;
+        color: var(--tinte-2);
+    }
+    .tabelle-versenkungen .spalte-schiff { grid-column: 1 / -1; order: -2; font-size: 1.05rem; }
+    .tabelle-versenkungen .spalte-schiff::before { display: none; }
+    .tabelle-versenkungen .spalte-nr { display: none; }
+    .tabelle-versenkungen .zelle-leer { display: none; }
+}
+
 /* ------------------------------------------------------------ Ehrentafel */
 
 .ehrentafel {
@@ -488,6 +702,7 @@ a.kachel:hover .kachel-pfeil { text-decoration: underline; }
     display: grid;
     gap: 1rem;
     grid-template-columns: repeat(auto-fill, minmax(15rem, 1fr));
+    align-items: start;
 }
 .tafel {
     padding: 1rem .75rem 1.1rem;
@@ -510,6 +725,11 @@ a.kachel:hover .kachel-pfeil { text-decoration: underline; }
 }
 .tafel-tod time { font-style: normal; color: var(--messing-hell); }
 .tafel-merkmale { margin-top: .5rem !important; color: var(--tafel-schrift-2); font-size: .8rem; }
+.tafel-orden { margin-top: .4rem !important; color: var(--messing-hell); font-size: .85rem; }
+.akte-tafel { text-align: left; margin-top: .6rem; border-top-color: rgba(199, 164, 98, .35); }
+.akte-tafel summary { color: var(--messing-hell); justify-content: center; }
+.akte-tafel .akte-inhalt, .akte-tafel .merkmale-titel, .akte-tafel .anzahl { color: var(--tafel-schrift-2); }
+.akte-tafel .lebenslauf p, .akte-tafel .leistungen-liste { color: var(--tafel-schrift); }
 .tafel-ohne { font-family: var(--schrift-tafel); font-style: italic; color: var(--tafel-schrift-2); margin: 0; }
 
 /* ------------------------------------------------------------ Fuß */

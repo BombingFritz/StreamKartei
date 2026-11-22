@@ -5,7 +5,12 @@
 **Adresse:** https://bombingfritz.github.io/StreamKartei/
 
 - **Startseite** (`/`): Auswahl des Spiels, je Spiel „Spielstand vom …“.
-- **UBOAT** (`/uboat/`): die ganze Besatzung (Kommandant, Offiziere, Matrosen) mit Suche und Filter, dazu die Ehrentafel der Gefallenen.
+- **UBOAT** (`/uboat/`):
+  - das Boot mit Kennzahlen, die Karriere (Treffer, Tiefe, Stunden auf See …) und die Gedenktafeln,
+  - die ganze Besatzung (Kommandant, Offiziere, Matrosen) mit Suche und Filter; je Person Orden und eine aufklappbare Akte mit Lebenslauf und Leistungen (nach Art gruppiert),
+  - die Liste der Versenkungen (am Handy als Karten),
+  - die Ehrentafel der Gefallenen.
+  - Die zurückgelegte Strecke (`distanceTravelled`) zeigt die Seite noch nicht, solange die Einheit ungeklärt ist.
 - **RimWorld** folgt später als eigene Seite.
 
 Rein statisch: HTML, CSS und Vanilla-JavaScript, kein Build-Schritt, keine Abhängigkeiten. Keine Cookies, kein Tracking, keine fremden Skripte oder Schriften. Twitch-Namen stehen nie auf der Seite, nur die Namen im Spiel.
@@ -26,7 +31,7 @@ Website (GitHub Pages, Zweig „main“) ──fetch im Browser──> raw.githu
 
 ## Beispielmodus
 
-In [`beispiel/`](beispiel/) liegen **erfundene** Daten im selben Format (25 Crewmitglieder, 3 Gefallene). Die Seite nimmt sie
+In [`beispiel/`](beispiel/) liegen **erfundene** Daten im selben Format (25 Crewmitglieder, 3 Gefallene, ein ausgedachtes Boot mit 10 Versenkungen). Die Seite nimmt sie
 
 - wenn die Adresse `?beispiel` enthält, z. B. https://bombingfritz.github.io/StreamKartei/?beispiel, oder
 - wenn der Zweig `data` noch fehlt (GitHub antwortet mit 404).
