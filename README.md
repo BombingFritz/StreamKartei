@@ -50,7 +50,7 @@ Eine Suche lässt sich als Link teilen: `/uboat/#suche=Möwe`.
 |---|---|
 | `index.html` | Startseite |
 | `uboat/index.html` | UBOAT-Seite |
-| `assets/css/kartei.css` | Gestaltung (hell und dunkel nach Systemeinstellung, Handy und PC) |
+| `assets/css/kartei.css` | Gestaltung im Stil der Marine der 1940er: Schreibtisch, Akten, Soldbuch-Formular, Seekarte, Stempel; nur CSS, ohne Bilder und ohne Hoheitszeichen (hell und dunkel nach Systemeinstellung, Handy und PC) |
 | `assets/js/kartei.js` | Gemeinsame Hilfen: Laden mit Beispiel-Rückfall, Aufbereiten, Datum, Suche; läuft auch in Node für die Tests |
 | `assets/js/start.js`, `assets/js/uboat.js` | Aufbau der beiden Seiten |
 | `beispiel/` | Erfundene Beispieldaten |

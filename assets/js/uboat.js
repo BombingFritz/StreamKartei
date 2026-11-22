@@ -45,14 +45,6 @@
 
     // ------------------------------------------------------- Bausteine
 
-    function marken(titel, liste, art) {
-        if (!liste.length) return null;
-        return el('div', { className: 'merkmale' },
-            el('h4', { className: 'merkmale-titel', text: titel }),
-            el.apply(null, ['ul', { className: 'marken marken-' + art }].concat(
-                liste.map(function (t) { return el('li', { text: t }); }))));
-    }
-
     function dienstText(p) {
         var teile = [];
         if (p.typeLabel) teile.push(p.typeLabel);
@@ -60,36 +52,38 @@
         return teile.join(' · ') || 'ohne Angabe';
     }
 
-    function jahrgang(p) {
-        return p.born ? 'Jahrgang ' + p.born.jahr : null;
-    }
-
-    function stufeZeile(p) {
+    /** Stufe und EP als Formularwert (nur Offiziere und Kommandant). */
+    function stufeWert(p) {
         if (!K.zeigtStufe(p)) return null;
         var kinder = [];
-        if (p.level !== null) kinder.push(el('span', { className: 'wert' }, 'Stufe ', el('b', { text: String(p.level) })));
+        if (p.level !== null) kinder.push('Stufe ' + p.level);
         if (p.experiencePoints !== null) {
-            var ep = el('span', { className: 'wert' }, el('b', { text: p.experiencePoints.toLocaleString('de-DE') }), ' EP');
-            kinder.push(ep);
+            if (kinder.length) kinder.push(' · ');
+            kinder.push(K.formatZahl(p.experiencePoints) + ' EP');
             if (p.experiencePointsFromLastPatrol) {
-                kinder.push(el('span', { className: 'wert wert-plus', title: 'EP aus der letzten Feindfahrt' },
-                    '+' + p.experiencePointsFromLastPatrol.toLocaleString('de-DE') + ' letzte Feindfahrt'));
+                kinder.push(' ', el('span', { className: 'wert-plus', title: 'EP aus der letzten Feindfahrt',
+                    text: '(+' + K.formatZahl(p.experiencePointsFromLastPatrol) + ' letzte Feindfahrt)' }));
             }
         }
         if (!kinder.length) return null;
-        return el.apply(null, ['p', { className: 'karte-stufe' }].concat(kinder));
+        return el.apply(null, ['span', null].concat(kinder));
     }
 
-    /** Orden mit Namen; ohne Namen nur die Anzahl wie bisher. */
-    function orden(p) {
+    /** Orden mit Namen; ohne Namen nur die Anzahl. */
+    function ordenWert(p) {
         if (p.decorationNames.length) {
-            var block = marken('Orden', p.decorationNames, 'orden');
-            if (p.decorations !== null && p.decorations > p.decorationNames.length) {
-                block.appendChild(el('p', { className: 'merkmale-zusatz', text: 'insgesamt ' + K.auszeichnungenText(p.decorations) }));
-            }
-            return block;
+            var t = p.decorationNames.join(', ');
+            if (p.decorations !== null && p.decorations > p.decorationNames.length) t += ' (insgesamt ' + K.auszeichnungenText(p.decorations) + ')';
+            return t;
         }
-        return auszeichnungen(p);
+        return K.auszeichnungenText(p.decorations);
+    }
+
+    /** Eine nummerierte Zeile im Formular, wie im Soldbuch. */
+    function formularZeile(nr, beschriftung, wert) {
+        return el('div', { className: 'zeile' },
+            el('dt', null, el('span', { className: 'zeile-nr', 'aria-hidden': 'true', text: String(nr) }), el('span', { text: beschriftung })),
+            el('dd', null, wert));
     }
 
     function leistungsGruppe(g) {
@@ -124,40 +118,41 @@
             .concat(inhalt));
     }
 
-    function auszeichnungen(p) {
-        var t = K.auszeichnungenText(p.decorations);
-        if (!t) return null;
-        var spangen = el('span', { className: 'spangen', 'aria-hidden': 'true' });
-        for (var i = 0; i < Math.min(p.decorations, 6); i++) spangen.appendChild(el('i'));
-        return el('p', { className: 'karte-auszeichnung' }, spangen, el('span', { text: t }));
-    }
-
-    function zustand(p) {
-        var liste = el('ul', { className: 'zustand' });
+    /** Aufenthalt und Verwundung als Stempel. */
+    function stempel(p) {
+        var reihe = el('ul', { className: 'stempel-reihe' });
         if (p.statusLabel) {
             var art = p.statusLabel === 'an Bord' ? 'bord' : (p.statusLabel === 'in Reserve' ? 'reserve' : 'sonst');
-            liste.appendChild(el('li', { className: 'plakette plakette-' + art, text: p.statusLabel }));
+            reihe.appendChild(el('li', { className: 'stempel stempel-' + art, text: p.statusLabel }));
         }
         if (p.woundLabel) {
-            liste.appendChild(el('li', { className: 'plakette plakette-wunde', text: p.woundLabel }));
+            reihe.appendChild(el('li', { className: 'stempel stempel-wunde', text: p.woundLabel }));
         }
-        return liste.childNodes.length ? liste : null;
+        return reihe.childNodes.length ? reihe : null;
     }
 
+    /** Personenkarte im Stil einer Soldbuchseite. */
     function karte(p) {
-        var kopf = el('div', { className: 'karte-kopf' },
-            el('h3', { className: 'karte-name', text: p.name }),
-            zustand(p));
-        var dienst = el('p', { className: 'karte-dienst' },
-            el('span', { text: dienstText(p) }),
-            jahrgang(p) ? el('span', { className: 'karte-jahrgang', title: K.formatKalenderdatum(p.born), text: jahrgang(p) }) : null);
+        var zeilen = [['Dienst', dienstText(p)]];
+        if (p.born) zeilen.push(['Jahrgang', el('span', { title: K.formatKalenderdatum(p.born), text: String(p.born.jahr) })]);
+        var stufe = stufeWert(p);
+        if (stufe) zeilen.push(['Stufe', stufe]);
+        var orden = ordenWert(p);
+        if (orden) zeilen.push(['Orden', orden]);
+        if (p.traits.length) zeilen.push(['Charakter', p.traits.join(', ')]);
+        if (p.skills.length) zeilen.push(['Fähigkeiten', p.skills.join(', ')]);
+        var formular = el('dl', { className: 'formular' });
+        zeilen.forEach(function (z, i) { formular.appendChild(formularZeile(i + 1, z[0], z[1])); });
+
         var klasse = 'karte';
         if (p.woundLabel) klasse += ' karte-verwundet';
         if (p.statusLabel === 'in Reserve') klasse += ' karte-reserve';
         return el('article', { className: klasse },
-            kopf, dienst, stufeZeile(p), orden(p),
-            marken('Charakter', p.traits, 'charakter'),
-            marken('Fähigkeiten', p.skills, 'faehigkeit'),
+            el('div', { className: 'karte-kopf' },
+                el('p', { className: 'karte-formular', 'aria-hidden': 'true', text: 'Soldbuch' }),
+                stempel(p)),
+            el('h3', { className: 'karte-name', text: p.name }),
+            formular,
             akte(p));
     }
 
@@ -305,7 +300,7 @@
         liste.forEach(function (s, i) {
             var schiff = el('span', { className: s.name ? 'schiff-name' : 'schiff-name schiff-unbekannt', text: K.schiffsname(s) });
             var schiffZelle = el('span', null, schiff,
-                s.damagedOnly ? el('span', { className: 'plakette plakette-beschaedigt', text: 'beschädigt' }) : null);
+                s.damagedOnly ? el('span', { className: 'stempel stempel-beschaedigt', text: 'beschädigt' }) : null);
             var zeile = el('tr', { className: s.damagedOnly ? 'nur-beschaedigt' : null },
                 zelle('Nr.', String(i + 1), 'zahl spalte-nr'),
                 zelle('Datum', s.date ? K.formatKalenderdatum(s.date) : null, 'spalte-datum'),

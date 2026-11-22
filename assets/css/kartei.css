@@ -1,145 +1,187 @@
 /*
  * Stream-Kartei – Gestaltung
- * Nüchtern, Marine der 1940er: Papier, Tinte, Marineblau, Messing.
- * Nur Systemschriften (keine Schriften von fremden Servern).
+ *
+ * Marine der 1940er als Schreibtisch: dunkles Holz, darauf Akten und
+ * Formulare aus vergilbtem Papier, Schreibmaschinenschrift, Stempel,
+ * Seekarten-Raster und Messing. Alles mit CSS, ohne Bilder.
+ *
+ * Bewusst ohne Hoheitszeichen, Adler, Hakenkreuze, Ordensbilder oder
+ * Farben historischer Orden. Nur Systemschriften (keine Schriften von
+ * fremden Servern).
  */
 
 :root {
-    --papier: #efeadf;
-    --flaeche: #fbf8f1;
-    --flaeche-2: #f4efe3;
-    --tinte: #1d252c;
-    --tinte-2: #4c5862;
-    --linie: #cfc6b3;
-    --marine: #1f3247;
-    --marine-2: #2c4661;
-    --auf-marine: #ece6d8;
-    --auf-marine-2: #b9c3cd;
-    --messing: #8f6f33;
-    --messing-hell: #c7a462;
-    --bord: #2f5d45;
-    --bord-grund: #dfeadf;
-    --reserve: #5a5f66;
-    --reserve-grund: #e4e2dc;
-    --wunde: #8a2b22;
-    --wunde-grund: #f4dfd9;
-    --hinweis-grund: #e6edf3;
-    --hinweis-rand: #6b8aa6;
-    --warn-grund: #f6ead0;
-    --warn-rand: #b08a3a;
-    --fehler-grund: #f5e0dc;
-    --fehler-rand: #a8483b;
-    --beispiel-grund: #fff2bf;
-    --beispiel-rand: #b58b00;
-    --tafel-grund: #1b232b;
-    --tafel-flaeche: #222c36;
+    /* Schreibtisch */
+    --tisch: #3a3128;
+    --tisch-2: #2e2720;
+    --auf-tisch: #ece1c6;
+    --auf-tisch-2: #bcae8f;
+
+    /* Papier */
+    --papier: #efe6cf;
+    --papier-2: #e5d8b7;
+    --papier-rand: #c9b68c;
+    --papier-schatten: 0 1px 1px rgba(0, 0, 0, .25), 0 8px 18px rgba(0, 0, 0, .35);
+    --papier-alter: inset 0 0 45px rgba(140, 105, 45, .18);
+
+    /* Tinte und Druck */
+    --tinte: #2b261d;
+    --tinte-2: #5f5544;
+    --form: #7b4a2b;          /* Vordruck braun, wie im Soldbuch */
+    --form-linie: rgba(123, 74, 43, .45);
+    --blau: #1f3a6b;          /* Füllertinte */
+    --stempel-rot: #a3322b;
+    --stempel-blau: #2f4f86;
+    --stempel-grau: #5f5b52;
+    --seekarte: rgba(64, 104, 138, .22);
+    --seekarte-stark: rgba(64, 104, 138, .55);
+
+    /* Akzente */
+    --marine: #1c2836;
+    --marine-2: #283a4f;
+    --messing: #9a7637;
+    --messing-hell: #d2b26b;
+    --gruen-bord: #2f5d45;
+
+    /* Ehrentafel */
+    --tafel-grund: #151a1f;
+    --tafel-flaeche: #1d242b;
     --tafel-schrift: #e9e3d4;
     --tafel-schrift-2: #a9b2ba;
-    --schatten: 0 1px 2px rgba(29, 37, 44, .08), 0 2px 8px rgba(29, 37, 44, .06);
 
-    --schrift: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
-    --schrift-titel: Bahnschrift, "DIN Alternate", "DIN 1451", "Arial Narrow", "Roboto Condensed", system-ui, sans-serif;
-    --schrift-tafel: Georgia, "Times New Roman", "Noto Serif", serif;
-    --schrift-akte: ui-monospace, "Cascadia Mono", Consolas, "Courier New", monospace;
+    --schrift: Georgia, "Times New Roman", "Noto Serif", serif;
+    --schrift-maschine: "Courier New", Courier, "Nimbus Mono PS", "Liberation Mono", ui-monospace, monospace;
+    --schrift-schablone: Bahnschrift, "DIN Alternate", "DIN 1451", "Arial Narrow", "Roboto Condensed", system-ui, sans-serif;
+    --schrift-ui: system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
 
-    color-scheme: light dark;
+    color-scheme: light;
 }
 
 @media (prefers-color-scheme: dark) {
     :root {
-        --papier: #0f151b;
-        --flaeche: #172029;
-        --flaeche-2: #1c2731;
-        --tinte: #e6e1d6;
-        --tinte-2: #a4adb5;
-        --linie: #2d3a46;
-        --marine: #14212e;
-        --marine-2: #1d3043;
-        --auf-marine: #ece6d8;
-        --auf-marine-2: #a9b5c1;
-        --messing: #cfae6c;
-        --messing-hell: #cfae6c;
-        --bord: #8fc4a3;
-        --bord-grund: #1d3428;
-        --reserve: #b3b8be;
-        --reserve-grund: #2a3038;
-        --wunde: #f0a497;
-        --wunde-grund: #45211c;
-        --hinweis-grund: #182a3a;
-        --hinweis-rand: #5f86a8;
-        --warn-grund: #352b17;
-        --warn-rand: #b8954a;
-        --fehler-grund: #3a1f1b;
-        --fehler-rand: #c46a5c;
-        --beispiel-grund: #3a3110;
-        --beispiel-rand: #d0a82a;
-        --tafel-grund: #0a0e12;
-        --tafel-flaeche: #121920;
-        --schatten: 0 1px 2px rgba(0, 0, 0, .4);
+        --tisch: #221d18;
+        --tisch-2: #1a1612;
+        --papier: #d9ceb2;
+        --papier-2: #cdbf9d;
+        --papier-rand: #a9976f;
+        --papier-alter: inset 0 0 45px rgba(90, 65, 25, .22);
+        --papier-schatten: 0 1px 1px rgba(0, 0, 0, .5), 0 8px 18px rgba(0, 0, 0, .55);
+        --tafel-grund: #0c0f12;
+        --tafel-flaeche: #141a20;
     }
 }
 
 *, *::before, *::after { box-sizing: border-box; }
 [hidden] { display: none !important; }
-
 html { -webkit-text-size-adjust: 100%; }
 
 body {
     margin: 0;
-    background: var(--papier);
-    color: var(--tinte);
+    color: var(--auf-tisch);
     font-family: var(--schrift);
     font-size: 1rem;
     line-height: 1.5;
+    background-color: var(--tisch);
+    /* Holzmaserung */
+    background-image:
+        repeating-linear-gradient(92deg, rgba(255, 255, 255, .018) 0 2px, transparent 2px 9px, rgba(0, 0, 0, .05) 9px 11px, transparent 11px 23px),
+        linear-gradient(180deg, var(--tisch) 0%, var(--tisch-2) 100%);
+    background-attachment: fixed;
 }
 
-a { color: var(--marine-2); }
-@media (prefers-color-scheme: dark) { a { color: #9cc0e0; } }
-a:focus-visible, button:focus-visible, input:focus-visible + span, input[type="search"]:focus-visible {
+a { color: var(--blau); }
+a:focus-visible, button:focus-visible, summary:focus-visible, input:focus-visible {
     outline: 3px solid var(--messing-hell);
     outline-offset: 2px;
 }
 
-/* ------------------------------------------------------------ Kopf */
+/* Papierblatt als Grundbaustein */
+.blatt, .karte, .kachel, .hinweis, .filter, .boot-karte, .karriere, .tabelle-rahmen {
+    color: var(--tinte);
+    background-color: var(--papier);
+    background-image: linear-gradient(160deg, rgba(255, 255, 255, .25), rgba(255, 255, 255, 0) 40%, rgba(120, 90, 40, .07));
+    box-shadow: var(--papier-alter), var(--papier-schatten);
+    border-radius: 1px;
+}
+.blatt a, .karte a, .hinweis a { color: var(--blau); }
+
+/* ------------------------------------------------------------ Kopf: Aktendeckel */
 
 .kopf {
-    background: var(--marine);
-    color: var(--auf-marine);
-    border-bottom: 4px solid var(--messing);
+    position: relative;
+    color: var(--auf-tisch);
+    background-color: var(--marine);
+    background-image:
+        repeating-linear-gradient(45deg, rgba(255, 255, 255, .025) 0 1px, transparent 1px 4px),
+        repeating-linear-gradient(-45deg, rgba(0, 0, 0, .08) 0 1px, transparent 1px 4px);
+    border-bottom: 3px solid var(--messing);
+    box-shadow: 0 6px 16px rgba(0, 0, 0, .45);
+    overflow: hidden;
 }
 .kopf-innen {
+    position: relative;
     max-width: 72rem;
     margin: 0 auto;
-    padding: 1.5rem 1rem 1.25rem;
+    padding: 1.4rem 1rem 1.2rem;
 }
 .kopf-marke {
-    margin: 0 0 .25rem;
-    font-family: var(--schrift-titel);
+    margin: 0 0 .6rem;
+    font-family: var(--schrift-schablone);
     font-size: .8rem;
-    letter-spacing: .18em;
+    letter-spacing: .22em;
     text-transform: uppercase;
     color: var(--messing-hell);
 }
 .kopf-marke a { color: inherit; text-decoration: none; }
 .kopf-marke a:hover { text-decoration: underline; }
+
+/* Aktenschild */
 .kopf h1 {
+    display: inline-block;
     margin: 0;
-    font-family: var(--schrift-titel);
-    font-weight: 600;
-    font-size: clamp(1.7rem, 5vw, 2.6rem);
+    padding: .45rem 1.1rem .55rem;
+    color: var(--tinte);
+    background: var(--papier);
+    box-shadow: var(--papier-alter), 0 2px 6px rgba(0, 0, 0, .4);
+    border: 1px solid var(--papier-rand);
+    outline: 1px solid var(--form-linie);
+    outline-offset: -5px;
+    font-family: var(--schrift-schablone);
+    font-weight: 700;
+    font-size: clamp(1.6rem, 5vw, 2.4rem);
     line-height: 1.1;
-    letter-spacing: .02em;
+    letter-spacing: .08em;
+    text-transform: uppercase;
 }
 .kopf-unter {
     display: block;
+    margin-top: .15rem;
+    font-family: var(--schrift-maschine);
     font-weight: 400;
-    font-size: .55em;
-    letter-spacing: .12em;
-    text-transform: uppercase;
-    color: var(--auf-marine-2);
-    margin-top: .2rem;
+    font-size: .42em;
+    letter-spacing: .14em;
+    color: var(--form);
 }
-.kopf-satz { margin: .6rem 0 0; max-width: 42rem; color: var(--auf-marine-2); }
+.kopf-satz { margin: .8rem 0 0; max-width: 42rem; color: var(--auf-tisch-2); }
+
+/* Stempel auf dem Aktendeckel */
+.kopf-innen::after {
+    content: "Stream-Kartei";
+    position: absolute;
+    top: 1.2rem;
+    right: 1rem;
+    padding: .2rem .7rem;
+    border: 3px double rgba(214, 90, 80, .75);
+    border-radius: 3px;
+    color: rgba(214, 90, 80, .8);
+    font-family: var(--schrift-schablone);
+    font-weight: 700;
+    font-size: .95rem;
+    letter-spacing: .2em;
+    text-transform: uppercase;
+    transform: rotate(-7deg);
+    pointer-events: none;
+}
 
 .kopf-stand {
     display: flex;
@@ -150,124 +192,169 @@ a:focus-visible, button:focus-visible, input:focus-visible + span, input[type="s
 }
 .kopf-stand div { display: flex; flex-direction: column; }
 .kopf-stand dt {
-    font-family: var(--schrift-titel);
+    font-family: var(--schrift-schablone);
     font-size: .72rem;
-    letter-spacing: .14em;
+    letter-spacing: .16em;
     text-transform: uppercase;
-    color: var(--auf-marine-2);
+    color: var(--auf-tisch-2);
 }
-.kopf-stand dd { margin: 0; font-variant-numeric: tabular-nums; }
-.kopf-stand .alter { color: var(--auf-marine-2); }
+.kopf-stand dd { margin: 0; font-family: var(--schrift-maschine); font-weight: 700; }
+.kopf-stand .alter { font-weight: 400; color: var(--auf-tisch-2); }
 
 /* ------------------------------------------------------------ Inhalt */
 
 .inhalt {
     max-width: 72rem;
     margin: 0 auto;
-    padding: 1.25rem 1rem 2rem;
+    padding: 1.5rem 1rem 2rem;
 }
 
+/* Abschnittstitel als Registerreiter */
 .abschnitt-titel {
-    font-family: var(--schrift-titel);
-    font-weight: 600;
-    font-size: 1.35rem;
-    letter-spacing: .04em;
+    display: inline-block;
+    margin: 1.75rem 0 .9rem;
+    padding: .35rem 1rem .3rem;
+    color: var(--tinte);
+    background: var(--papier-2);
+    box-shadow: var(--papier-alter), 0 3px 8px rgba(0, 0, 0, .35);
+    border-radius: 4px 4px 0 0;
+    border-bottom: 3px solid var(--form);
+    font-family: var(--schrift-schablone);
+    font-weight: 700;
+    font-size: 1.15rem;
+    letter-spacing: .14em;
     text-transform: uppercase;
-    margin: 1.25rem 0 .75rem;
-    padding-bottom: .35rem;
-    border-bottom: 2px solid var(--tinte);
 }
 .anzahl {
-    font-family: var(--schrift);
+    font-family: var(--schrift-maschine);
     font-weight: 400;
-    font-size: .8em;
+    font-size: .85em;
     letter-spacing: 0;
     text-transform: none;
     color: var(--tinte-2);
 }
 
-.laedt { color: var(--tinte-2); font-style: italic; }
-.leer { color: var(--tinte-2); font-style: italic; margin: 1rem 0; }
+.laedt { color: var(--auf-tisch-2); font-style: italic; }
+.leer { color: var(--auf-tisch-2); font-style: italic; margin: 1rem 0; }
 
-.sprung { display: flex; gap: 1.25rem; flex-wrap: wrap; font-size: .95rem; margin: .25rem 0 0; }
-
-/* ------------------------------------------------------------ Hinweise */
-
-.hinweis {
-    margin: 0 0 .75rem;
-    padding: .75rem 1rem;
-    border-left: 5px solid var(--hinweis-rand);
-    background: var(--hinweis-grund);
+.sprung { display: flex; gap: .5rem; flex-wrap: wrap; margin: .25rem 0 0; }
+.sprung a {
+    padding: .2rem .7rem;
+    color: var(--auf-tisch);
+    font-family: var(--schrift-schablone);
+    font-size: .8rem;
+    letter-spacing: .14em;
+    text-transform: uppercase;
+    text-decoration: none;
+    border: 1px solid rgba(236, 225, 198, .35);
     border-radius: 2px;
 }
-.hinweis strong { font-weight: 700; }
-.hinweis-warnung { border-color: var(--warn-rand); background: var(--warn-grund); }
-.hinweis-fehler { border-color: var(--fehler-rand); background: var(--fehler-grund); }
-.hinweis-beispiel {
-    border-color: var(--beispiel-rand);
-    background: var(--beispiel-grund);
-    background-image: repeating-linear-gradient(-45deg, transparent 0 12px, rgba(181, 139, 0, .08) 12px 24px);
+.sprung a:hover { border-color: var(--messing-hell); color: var(--messing-hell); }
+
+/* ------------------------------------------------------------ Hinweise: Notizzettel */
+
+.hinweis {
+    margin: 0 0 .85rem;
+    padding: .7rem 1rem;
+    font-family: var(--schrift-maschine);
+    font-size: .95rem;
+    border-left: 6px solid var(--stempel-blau);
 }
-.hinweis-beispiel strong {
-    font-family: var(--schrift-titel);
+.hinweis strong {
+    font-family: var(--schrift-schablone);
+    letter-spacing: .08em;
     text-transform: uppercase;
-    letter-spacing: .12em;
+}
+.hinweis-warnung { border-left-color: var(--messing); }
+.hinweis-fehler { border-left-color: var(--stempel-rot); }
+.hinweis-fehler strong { color: var(--stempel-rot); }
+.hinweis-beispiel {
+    background-color: #f3e7b0;
+    border-left-color: #b58b00;
+    transform: rotate(-.4deg);
+}
+@media (prefers-color-scheme: dark) { .hinweis-beispiel { background-color: #d8c98f; } }
+.hinweis-beispiel strong {
+    display: inline-block;
+    margin-right: .4rem;
+    padding: 0 .4rem;
+    color: var(--stempel-rot);
+    border: 2px solid var(--stempel-rot);
+    border-radius: 2px;
+    transform: rotate(-3deg);
 }
 .hinweis-aktionen { margin: .6rem 0 0; display: flex; flex-wrap: wrap; gap: .5rem 1rem; align-items: center; }
 
 .knopf {
     font: inherit;
+    font-family: var(--schrift-schablone);
+    letter-spacing: .08em;
     padding: .4rem .9rem;
     border: 1px solid var(--marine-2);
     background: var(--marine-2);
-    color: #fff;
-    border-radius: 3px;
+    color: var(--auf-tisch);
+    border-radius: 2px;
     cursor: pointer;
 }
 .knopf:hover { background: var(--marine); }
 
-/* ------------------------------------------------------------ Startseite */
+/* ------------------------------------------------------------ Startseite: Akten auf dem Tisch */
 
 .kacheln {
     display: grid;
-    gap: 1rem;
+    gap: 1.5rem;
     grid-template-columns: repeat(auto-fill, minmax(16rem, 1fr));
+    padding-top: .8rem;
 }
 .kachel {
     position: relative;
     display: flex;
     flex-direction: column;
-    min-height: 9rem;
-    padding: 1.1rem 1.2rem 1rem;
-    background: var(--flaeche);
-    border: 1px solid var(--linie);
-    border-top: 6px solid var(--marine-2);
-    border-radius: 3px;
-    box-shadow: var(--schatten);
-    color: inherit;
+    min-height: 10rem;
+    padding: 1.2rem 1.2rem 1rem;
+    color: var(--tinte);
+    background-color: #c9b27e; /* Aktendeckel */
     text-decoration: none;
+    transform: rotate(-.6deg);
+    transition: transform .15s;
 }
-a.kachel:hover { border-color: var(--messing); border-top-color: var(--messing); }
+.kachel:nth-child(even) { transform: rotate(.5deg); }
+/* Reiter der Akte */
+.kachel::before {
+    content: "";
+    position: absolute;
+    top: -.8rem;
+    left: 1rem;
+    width: 7rem;
+    height: .9rem;
+    background: inherit;
+    border-radius: 4px 4px 0 0;
+}
+a.kachel:hover { transform: rotate(0) translateY(-2px); }
 a.kachel:hover .kachel-pfeil { text-decoration: underline; }
 .kachel-titel {
-    margin: 0 0 .4rem;
-    font-family: var(--schrift-titel);
-    font-size: 1.6rem;
-    font-weight: 600;
-    letter-spacing: .06em;
+    align-self: flex-start;
+    margin: 0 0 .6rem;
+    padding: .2rem .7rem;
+    background: var(--papier);
+    border: 1px solid var(--papier-rand);
+    font-family: var(--schrift-schablone);
+    font-size: 1.5rem;
+    font-weight: 700;
+    letter-spacing: .1em;
 }
-.kachel-stand, .kachel-alter { margin: 0; }
+.kachel-stand, .kachel-alter { margin: 0; font-family: var(--schrift-maschine); }
 .kachel-alter { color: var(--tinte-2); font-size: .9rem; }
 .kachel-pfeil {
     margin-top: auto;
     padding-top: .75rem;
-    font-family: var(--schrift-titel);
-    letter-spacing: .08em;
+    font-family: var(--schrift-schablone);
+    letter-spacing: .12em;
     text-transform: uppercase;
     font-size: .85rem;
-    color: var(--messing);
+    color: var(--form);
 }
-.kachel-ohne-seite { border-top-color: var(--linie); }
+.kachel-ohne-seite { background-color: #b9ad94; }
 .kachel-ohne-seite .kachel-pfeil { color: var(--tinte-2); }
 
 /* ------------------------------------------------------------ Filter */
@@ -278,188 +365,184 @@ a.kachel:hover .kachel-pfeil { text-decoration: underline; }
     gap: .75rem 1.5rem;
     align-items: flex-end;
     margin: 0 0 .5rem;
-    padding: .75rem 1rem;
-    background: var(--flaeche-2);
-    border: 1px solid var(--linie);
-    border-radius: 3px;
+    padding: .8rem 1rem;
 }
 .filter-label {
     display: block;
-    font-family: var(--schrift-titel);
+    font-family: var(--schrift-schablone);
     font-size: .72rem;
-    letter-spacing: .14em;
+    letter-spacing: .16em;
     text-transform: uppercase;
-    color: var(--tinte-2);
+    color: var(--form);
     margin-bottom: .2rem;
     padding: 0;
 }
 .filter-suche { flex: 1 1 14rem; }
 .filter-suche input {
     width: 100%;
-    font: inherit;
+    font-family: var(--schrift-maschine);
     font-size: 1rem; /* verhindert Zoom auf iOS */
-    padding: .5rem .7rem;
-    border: 1px solid var(--linie);
-    border-radius: 3px;
-    background: var(--flaeche);
-    color: var(--tinte);
+    font-weight: 700;
+    padding: .45rem .2rem;
+    border: 0;
+    border-bottom: 2px solid var(--form-linie);
+    background: transparent;
+    color: var(--blau);
 }
+.filter-suche input::placeholder { color: var(--tinte-2); font-weight: 400; opacity: .7; }
 .filter-ort { border: 0; margin: 0; padding: 0; min-width: 0; }
 .filter-ort label { display: inline-block; margin: 0 .15rem .15rem 0; }
 .filter-ort input { position: absolute; opacity: 0; width: 1px; height: 1px; }
 .filter-ort span {
     display: inline-block;
-    padding: .45rem .8rem;
-    border: 1px solid var(--linie);
-    border-radius: 3px;
-    background: var(--flaeche);
+    padding: .35rem .8rem;
+    border: 1px solid var(--form-linie);
+    border-radius: 2px;
+    font-family: var(--schrift-schablone);
+    letter-spacing: .06em;
     cursor: pointer;
     user-select: none;
 }
 .filter-ort input:checked + span {
     background: var(--marine-2);
     border-color: var(--marine-2);
-    color: #fff;
+    color: var(--auf-tisch);
 }
-@media (prefers-color-scheme: dark) {
-    .filter-ort input:checked + span { background: var(--messing); border-color: var(--messing); color: #12181e; }
-}
-.filter-ergebnis { min-height: 1.5em; margin: 0 0 .5rem; color: var(--tinte-2); font-size: .95rem; }
+.filter-ort input:focus-visible + span { outline: 3px solid var(--messing-hell); outline-offset: 2px; }
+.filter-ergebnis { min-height: 1.5em; margin: 0 0 .5rem; color: var(--auf-tisch-2); font-family: var(--schrift-maschine); font-size: .95rem; }
 
-/* ------------------------------------------------------------ Gruppen und Karten */
+/* ------------------------------------------------------------ Gruppen */
 
-.gruppe { margin: 0 0 1.75rem; }
+.gruppe { margin: 0 0 2rem; }
 .gruppe-titel {
     display: flex;
     align-items: baseline;
     gap: .5rem;
-    margin: 1rem 0 .6rem;
-    font-family: var(--schrift-titel);
-    font-weight: 600;
-    font-size: 1.05rem;
-    letter-spacing: .12em;
+    margin: 1.25rem 0 .8rem;
+    font-family: var(--schrift-schablone);
+    font-weight: 700;
+    font-size: 1rem;
+    letter-spacing: .2em;
     text-transform: uppercase;
-    color: var(--marine-2);
+    color: var(--messing-hell);
 }
-@media (prefers-color-scheme: dark) { .gruppe-titel { color: var(--messing); } }
+.gruppe-titel .anzahl { color: var(--auf-tisch-2); }
 .gruppe-titel::after {
     content: "";
     flex: 1;
-    border-bottom: 1px solid var(--linie);
+    border-bottom: 1px solid rgba(210, 178, 107, .35);
     transform: translateY(-.3em);
 }
 
 .karten {
     display: grid;
-    gap: .9rem;
-    grid-template-columns: repeat(auto-fill, minmax(17.5rem, 1fr));
+    gap: 1.1rem;
+    grid-template-columns: repeat(auto-fill, minmax(19rem, 1fr));
+    align-items: start;
 }
-.gruppe-kommandant .karten { grid-template-columns: minmax(0, 32rem); }
+.gruppe-kommandant .karten { grid-template-columns: minmax(0, 34rem); }
+
+/* ------------------------------------------------------------ Personenkarte: Soldbuchseite */
 
 .karte {
-    display: flex;
-    flex-direction: column;
-    gap: .45rem;
+    position: relative;
     padding: .9rem 1rem 1rem;
-    background: var(--flaeche);
-    border: 1px solid var(--linie);
-    border-left: 5px solid var(--bord);
-    border-radius: 3px;
-    box-shadow: var(--schatten);
+    border: 1px solid var(--papier-rand);
+    outline: 1px solid var(--form-linie);
+    outline-offset: -6px;
 }
-.karte-reserve { border-left-color: var(--reserve); }
-.karte-verwundet { border-left-color: var(--wunde); }
-.gruppe-kommandant .karte { border-left-color: var(--messing); }
-
 .karte-kopf {
     display: flex;
-    flex-wrap: wrap;
-    align-items: baseline;
+    align-items: flex-start;
     justify-content: space-between;
-    gap: .25rem .75rem;
+    gap: .5rem;
+    min-height: 1.6rem;
+}
+.karte-formular {
+    margin: .1rem 0 0 .2rem;
+    font-family: var(--schrift-schablone);
+    font-size: .7rem;
+    letter-spacing: .3em;
+    text-transform: uppercase;
+    color: var(--form);
 }
 .karte-name {
-    margin: 0;
-    font-family: var(--schrift-titel);
-    font-size: 1.25rem;
-    font-weight: 600;
-    letter-spacing: .02em;
+    margin: .2rem .2rem .55rem;
+    padding-bottom: .15rem;
+    border-bottom: 1px solid var(--form-linie);
+    font-family: var(--schrift-maschine);
+    font-size: 1.35rem;
+    font-weight: 700;
+    color: var(--blau);
     overflow-wrap: anywhere;
 }
-.karte-dienst {
-    margin: 0;
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: space-between;
-    gap: 0 .75rem;
-    color: var(--tinte-2);
-}
-.karte-jahrgang { font-variant-numeric: tabular-nums; }
-.karte-stufe {
-    margin: 0;
-    display: flex;
-    flex-wrap: wrap;
-    gap: .2rem .9rem;
-    font-family: var(--schrift-akte);
-    font-size: .9rem;
-}
-.karte-stufe b { font-weight: 700; }
-.wert-plus { color: var(--bord); }
-.karte-auszeichnung { margin: 0; display: flex; align-items: center; gap: .5rem; font-size: .92rem; }
 
-.spangen { display: inline-flex; gap: 2px; }
-.spangen i {
-    display: inline-block;
-    width: 1.1rem;
-    height: .55rem;
-    border: 1px solid rgba(0, 0, 0, .35);
-    /* neutrale Spange: Marineblau und Messing, bewusst ohne historische Ordensfarben */
-    background: linear-gradient(90deg, #2c4661 0 35%, #c7a462 35% 65%, #2c4661 65%);
+/* Formular mit nummerierten Zeilen */
+.formular {
+    margin: 0 .2rem;
+    border: 1px solid var(--form-linie);
 }
-
-.zustand { list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; gap: .3rem; }
-.plakette {
+.zeile {
+    display: grid;
+    grid-template-columns: 6.6rem minmax(0, 1fr);
+    border-top: 1px solid var(--form-linie);
+}
+.zeile:first-child { border-top: 0; }
+.zeile dt {
+    display: flex;
+    gap: .35rem;
+    padding: .3rem .4rem;
+    border-right: 1px solid var(--form-linie);
+    font-family: var(--schrift);
     font-size: .78rem;
-    font-weight: 600;
-    letter-spacing: .04em;
-    padding: .1rem .5rem;
-    border-radius: 2px;
-    border: 1px solid currentColor;
-    white-space: nowrap;
+    line-height: 1.25;
+    color: var(--form);
+    hyphens: auto;
+    overflow-wrap: anywhere;
 }
-.plakette-bord { color: var(--bord); background: var(--bord-grund); }
-.plakette-reserve, .plakette-sonst { color: var(--reserve); background: var(--reserve-grund); }
-.plakette-wunde { color: var(--wunde); background: var(--wunde-grund); }
+.zeile dt > span:last-child { min-width: 0; }
+.zeile-nr { min-width: .9rem; color: var(--form); opacity: .75; font-variant-numeric: tabular-nums; }
+.zeile dd {
+    margin: 0;
+    padding: .28rem .45rem;
+    font-family: var(--schrift-maschine);
+    font-size: .84rem;
+    font-weight: 700;
+    letter-spacing: -.02em;
+    line-height: 1.35;
+    color: var(--blau);
+    overflow-wrap: anywhere;
+}
+.wert-plus { font-weight: 400; color: var(--gruen-bord); }
 
-.merkmale { margin: 0; }
-.merkmale-titel {
-    margin: .15rem 0 .25rem;
-    font-family: var(--schrift-titel);
-    font-weight: 400;
-    font-size: .7rem;
-    letter-spacing: .14em;
+/* Stempel */
+.stempel-reihe { list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; justify-content: flex-end; gap: .3rem .4rem; }
+.stempel {
+    display: inline-block;
+    padding: .05rem .45rem;
+    border: 2px solid currentColor;
+    border-radius: 3px;
+    font-family: var(--schrift-schablone);
+    font-weight: 700;
+    font-size: .72rem;
+    letter-spacing: .12em;
     text-transform: uppercase;
-    color: var(--tinte-2);
+    white-space: nowrap;
+    opacity: .85;
+    transform: rotate(-4deg);
+    mix-blend-mode: multiply;
 }
-.marken { list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; gap: .3rem; }
-.marken li {
-    font-size: .85rem;
-    padding: .1rem .5rem;
-    border-radius: 2px;
-    border: 1px solid var(--linie);
-    background: var(--flaeche-2);
-}
-.marken-charakter li { border-style: dashed; }
+.stempel-bord { color: var(--stempel-blau); }
+.stempel-reserve, .stempel-sonst { color: var(--stempel-grau); transform: rotate(3deg); }
+.stempel-wunde { color: var(--stempel-rot); transform: rotate(-8deg); }
+.stempel-beschaedigt { margin-left: .4rem; color: var(--stempel-rot); font-size: .65rem; }
 
-.merkmale-zusatz { margin: .2rem 0 0; font-size: .8rem; color: var(--tinte-2); }
-.marken-orden li { border-color: var(--messing); }
+.karte-reserve { background-color: var(--papier-2); }
 
 /* ------------------------------------------------------------ Akte (aufklappbar) */
 
 .akte {
-    margin-top: .25rem;
-    border-top: 1px dashed var(--linie);
-    padding-top: .45rem;
+    margin: .7rem .2rem 0;
 }
 .akte summary {
     cursor: pointer;
@@ -467,10 +550,9 @@ a.kachel:hover .kachel-pfeil { text-decoration: underline; }
     display: flex;
     align-items: baseline;
     gap: .5rem;
-    color: var(--marine-2);
-    font-size: .9rem;
+    color: var(--form);
+    font-size: .88rem;
 }
-@media (prefers-color-scheme: dark) { .akte summary { color: var(--messing); } }
 .akte summary::-webkit-details-marker { display: none; }
 .akte summary::before {
     content: "▸";
@@ -480,77 +562,110 @@ a.kachel:hover .kachel-pfeil { text-decoration: underline; }
 }
 .akte[open] summary::before { transform: rotate(90deg); }
 .akte summary:hover .akte-wort { text-decoration: underline; }
-.akte summary:focus-visible { outline: 3px solid var(--messing-hell); outline-offset: 2px; }
 .akte-wort {
-    font-family: var(--schrift-titel);
-    font-weight: 600;
-    letter-spacing: .12em;
+    font-family: var(--schrift-schablone);
+    font-weight: 700;
+    letter-spacing: .16em;
     text-transform: uppercase;
-    font-size: .78rem;
+    font-size: .76rem;
 }
-.akte-inhalt { color: var(--tinte-2); }
-.akte[open] > :not(summary) { margin-top: .6rem; }
-
+.akte-inhalt { color: var(--tinte-2); font-family: var(--schrift-maschine); }
+.akte[open] > :not(summary) {
+    margin-top: .6rem;
+    padding: .6rem .7rem;
+    background-color: rgba(255, 255, 255, .28);
+    /* liniertes Papier */
+    background-image: repeating-linear-gradient(180deg, transparent 0 1.42rem, rgba(64, 104, 138, .16) 1.42rem calc(1.42rem + 1px));
+    border-left: 2px solid rgba(163, 50, 43, .35);
+}
+.merkmale-titel {
+    margin: 0 0 .3rem;
+    font-family: var(--schrift-schablone);
+    font-weight: 700;
+    font-size: .7rem;
+    letter-spacing: .18em;
+    text-transform: uppercase;
+    color: var(--form);
+}
 .lebenslauf p {
     margin: 0 0 .5rem;
-    font-family: var(--schrift-tafel);
-    font-size: .95rem;
-    line-height: 1.55;
+    font-family: var(--schrift-maschine);
+    font-size: .88rem;
+    line-height: 1.6;
     hyphens: auto;
 }
 .leistungen { margin: 0 0 .6rem; }
 .leistungen-titel {
-    margin: .3rem 0 .2rem;
+    margin: .3rem 0 .15rem;
+    font-family: var(--schrift);
     font-size: .85rem;
-    font-weight: 600;
+    font-weight: 700;
+    color: var(--tinte);
 }
 .leistungen-titel .anzahl { font-size: .9em; }
 .leistungen-liste {
     margin: 0;
     padding-left: 1.1rem;
-    font-size: .88rem;
+    font-family: var(--schrift-maschine);
+    font-size: .84rem;
+    list-style: "– ";
 }
 .leistungen-liste li { margin: .1rem 0; }
-.leistung-mal { font-variant-numeric: tabular-nums; font-weight: 600; }
+.leistung-mal { font-weight: 700; color: var(--blau); }
 
-/* ------------------------------------------------------------ Boot und Karriere */
+/* ------------------------------------------------------------ Boot: Seekarte */
 
 .unter-titel {
-    margin: 0 0 .6rem;
-    font-family: var(--schrift-titel);
-    font-weight: 600;
-    font-size: 1.05rem;
-    letter-spacing: .12em;
+    margin: 0 0 .7rem;
+    font-family: var(--schrift-schablone);
+    font-weight: 700;
+    font-size: 1rem;
+    letter-spacing: .18em;
     text-transform: uppercase;
-    color: var(--marine-2);
+    color: var(--form);
 }
-@media (prefers-color-scheme: dark) { .unter-titel { color: var(--messing); } }
 
 .boot-raster {
     display: grid;
-    gap: 1rem;
+    gap: 1.25rem;
     grid-template-columns: minmax(0, 1fr) minmax(0, 1.6fr);
     align-items: start;
 }
-.boot-karte, .karriere, .gedenktafeln {
-    padding: 1rem 1.1rem;
-    background: var(--flaeche);
-    border: 1px solid var(--linie);
-    border-radius: 3px;
-    box-shadow: var(--schatten);
-}
+.boot-karte, .karriere { padding: 1.1rem 1.2rem; }
+
+/* Seekarte mit Gradnetz */
 .boot-karte {
-    border-top: 6px solid var(--marine-2);
+    position: relative;
+    background-color: #e9e6d6;
+    background-image:
+        linear-gradient(var(--seekarte-stark) 1px, transparent 1px),
+        linear-gradient(90deg, var(--seekarte-stark) 1px, transparent 1px),
+        linear-gradient(var(--seekarte) 1px, transparent 1px),
+        linear-gradient(90deg, var(--seekarte) 1px, transparent 1px);
+    background-size: 6rem 6rem, 6rem 6rem, 1.5rem 1.5rem, 1.5rem 1.5rem;
+    background-position: -1px -1px;
+    border: 6px double rgba(64, 104, 138, .7);
 }
+@media (prefers-color-scheme: dark) { .boot-karte { background-color: #cfcbb6; } }
+.boot-karte > * { position: relative; }
 .boot-name {
+    display: inline-block;
     margin: 0;
-    font-family: var(--schrift-titel);
-    font-size: clamp(1.8rem, 5vw, 2.4rem);
-    font-weight: 600;
-    letter-spacing: .06em;
+    padding: .1rem .6rem;
+    background: rgba(239, 230, 207, .9);
+    border: 2px solid var(--tinte);
+    font-family: var(--schrift-schablone);
+    font-size: clamp(1.8rem, 5vw, 2.5rem);
+    font-weight: 700;
+    letter-spacing: .1em;
     line-height: 1.1;
 }
-.boot-zeile { margin: .25rem 0 .75rem; color: var(--tinte-2); }
+.boot-zeile {
+    margin: .5rem 0 .8rem;
+    font-family: var(--schrift-maschine);
+    font-weight: 700;
+}
+.boot-karte .kennzahl { background: rgba(239, 230, 207, .85); padding: .3rem .45rem; border-top: 0; border-left: 3px solid var(--seekarte-stark); }
 
 .kennzahlen {
     margin: 0;
@@ -558,106 +673,107 @@ a.kachel:hover .kachel-pfeil { text-decoration: underline; }
     gap: .6rem 1rem;
     grid-template-columns: repeat(auto-fill, minmax(8.5rem, 1fr));
 }
-.kennzahl { padding-top: .35rem; border-top: 1px solid var(--linie); display: flex; flex-direction: column; }
-.kennzahl dd { margin-top: auto !important; }
+.kennzahl { padding-top: .35rem; border-top: 1px dashed var(--form-linie); display: flex; flex-direction: column; }
 .kennzahl dt {
-    font-family: var(--schrift-titel);
-    font-size: .7rem;
-    letter-spacing: .12em;
-    text-transform: uppercase;
-    color: var(--tinte-2);
+    font-family: var(--schrift);
+    font-size: .76rem;
+    color: var(--form);
 }
-.kennzahl dd { margin: 0; font-variant-numeric: tabular-nums; }
-.kennzahl-wert { font-size: 1.25rem; font-weight: 600; }
-.kennzahlen-klein .kennzahl-wert { font-size: 1.05rem; }
-.kennzahl-zusatz { color: var(--tinte-2); font-size: .9rem; }
-.fussnote { margin: .75rem 0 0; font-size: .8rem; color: var(--tinte-2); }
+.kennzahl dd { margin: auto 0 0; font-family: var(--schrift-maschine); font-variant-numeric: tabular-nums; }
+.kennzahl-wert { font-size: 1.15rem; font-weight: 700; color: var(--blau); }
+.kennzahlen-klein .kennzahl-wert { font-size: 1rem; }
+.kennzahl-zusatz { color: var(--tinte-2); font-size: .85rem; }
+.fussnote { margin: .8rem 0 0; font-size: .78rem; font-style: italic; color: var(--tinte-2); }
 
-.gedenktafeln { margin-top: 1rem; }
-.gedenktafeln-liste { list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; gap: .5rem; }
+/* Gedenktafeln aus Messing */
+.gedenktafeln { margin-top: 1.25rem; }
+.gedenktafeln .unter-titel { color: var(--messing-hell); }
+.gedenktafeln-liste { list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; gap: .75rem; }
 .gedenktafeln-liste li {
     display: flex;
     flex-direction: column;
-    padding: .4rem .8rem;
-    border: 1px solid var(--messing);
-    border-radius: 2px;
-    background: var(--flaeche-2);
+    align-items: center;
+    min-width: 11rem;
+    padding: .55rem 1.1rem;
+    color: #2d2412;
+    background: linear-gradient(135deg, #e3c77f 0%, #b48d3e 45%, #d9bb6d 60%, #9c7631 100%);
+    border: 1px solid #6e5320;
+    border-radius: 3px;
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, .5), inset 0 -1px 0 rgba(0, 0, 0, .3), 0 3px 8px rgba(0, 0, 0, .45);
+    text-shadow: 0 1px 0 rgba(255, 240, 200, .5);
 }
-.gedenktafel-boot { font-family: var(--schrift-titel); font-weight: 600; letter-spacing: .06em; }
-.gedenktafel-ort { font-size: .85rem; color: var(--tinte-2); }
+.gedenktafel-boot { font-family: var(--schrift-schablone); font-weight: 700; font-size: 1.1rem; letter-spacing: .14em; }
+.gedenktafel-ort { font-family: var(--schrift); font-size: .85rem; font-style: italic; }
 
-/* ------------------------------------------------------------ Versenkungen */
+/* ------------------------------------------------------------ Versenkungen: Kladde */
 
 .versenkungen { margin: 1rem 0 0; }
-.versenkungen-satz { margin: 0 0 .75rem; color: var(--tinte-2); }
+.versenkungen-satz { margin: 0 0 .8rem; color: var(--auf-tisch-2); font-family: var(--schrift-maschine); }
 .tabelle-rahmen {
-    background: var(--flaeche);
-    border: 1px solid var(--linie);
-    border-radius: 3px;
-    box-shadow: var(--schatten);
+    padding: .5rem;
     overflow-x: auto;
 }
 .tabelle-versenkungen {
     width: 100%;
     border-collapse: collapse;
-    font-size: .9rem;
+    font-size: .88rem;
+    border: 1px solid var(--form-linie);
 }
 .tabelle-versenkungen th, .tabelle-versenkungen td {
-    padding: .45rem .6rem;
+    padding: .35rem .55rem;
     text-align: left;
     vertical-align: top;
-    border-bottom: 1px solid var(--linie);
+    border: 1px solid var(--form-linie);
 }
 .tabelle-versenkungen th {
-    font-family: var(--schrift-titel);
-    font-weight: 600;
-    font-size: .72rem;
-    letter-spacing: .12em;
-    text-transform: uppercase;
-    color: var(--tinte-2);
-    background: var(--flaeche-2);
+    font-family: var(--schrift);
+    font-weight: 400;
+    font-size: .76rem;
+    color: var(--form);
     white-space: nowrap;
+    border-bottom: 2px solid var(--form);
 }
-.tabelle-versenkungen tbody tr:last-child td { border-bottom: 0; }
-.tabelle-versenkungen tbody tr:nth-child(even) { background: var(--flaeche-2); }
+.tabelle-versenkungen td {
+    font-family: var(--schrift-maschine);
+    font-weight: 700;
+    color: var(--blau);
+}
 .tabelle-versenkungen .zahl { text-align: right; font-variant-numeric: tabular-nums; }
 .spalte-datum { white-space: nowrap; }
-.schiff-name { font-weight: 600; }
+.spalte-nr { color: var(--form) !important; font-weight: 400 !important; }
 .schiff-unbekannt { font-weight: 400; font-style: italic; color: var(--tinte-2); }
-.leer-wert { color: var(--tinte-2); }
-.plakette-beschaedigt { margin-left: .4rem; color: var(--warn-rand); background: var(--warn-grund); font-size: .72rem; }
-.nur-beschaedigt .schiff-name { font-weight: 400; }
+.leer-wert { color: var(--tinte-2); font-weight: 400; }
+.nur-beschaedigt td { font-weight: 400; }
 
 @media (max-width: 48rem) {
     .boot-raster { grid-template-columns: 1fr; }
 }
 
-/* Versenkungen am Handy: jede Zeile als kleine Karte */
+/* Versenkungen am Handy: jede Zeile als kleiner Karteizettel */
 @media (max-width: 40rem) {
-    .tabelle-rahmen { background: none; border: 0; box-shadow: none; overflow: visible; }
+    .tabelle-rahmen { padding: 0; background: none; box-shadow: none; overflow: visible; }
+    .tabelle-versenkungen { border: 0; }
     .tabelle-versenkungen thead { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); }
     .tabelle-versenkungen, .tabelle-versenkungen tbody, .tabelle-versenkungen tr, .tabelle-versenkungen td { display: block; width: 100%; }
     .tabelle-versenkungen tr {
         display: grid;
         grid-template-columns: 1fr 1fr;
-        gap: .15rem .75rem;
-        margin: 0 0 .6rem;
+        gap: .2rem .75rem;
+        margin: 0 0 .7rem;
         padding: .6rem .8rem;
-        background: var(--flaeche) !important;
-        border: 1px solid var(--linie);
-        border-left: 4px solid var(--marine-2);
-        border-radius: 3px;
+        background-color: var(--papier);
+        box-shadow: var(--papier-alter), var(--papier-schatten);
+        border-top: 4px solid var(--form);
     }
-    .tabelle-versenkungen tr.nur-beschaedigt { border-left-color: var(--warn-rand); }
+    .tabelle-versenkungen tr.nur-beschaedigt { border-top-color: var(--stempel-rot); }
     .tabelle-versenkungen td { padding: 0; border: 0; text-align: left !important; }
     .tabelle-versenkungen td::before {
         content: attr(data-label);
         display: block;
-        font-family: var(--schrift-titel);
-        font-size: .65rem;
-        letter-spacing: .12em;
-        text-transform: uppercase;
-        color: var(--tinte-2);
+        font-family: var(--schrift);
+        font-weight: 400;
+        font-size: .7rem;
+        color: var(--form);
     }
     .tabelle-versenkungen .spalte-schiff { grid-column: 1 / -1; order: -2; font-size: 1.05rem; }
     .tabelle-versenkungen .spalte-schiff::before { display: none; }
@@ -674,11 +790,12 @@ a.kachel:hover .kachel-pfeil { text-decoration: underline; }
     color: var(--tafel-schrift);
     border-top: 3px solid var(--messing-hell);
     border-bottom: 3px solid var(--messing-hell);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, .5);
     text-align: center;
 }
 .ehrentafel h2 {
     margin: 0;
-    font-family: var(--schrift-tafel);
+    font-family: var(--schrift);
     font-weight: 400;
     font-size: clamp(1.6rem, 4vw, 2.2rem);
     letter-spacing: .3em;
@@ -693,7 +810,7 @@ a.kachel:hover .kachel-pfeil { text-decoration: underline; }
     border-top: 1px solid var(--messing-hell);
     opacity: .6;
 }
-.ehrentafel-satz { margin: .25rem 0 1.5rem; font-family: var(--schrift-tafel); font-style: italic; color: var(--tafel-schrift-2); }
+.ehrentafel-satz { margin: .25rem 0 1.5rem; font-style: italic; color: var(--tafel-schrift-2); }
 .ehrentafel-liste {
     list-style: none;
     margin: 0 auto;
@@ -707,30 +824,28 @@ a.kachel:hover .kachel-pfeil { text-decoration: underline; }
 .tafel {
     padding: 1rem .75rem 1.1rem;
     background: var(--tafel-flaeche);
-    border: 1px solid rgba(199, 164, 98, .35);
+    border: 1px solid rgba(210, 178, 107, .35);
 }
 .tafel p { margin: 0; }
 .tafel-name {
-    font-family: var(--schrift-tafel);
     font-size: 1.3rem;
     font-variant: small-caps;
     letter-spacing: .06em;
     overflow-wrap: anywhere;
 }
 .tafel-dienst { margin-top: .2rem !important; color: var(--tafel-schrift-2); font-size: .9rem; }
-.tafel-tod {
-    margin-top: .5rem !important;
-    font-family: var(--schrift-tafel);
-    font-style: italic;
-}
+.tafel-tod { margin-top: .5rem !important; font-style: italic; }
 .tafel-tod time { font-style: normal; color: var(--messing-hell); }
-.tafel-merkmale { margin-top: .5rem !important; color: var(--tafel-schrift-2); font-size: .8rem; }
 .tafel-orden { margin-top: .4rem !important; color: var(--messing-hell); font-size: .85rem; }
-.akte-tafel { text-align: left; margin-top: .6rem; border-top-color: rgba(199, 164, 98, .35); }
+.tafel-merkmale { margin-top: .5rem !important; color: var(--tafel-schrift-2); font-size: .8rem; }
+.tafel-ohne { font-style: italic; color: var(--tafel-schrift-2); margin: 0; }
+
+.akte-tafel { text-align: left; margin-top: .7rem; }
 .akte-tafel summary { color: var(--messing-hell); justify-content: center; }
 .akte-tafel .akte-inhalt, .akte-tafel .merkmale-titel, .akte-tafel .anzahl { color: var(--tafel-schrift-2); }
-.akte-tafel .lebenslauf p, .akte-tafel .leistungen-liste { color: var(--tafel-schrift); }
-.tafel-ohne { font-family: var(--schrift-tafel); font-style: italic; color: var(--tafel-schrift-2); margin: 0; }
+.akte-tafel[open] > :not(summary) { background: rgba(255, 255, 255, .04); border-left-color: rgba(210, 178, 107, .4); }
+.akte-tafel .lebenslauf p, .akte-tafel .leistungen-liste, .akte-tafel .leistungen-titel { color: var(--tafel-schrift); }
+.akte-tafel .leistung-mal { color: var(--messing-hell); }
 
 /* ------------------------------------------------------------ Fuß */
 
@@ -738,25 +853,32 @@ a.kachel:hover .kachel-pfeil { text-decoration: underline; }
     max-width: 72rem;
     margin: 0 auto;
     padding: 1rem 1rem 2.5rem;
-    border-top: 1px solid var(--linie);
-    color: var(--tinte-2);
+    border-top: 1px solid rgba(236, 225, 198, .2);
+    color: var(--auf-tisch-2);
     font-size: .88rem;
 }
+.fuss a { color: var(--messing-hell); }
 .fuss p { margin: .3rem 0; }
 
 /* ------------------------------------------------------------ Handy */
 
 @media (max-width: 30rem) {
     .kopf-innen { padding: 1.1rem 1rem 1rem; }
+    .kopf-innen::after { top: .7rem; font-size: .7rem; }
     .kopf-stand { gap: .4rem 1.25rem; }
     .filter { padding: .6rem .75rem; }
     .filter-ort { width: 100%; }
-    .filter-ort label { margin-right: 0; }
     .karten { grid-template-columns: 1fr; }
+    .zeile { grid-template-columns: 6.2rem minmax(0, 1fr); }
     .ehrentafel { margin-left: -1rem; margin-right: -1rem; }
 }
 
+@media (prefers-reduced-motion: reduce) {
+    * { transition: none !important; }
+}
+
 @media print {
-    .filter, .filter-ergebnis, .sprung, .hinweis-aktionen { display: none !important; }
+    body { background: #fff; color: #000; }
+    .filter, .filter-ergebnis, .sprung, .hinweis-aktionen, .kopf-innen::after { display: none !important; }
     .karte, .tafel { break-inside: avoid; box-shadow: none; }
 }

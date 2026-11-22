@@ -19,7 +19,7 @@
 - Unbekannte Felder ignorieren. `schemaVersion` größer als unterstützt: Hinweis zeigen, nicht abbrechen.
 - Ohne Daten oder bei Ladefehler: freundlicher Hinweis, nie eine leere Seite.
 - Beispieldaten in `beispiel/` sind erfunden (ausgedachte Namen), im Format des Vertrags, und werden mit „Beispieldaten“ gekennzeichnet.
-- Handy und PC, hell und dunkel. Gestaltung nüchtern (Marine, 1940er), ohne Markenlogos oder Spielgrafiken und ohne Hoheitszeichen, Ordensbilder oder Farben historischer Orden.
+- Handy und PC, hell und dunkel. Gestaltung im Stil der Marine der 1940er als Schreibtisch mit Akten, Formularen (Soldbuch), Seekarte, Stempeln und Schreibmaschinenschrift, nur mit CSS. Ohne Markenlogos oder Spielgrafiken und **ohne Hoheitszeichen, Adler, Hakenkreuze, Ordensbilder oder Farben historischer Orden**; Ordensnamen aus den Daten nur als Text.
 
 ## Arbeitsweise
 - Eigener Branch vom aktuellen `main` (`git checkout --no-track -b <name> origin/main`), kleine Commits.
