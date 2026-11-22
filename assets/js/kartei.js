@@ -162,8 +162,36 @@
         };
     }
 
+    /**
+     * Lebenslauf → Absätze. Entfernt `_x000D_` (so kodiert das Spiel teils
+     * Wagenrückläufe) und teilt an Leerzeilen bzw. Zeilenumbrüchen.
+     */
+    function absaetze(wert) {
+        var t = text(wert);
+        if (t === null) return [];
+        return t.replace(/_x000D_/gi, '\n').replace(/\r\n?/g, '\n')
+            .split(/\n+/)
+            .map(function (s) { return s.replace(/[ \t]+/g, ' ').trim(); })
+            .filter(function (s) { return s !== ''; });
+    }
+
+    function leistungen(liste) {
+        if (!Array.isArray(liste)) return [];
+        var ergebnis = [];
+        liste.forEach(function (a) {
+            if (!a || typeof a !== 'object') return;
+            var t = text(a.text);
+            if (t === null) return;
+            ergebnis.push({ kind: text(a.kind), text: t });
+        });
+        return ergebnis;
+    }
+
     function normalisierePerson(p) {
         return {
+            lebenslauf: absaetze(p.background),
+            decorationNames: textListe(p.decorationNames),
+            accomplishments: leistungen(p.accomplishments),
             name: text(p.name) || 'Unbekannt',
             typeLabel: text(p.typeLabel),
             classLabel: text(p.classLabel),
@@ -197,8 +225,127 @@
             publishedAt: zeitpunkt(json.publishedAt),
             gameVersion: text(json.gameVersion),
             crew: personen(json.crew),
-            fallen: personen(json.fallen)
+            fallen: personen(json.fallen),
+            boat: boot(json.boat),
+            career: karriere(json.career),
+            plaques: gedenktafeln(json.plaques),
+            sinkings: versenkungen(json.sinkings)
         };
+    }
+
+    function istObjekt(wert) {
+        return !!wert && typeof wert === 'object' && !Array.isArray(wert);
+    }
+
+    /** `boat` → aufbereitet oder null. */
+    function boot(b) {
+        if (!istObjekt(b)) return null;
+        return {
+            name: text(b.name),
+            typeLabel: text(b.typeLabel),
+            commissioned: kalenderdatum(b.commissioned),
+            tonnageSunk: zahl(b.tonnageSunk),
+            merchantShipsSunk: zahl(b.merchantShipsSunk),
+            warshipsSunk: zahl(b.warshipsSunk),
+            aircraftShotDown: zahl(b.aircraftShotDown)
+        };
+    }
+
+    var KARRIERE_ZAHLEN = ['currentPatrol', 'torpedoesFired', 'torpedoHits', 'farthestTorpedoHitM',
+        'deckGunShots', 'deckGunHits', 'flakShots', 'flakHits', 'distanceTravelled',
+        'fuelConsumedLitres', 'maximumDepthM', 'hoursUnderWater', 'hoursAtSea', 'casualties'];
+
+    /** `career` → aufbereitet oder null. */
+    function karriere(c) {
+        if (!istObjekt(c)) return null;
+        var k = { startDate: kalenderdatum(c.startDate) };
+        KARRIERE_ZAHLEN.forEach(function (f) { k[f] = zahl(c[f]); });
+        return k;
+    }
+
+    function gedenktafeln(liste) {
+        if (!Array.isArray(liste)) return [];
+        return liste.filter(istObjekt).map(function (t) {
+            return { boat: text(t.boat), port: text(t.port) };
+        }).filter(function (t) { return t.boat || t.port; });
+    }
+
+    /** `sinkings` → aufbereitet, Reihenfolge wie geliefert (Spielreihenfolge). */
+    function versenkungen(liste) {
+        if (!Array.isArray(liste)) return [];
+        return liste.filter(istObjekt).map(function (s) {
+            return {
+                name: text(s.name),
+                grt: zahl(s.grt),
+                kindLabel: text(s.kindLabel),
+                cargoLabel: text(s.cargoLabel),
+                convoy: text(s.convoy),
+                destination: text(s.destination),
+                patrol: zahl(s.patrol),
+                date: kalenderdatum(s.date),
+                damagedOnly: s.damagedOnly === true
+            };
+        });
+    }
+
+    function schiffsname(s) {
+        return s.name || 'unbekanntes Schiff';
+    }
+
+    /** Summe der BRT der versenkten (nicht nur beschädigten) Schiffe mit bekannter Größe. */
+    function summeBrt(liste) {
+        return liste.reduce(function (summe, s) {
+            return summe + (!s.damagedOnly && s.grt ? s.grt : 0);
+        }, 0);
+    }
+
+    /** Arten der Leistungen (englischer Schlüssel des Spiels) → Gruppe auf der Seite. */
+    var LEISTUNGS_GRUPPEN = [
+        { schluessel: 'versenkung', titel: 'Versenkungen', passt: function (k) { return /^Sunk Ship /.test(k) && k !== 'Sunk Ship Participation'; } },
+        { schluessel: 'beteiligung', titel: 'Beteiligung an Versenkungen', passt: function (k) { return k === 'Sunk Ship Participation'; } },
+        { schluessel: 'torpedo', titel: 'Torpedo-Ziellösungen', passt: function (k) { return k === 'Torpedo Course'; } },
+        { schluessel: 'auftrag', titel: 'Abgeschlossene Aufträge', passt: function (k) { return k === 'Assignment Completed'; } },
+        { schluessel: 'medizin', titel: 'Sanitätsdienst', passt: function (k) { return k === 'Medical'; } }
+    ];
+
+    /**
+     * Leistungen → [{schluessel, titel, anzahl, eintraege: [{text, anzahl}]}].
+     * Feste Reihenfolge, Unbekanntes unter „Weitere Leistungen“.
+     * Gleiche Texte werden zusammengefasst („12 ×“).
+     */
+    function gruppiereLeistungen(liste) {
+        var gruppen = LEISTUNGS_GRUPPEN.map(function (g) {
+            return { schluessel: g.schluessel, titel: g.titel, passt: g.passt, anzahl: 0, eintraege: [] };
+        });
+        var weitere = { schluessel: 'weitere', titel: 'Weitere Leistungen', passt: null, anzahl: 0, eintraege: [] };
+        (liste || []).forEach(function (a) {
+            var ziel = weitere;
+            for (var i = 0; i < gruppen.length; i++) {
+                if (a.kind && gruppen[i].passt(a.kind)) { ziel = gruppen[i]; break; }
+            }
+            ziel.anzahl++;
+            for (var j = 0; j < ziel.eintraege.length; j++) {
+                if (ziel.eintraege[j].text === a.text) { ziel.eintraege[j].anzahl++; return; }
+            }
+            ziel.eintraege.push({ text: a.text, anzahl: 1 });
+        });
+        gruppen.push(weitere);
+        return gruppen.filter(function (g) { return g.anzahl > 0; }).map(function (g) {
+            return { schluessel: g.schluessel, titel: g.titel, anzahl: g.anzahl, eintraege: g.eintraege };
+        });
+    }
+
+    /** Zahl deutsch, z. B. 1.057,4. */
+    function formatZahl(n, nachkomma) {
+        if (n === null || n === undefined || !isFinite(n)) return '–';
+        var stellen = nachkomma || 0;
+        return Number(n).toLocaleString('de-DE', { minimumFractionDigits: stellen, maximumFractionDigits: stellen });
+    }
+
+    /** Anteil in Prozent, gerundet, oder null. */
+    function quote(treffer, gesamt) {
+        if (treffer === null || gesamt === null || !gesamt) return null;
+        return Math.round(treffer / gesamt * 100);
     }
 
     /** Gruppen der UBOAT-Crew in fester Reihenfolge. */
@@ -399,6 +546,12 @@
         zeigtStufe: zeigtStufe,
         sortiereGefallene: sortiereGefallene,
         auszeichnungenText: auszeichnungenText,
+        absaetze: absaetze,
+        gruppiereLeistungen: gruppiereLeistungen,
+        schiffsname: schiffsname,
+        summeBrt: summeBrt,
+        formatZahl: formatZahl,
+        quote: quote,
         beispielErzwungen: beispielErzwungen,
         ladeDaten: ladeDaten,
         mitModus: mitModus,
