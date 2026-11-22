@@ -132,6 +132,11 @@
         return String(a.name || '').localeCompare(String(b.name || ''), 'de', { sensitivity: 'base' });
     }
 
+    /** 1, wenn die Person in Reserve ist, sonst 0 (zum Sortieren). */
+    function istReserve(p) {
+        return p && p.statusLabel === 'in Reserve' ? 1 : 0;
+    }
+
     // ------------------------------------------------------ Daten aufbereiten
 
     function schemaInfo(json) {
@@ -370,7 +375,10 @@
         });
         gruppen.push(weitere);
         return gruppen.filter(function (g) { return g.personen.length > 0; }).map(function (g) {
-            g.personen.sort(vergleicheNamen);
+            // Erst wer an Bord ist, die Reserve ans Ende; innerhalb nach Name.
+            g.personen.sort(function (a, b) {
+                return (istReserve(a) - istReserve(b)) || vergleicheNamen(a, b);
+            });
             if (g.personen.length > 1) g.titel = g.titelMehrzahl;
             return g;
         });
@@ -543,6 +551,7 @@
         normalisiereIndex: normalisiereIndex,
         normalisiereUboat: normalisiereUboat,
         gruppiereCrew: gruppiereCrew,
+        istReserve: istReserve,
         zeigtStufe: zeigtStufe,
         sortiereGefallene: sortiereGefallene,
         auszeichnungenText: auszeichnungenText,

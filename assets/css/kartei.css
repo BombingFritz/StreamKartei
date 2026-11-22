@@ -453,6 +453,23 @@ a.kachel:hover .kachel-pfeil { text-decoration: underline; }
 }
 .gruppe-kommandant .karten { grid-template-columns: minmax(0, 34rem); }
 
+/* Trennlinie vor der Reserve innerhalb einer Gruppe */
+.reserve-trenner {
+    grid-column: 1 / -1;
+    display: flex;
+    align-items: center;
+    gap: .75rem;
+    margin: .6rem 0 0;
+    font-family: var(--schrift-fraktur);
+    font-size: 1.2rem;
+    color: var(--auf-tisch-2);
+}
+.reserve-trenner::before, .reserve-trenner::after {
+    content: "";
+    flex: 1;
+    border-top: 1px dashed rgba(236, 225, 198, .3);
+}
+
 /* ------------------------------------------------------------ Personenkarte: Soldbuchseite */
 
 .karte {
