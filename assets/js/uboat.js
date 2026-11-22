@@ -334,12 +334,20 @@
             var abschnitt = el('section', { className: 'gruppe gruppe-' + g.schluessel, 'aria-label': g.titel },
                 el('h3', { className: 'gruppe-titel' }, el('span', { text: g.titel }), ' ', zaehler),
                 raster);
-            g.personen.forEach(function (p) {
+            // Die Reserve steht am Ende der Gruppe (Sortierung in gruppiereCrew),
+            // davor eine Trennlinie, wenn es auch Leute an Bord gibt.
+            var trenner = null;
+            g.personen.forEach(function (p, i) {
+                var reserve = K.istReserve(p) === 1;
+                if (reserve && !trenner && i > 0) {
+                    trenner = el('p', { className: 'reserve-trenner', text: 'in Reserve' });
+                    raster.appendChild(trenner);
+                }
                 var k = karte(p);
                 raster.appendChild(k);
-                karten.push({ knoten: k, suchtext: K.suchform(p.name), ort: p.statusLabel, gruppe: g.schluessel });
+                karten.push({ knoten: k, suchtext: K.suchform(p.name), ort: p.statusLabel, gruppe: g.schluessel, reserve: reserve });
             });
-            gruppenKnoten.push({ knoten: abschnitt, zaehler: zaehler, schluessel: g.schluessel, gesamt: g.personen.length });
+            gruppenKnoten.push({ knoten: abschnitt, zaehler: zaehler, schluessel: g.schluessel, gesamt: g.personen.length, trenner: trenner });
             gruppenZiel.appendChild(abschnitt);
         });
         gruppenZiel.appendChild(el('p', { className: 'leer', id: 'crew-leer', hidden: true, text: 'Niemand passt zu dieser Suche.' }));
@@ -376,14 +384,22 @@
         var ort = aktuellerOrt();
         var sichtbar = 0;
         var jeGruppe = {};
+        var reserveJeGruppe = {};
         karten.forEach(function (k) {
             var passt = (!s || k.suchtext.indexOf(s) >= 0) && (!ort || k.ort === ort);
             k.knoten.hidden = !passt;
-            if (passt) { sichtbar++; jeGruppe[k.gruppe] = (jeGruppe[k.gruppe] || 0) + 1; }
+            if (passt) {
+                sichtbar++;
+                jeGruppe[k.gruppe] = (jeGruppe[k.gruppe] || 0) + 1;
+                if (k.reserve) reserveJeGruppe[k.gruppe] = (reserveJeGruppe[k.gruppe] || 0) + 1;
+            }
         });
         gruppenKnoten.forEach(function (g) {
             var n = jeGruppe[g.schluessel] || 0;
+            var r = reserveJeGruppe[g.schluessel] || 0;
             g.knoten.hidden = n === 0;
+            // Trennlinie nur, wenn oben jemand an Bord und unten jemand in Reserve sichtbar ist.
+            if (g.trenner) g.trenner.hidden = r === 0 || r === n;
             g.zaehler.textContent = n === g.gesamt ? '(' + n + ')' : '(' + n + ' von ' + g.gesamt + ')';
         });
         var leer = document.getElementById('crew-leer');

@@ -223,6 +223,20 @@ if (extra[1]) pruefeIndexDatei(path.resolve(extra[1]));
     const voll = K.gruppiereCrew(K.normalisiereUboat(crew).crew);
     pruefe(voll.map(x => x.schluessel).join(',') === 'kommandant,offiziere,matrosen', 'Gruppen in fester Reihenfolge');
     pruefe(voll[0].titel === 'Kommandant' && voll[1].titel === 'Offiziere', 'Gruppentitel');
+    // Reserve je Gruppe am Ende, sonst nach Name (Nutzer, 22.11.2026)
+    voll.forEach(gr => {
+        const reserveAb = gr.personen.findIndex(p => K.istReserve(p) === 1);
+        pruefe(reserveAb === -1 || gr.personen.slice(reserveAb).every(p => K.istReserve(p) === 1), 'Gruppe ' + gr.schluessel + ': Reserve am Ende');
+    });
+    const gemischt = K.gruppiereCrew(K.normalisiereUboat({ crew: [
+        { name: 'Anton', typeLabel: 'Matrose', statusLabel: 'in Reserve' },
+        { name: 'Berta', typeLabel: 'Matrose', statusLabel: 'an Bord' },
+        { name: 'Cäsar', typeLabel: 'Matrose', statusLabel: 'in Reserve' },
+        { name: 'Dora', typeLabel: 'Matrose', statusLabel: 'an Bord' },
+        { name: 'Emil', typeLabel: 'Matrose', statusLabel: null }
+    ] }).crew)[0].personen.map(p => p.name).join(',');
+    pruefe(gemischt === 'Berta,Dora,Emil,Anton,Cäsar', 'Reihenfolge: an Bord und ohne Angabe nach Name, dann Reserve nach Name (' + gemischt + ')');
+    pruefe(voll[2].personen.some(p => K.istReserve(p) === 1), 'Beispiel: Matrosen mit Reserve');
 
     let warfFehler = false;
     try { K.normalisiereUboat([]); } catch (e) { warfFehler = true; }
