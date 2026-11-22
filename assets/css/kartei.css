@@ -514,6 +514,23 @@ a.kachel:hover .kachel-pfeil { text-decoration: underline; }
     overflow-wrap: anywhere;
 }
 
+/* Feindfahrten der Person, gleich unter dem Namen */
+.karte-feindfahrten {
+    display: inline-block;
+    margin: -.2rem .2rem .6rem;
+    padding: .05rem .55rem;
+    color: var(--stempel-rot);
+    border: 2px solid currentColor;
+    border-radius: 3px;
+    font-family: var(--schrift-schablone);
+    font-weight: 700;
+    font-size: 1.05rem;
+    letter-spacing: .06em;
+    transform: rotate(-1.5deg);
+}
+.karte-feindfahrten-keine { color: var(--stempel-grau); font-size: .9rem; font-weight: 400; }
+.tafel-feindfahrten { margin-top: .3rem !important; color: var(--messing-hell); font-family: var(--schrift-schablone); letter-spacing: .06em; }
+
 /* Formular mit nummerierten Zeilen */
 .formular {
     margin: 0 .2rem;

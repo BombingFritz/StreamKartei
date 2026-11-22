@@ -180,6 +180,22 @@
             .filter(function (s) { return s !== ''; });
     }
 
+    /** Nicht negative ganze Zahl oder null. */
+    function ganzzahlOderNull(wert) {
+        var n = zahl(wert);
+        return n !== null && n >= 0 && Math.floor(n) === n ? n : null;
+    }
+
+    /**
+     * Feindfahrten einer Person (Feld `patrols`, Stufe 1c): „3 Feindfahrten“,
+     * „1 Feindfahrt“, „noch keine Feindfahrt“; null ohne Verlauf → nicht anzeigen.
+     */
+    function feindfahrtenText(n) {
+        if (n === null || n === undefined) return null;
+        if (n === 0) return 'noch keine Feindfahrt';
+        return n === 1 ? '1 Feindfahrt' : n + ' Feindfahrten';
+    }
+
     function leistungen(liste) {
         if (!Array.isArray(liste)) return [];
         var ergebnis = [];
@@ -194,6 +210,7 @@
 
     function normalisierePerson(p) {
         return {
+            patrols: ganzzahlOderNull(p.patrols),
             lebenslauf: absaetze(p.background),
             decorationNames: textListe(p.decorationNames),
             accomplishments: leistungen(p.accomplishments),
@@ -556,6 +573,7 @@
         sortiereGefallene: sortiereGefallene,
         auszeichnungenText: auszeichnungenText,
         absaetze: absaetze,
+        feindfahrtenText: feindfahrtenText,
         gruppiereLeistungen: gruppiereLeistungen,
         schiffsname: schiffsname,
         summeBrt: summeBrt,

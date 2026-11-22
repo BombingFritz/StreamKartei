@@ -148,8 +148,16 @@
                 el('p', { className: 'karte-formular', 'aria-hidden': 'true', text: 'Soldbuch' }),
                 stempel(p)),
             el('h3', { className: 'karte-name', text: p.name }),
+            feindfahrten(p, 'karte-feindfahrten'),
             formular,
             akte(p));
+    }
+
+    /** Feindfahrten der Person, prominent unter dem Namen („wichtigster Datenpunkt“, Nutzer 22.11.2026). */
+    function feindfahrten(p, klasse) {
+        var t = K.feindfahrtenText(p.patrols);
+        if (!t) return null;
+        return el('p', { className: klasse + (p.patrols === 0 ? ' ' + klasse + '-keine' : '') }, t);
     }
 
     function tafelEintrag(p) {
@@ -163,6 +171,7 @@
         return el('li', { className: 'tafel' },
             el('p', { className: 'tafel-name', text: p.name }),
             el('p', { className: 'tafel-dienst', text: zeile.join(' · ') }),
+            feindfahrten(p, 'tafel-feindfahrten'),
             el('p', { className: 'tafel-tod' }, 'gefallen am ',
                 el('time', { datetime: p.died ? [p.died.jahr, ('0' + p.died.monat).slice(-2), ('0' + p.died.tag).slice(-2)].join('-') : null,
                     text: K.formatKalenderdatum(p.died) })),
