@@ -381,7 +381,7 @@ if (extra[1]) pruefeIndexDatei(path.resolve(extra[1]));
         }
     });
     // Kopf (Nutzer, 24.11.2026): kein „Stream-Kartei“ mehr als Text, Stempel „Streng geheim“,
-    // Titel der Startseite „Aktenauskunft der Kriegsmarine“
+    // Überschrift der Startseite „Aktenauskunft der Kriegsmarine“ (Tab-Titel seit 24.11.2026 „Streamkartei - BombingFritz“)
     ['index.html', 'uboat/index.html'].forEach(d => {
         const kopf = (fs.readFileSync(path.join(WURZEL, d), 'utf8').match(/<header[\s\S]*?<\/header>/) || [''])[0];
         pruefe(!/Stream-Kartei/.test(kopf), d + ': kein „Stream-Kartei“ im Kopf');

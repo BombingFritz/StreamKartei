@@ -866,6 +866,10 @@ a.kachel:hover .kachel-pfeil { text-decoration: underline; }
 .kennzahl dd { margin: auto 0 0; font-family: var(--schrift-maschine); font-variant-numeric: tabular-nums; }
 .kennzahl-wert { font-size: 1.15rem; font-weight: 700; color: var(--blau); }
 .kennzahlen-klein .kennzahl-wert { font-size: 1rem; }
+/* Werte nie umbrechen: auch „1.234 von 5.678“ bleibt eine Zeile, Prozent darunter */
+.kennzahl-wert { white-space: nowrap; }
+.kennzahlen-klein { grid-template-columns: repeat(auto-fill, minmax(10.5rem, 1fr)); }
+.kennzahl-zusatz-unten { display: block; }
 .kennzahl-zusatz { color: var(--tinte-2); font-size: .85rem; }
 .fussnote { margin: .8rem 0 0; font-size: .78rem; font-style: italic; color: var(--tinte-2); }
 
@@ -1098,6 +1102,8 @@ a.kachel:hover .kachel-pfeil { text-decoration: underline; }
     .filter { padding: .6rem .75rem; }
     .filter-ort { width: 100%; }
     .karten { grid-template-columns: 1fr; }
+    .kennzahlen-klein { grid-template-columns: repeat(auto-fill, minmax(8.9rem, 1fr)); gap: .6rem .75rem; }
+    .kennzahlen-klein .kennzahl-wert { font-size: .92rem; }
     .zeile { grid-template-columns: 6.8rem minmax(0, 1fr); }
     .ehrentafel { margin-left: -1rem; margin-right: -1rem; }
 }
