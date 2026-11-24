@@ -343,6 +343,12 @@ if (extra[1]) pruefeIndexDatei(path.resolve(extra[1]));
             pruefe(fremd.length === 0, d + ': keine fremden Skripte oder Stile');
         }
     });
+    // „Stream-Kartei“ steht im Kopf nur einmal: als Stempel aus dem CSS, nicht noch als Text (Nutzer, 24.11.2026)
+    ['index.html', 'uboat/index.html'].forEach(d => {
+        const kopf = (fs.readFileSync(path.join(WURZEL, d), 'utf8').match(/<header[\s\S]*?<\/header>/) || [''])[0];
+        pruefe(!/Stream-Kartei/.test(kopf), d + ': „Stream-Kartei“ nicht doppelt im Kopf');
+    });
+
     // Wünsche des Nutzers vom 22.11.2026 für die UBOAT-Seite
     const uboatHtml = fs.readFileSync(path.join(WURZEL, 'uboat/index.html'), 'utf8');
     const uboatJs = fs.readFileSync(path.join(WURZEL, 'assets/js/uboat.js'), 'utf8');
