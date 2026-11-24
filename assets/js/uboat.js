@@ -12,6 +12,7 @@
     var filterForm = document.getElementById('filter');
     var ergebnisZeile = document.getElementById('filter-ergebnis');
     var crewAnzahl = document.getElementById('crew-anzahl');
+    var suchFeld = document.getElementById('suche');
 
     // Links zur Startseite behalten den Beispielmodus.
     ['zur-start', 'zur-start-fuss'].forEach(function (id) {
@@ -19,7 +20,7 @@
         if (a) a.setAttribute('href', K.mitModus('../'));
     });
 
-    var karten = [];        // {knoten, ort, gruppe, reserve}
+    var karten = [];        // {knoten, ort, gruppe, reserve, name}
     var gruppenKnoten = []; // {knoten, zaehler, schluessel, gesamt, trenner}
 
     // ------------------------------------------------------------ Kopf
@@ -220,8 +221,8 @@
 
         var kopf = el('div', { className: 'boot-kopf' });
         if (b) kopf.appendChild(el('p', { className: 'boot-name', text: b.name || 'Boot ohne Namen' }));
-        var kommandant = kommandantText(daten.crew);
-        if (kommandant) kopf.appendChild(el('p', { className: 'boot-kommandant', text: kommandant }));
+        var kommandant = kommandantName(daten.crew);
+        if (kommandant) kopf.appendChild(el('p', { className: 'boot-kommandant', text: 'KptLn. ' + kommandant }));
         if (feindfahrt !== null) {
             kopf.appendChild(el('p', { className: 'boot-feindfahrt' },
                 el('span', { className: 'boot-feindfahrt-nr', text: K.formatZahl(feindfahrt) + '.' }),
@@ -251,19 +252,58 @@
     }
 
     /**
-     * Kommandant für die Bootskarte. Das Spiel kennt keine Dienstgrade; ein
-     * U-Boot-Kommandant war üblicherweise Kapitänleutnant (Nutzer, 24.11.2026).
+     * Name des Kommandanten, wer an Bord ist zuerst. Die Bootskarte setzt
+     * „KptLn.“ davor: Das Spiel kennt keine Dienstgrade, ein U-Boot-Kommandant
+     * war üblicherweise Kapitänleutnant (Nutzer, 24.11.2026).
      */
-    function kommandantText(crew) {
+    function kommandantName(crew) {
         var k = crew.filter(function (p) { return p.typeLabel === 'Kommandant' && p.name; });
         if (!k.length) return null;
         var anBord = k.filter(function (p) { return p.statusLabel === 'an Bord'; });
-        return 'KptLn. ' + (anBord.length ? anBord : k)[0].name;
+        return (anBord.length ? anBord : k)[0].name;
     }
 
-    /** Karriere als eigener Abschnitt unter der Besatzung. */
-    function zeigeKarriere(c) {
+    /**
+     * Bilanz der laufenden bzw. letzten Feindfahrt neben der Bootskarte,
+     * berechnet aus sinkings[].patrol (Nutzer, 24.11.2026). Verluste je Fahrt
+     * stehen nicht in den Daten und fehlen deshalb hier.
+     */
+    function zeigeFahrt(daten) {
+        var blatt = document.getElementById('fahrt');
+        var ziel = document.getElementById('fahrt-inhalt');
+        ziel.textContent = '';
+        var nr = daten.career ? daten.career.currentPatrol : null;
+        blatt.hidden = nr === null;
+        if (nr === null) return;
+        document.getElementById('fahrt-titel').textContent = 'Bilanz der ' + K.formatZahl(nr) + '. Feindfahrt';
+
+        var liste = daten.sinkings.filter(function (s) { return s.patrol === nr; });
+        if (!liste.length) {
+            ziel.appendChild(el('p', { className: 'fahrt-leer', text: 'Auf dieser Fahrt bisher keine Versenkungen.' }));
+            return;
+        }
+        var versenkt = liste.filter(function (s) { return !s.damagedOnly; }).length;
+        var beschaedigt = liste.length - versenkt;
+        var zahlen = el('dl', { className: 'kennzahlen kennzahlen-klein fahrt-zahlen' });
+        zahlen.appendChild(kennzahl('Schiffe versenkt', K.formatZahl(versenkt)));
+        var brt = K.summeBrt(liste);
+        if (brt) zahlen.appendChild(kennzahl('Tonnage', K.formatZahl(brt), 'BRT'));
+        if (beschaedigt) zahlen.appendChild(kennzahl('beschädigt', K.formatZahl(beschaedigt)));
+        var letzte = null;
+        liste.forEach(function (s) { if (s.date) letzte = s; });
+        if (letzte) zahlen.appendChild(kennzahl('Zuletzt', K.formatKalenderdatum(letzte.date)));
+        ziel.appendChild(zahlen);
+    }
+
+    /**
+     * Karriere als „Leistungen unter Kommandant …“ vor der Besatzung
+     * (Nutzer, 24.11.2026).
+     */
+    function zeigeKarriere(c, crew) {
         var abschnitt = document.getElementById('karriere');
+        var kommandant = kommandantName(crew);
+        document.getElementById('karriere-titel').textContent =
+            kommandant ? 'Leistungen unter Kommandant ' + kommandant : 'Leistungen';
         var ziel = document.getElementById('karriere-inhalt');
         ziel.textContent = '';
         var liste = el('dl', { className: 'kennzahlen kennzahlen-klein' });
@@ -272,7 +312,7 @@
                 if (wert === null || wert === undefined) return;
                 liste.appendChild(kennzahl(beschriftung, wert, zusatz));
             };
-            dazu('Karriere seit', c.startDate ? K.formatKalenderdatum(c.startDate) : null);
+            dazu('Übernahm das Kommando am', c.startDate ? K.formatKalenderdatum(c.startDate) : null);
             var torpedo = trefferText(c.torpedoHits, c.torpedoesFired);
             if (torpedo) dazu('Torpedotreffer', torpedo.wert, torpedo.zusatz);
             dazu('Weitester Torpedotreffer', c.farthestTorpedoHitM !== null ? K.formatZahl(c.farthestTorpedoHitM) : null, 'm');
@@ -411,7 +451,7 @@
                 }
                 var k = karte(p);
                 raster.appendChild(k);
-                karten.push({ knoten: k, ort: p.statusLabel, gruppe: g.schluessel, reserve: reserve });
+                karten.push({ knoten: k, ort: p.statusLabel, gruppe: g.schluessel, reserve: reserve, name: suchText(p.name) });
             });
             gruppenKnoten.push({ knoten: abschnitt, zaehler: zaehler, schluessel: g.schluessel, gesamt: g.personen.length, trenner: trenner });
             gruppenZiel.appendChild(abschnitt);
@@ -434,7 +474,13 @@
         });
     }
 
-    // ------------------------------------------------------- Filter (Aufenthalt)
+    // ------------------------------------------------------- Filter (Aufenthalt und Name)
+
+    /** Für die Suche: klein, ohne Akzente, damit „Muller“ auch „Müller“ findet. */
+    function suchText(t) {
+        t = String(t || '').toLowerCase();
+        return t.normalize ? t.normalize('NFD').replace(/[\u0300-\u036f]/g, '') : t;
+    }
 
     function aktuellerOrt() {
         var gewaehlt = filterForm.querySelector('input[name="ort"]:checked');
@@ -443,11 +489,12 @@
 
     function filtere() {
         var ort = aktuellerOrt();
+        var suche = suchText(suchFeld.value.trim());
         var sichtbar = 0;
         var jeGruppe = {};
         var reserveJeGruppe = {};
         karten.forEach(function (k) {
-            var passt = !ort || k.ort === ort;
+            var passt = (!ort || k.ort === ort) && (!suche || k.name.indexOf(suche) !== -1);
             k.knoten.hidden = !passt;
             if (passt) {
                 sichtbar++;
@@ -465,17 +512,19 @@
         });
         var leer = document.getElementById('crew-leer');
         if (leer) leer.hidden = sichtbar > 0 || !karten.length;
-        ergebnisZeile.textContent = ort ? sichtbar + ' von ' + karten.length + ' in der Besatzung.' : '';
-        return ort;
+        ergebnisZeile.textContent = ort || suche ? sichtbar + ' von ' + karten.length + ' in der Besatzung.' : '';
+        return ort || suche;
     }
 
     filterForm.addEventListener('submit', function (e) { e.preventDefault(); });
-    filterForm.addEventListener('change', function () {
-        // Wer gezielt filtert, will das Ergebnis sehen: passende Gruppen aufklappen.
+    function filterGeaendert() {
+        // Wer gezielt filtert oder sucht, will das Ergebnis sehen: passende Gruppen aufklappen.
         if (filtere()) {
             gruppenKnoten.forEach(function (g) { if (!g.knoten.hidden) g.knoten.open = true; });
         }
-    });
+    }
+    filterForm.addEventListener('change', filterGeaendert);
+    suchFeld.addEventListener('input', filterGeaendert);
 
     // ------------------------------------------------------- Laden
 
@@ -494,8 +543,9 @@
 
         zeigeKopf(daten);
         zeigeBoot(daten);
+        zeigeFahrt(daten);
+        zeigeKarriere(daten.career, daten.crew);
         zeigeCrew(daten.crew);
-        zeigeKarriere(daten.career);
         zeigeVersenkungen(daten.sinkings);
         zeigeGefallene(daten.fallen);
         zeigeMods(daten.mods, ergebnis.beispiel);

@@ -15,7 +15,7 @@
             <p class="kopf-marke"><a href="../" id="zur-start">← Spielauswahl</a></p>
             <h1>UBOAT <span class="kopf-unter">Besatzungsliste</span></h1>
             <dl class="kopf-stand" id="stand" aria-live="polite">
-                <div><dt>Spielstand vom</dt><dd id="stand-gespeichert">…</dd></div>
+                <div><dt>Letzte Meldung vom</dt><dd id="stand-gespeichert">…</dd></div>
                 <div><dt>veröffentlicht</dt><dd id="stand-veroeffentlicht">…</dd></div>
                 <div id="stand-version-zeile" hidden><dt>Spielversion</dt><dd id="stand-version"></dd></div>
             </dl>
@@ -28,8 +28,8 @@
         <div id="seite" hidden>
             <nav class="sprung" aria-label="Auf dieser Seite">
                 <a href="#boot" id="sprung-boot" hidden>Boot</a>
+                <a href="#karriere" id="sprung-karriere" hidden>Leistungen</a>
                 <a href="#besatzung">Besatzung</a>
-                <a href="#karriere" id="sprung-karriere" hidden>Karriere</a>
                 <a href="#versenkungen" id="sprung-versenkungen" hidden>Versenkungen</a>
                 <a href="#ehrentafel">Ehrentafel</a>
                 <a href="#mods" id="sprung-mods" hidden>Mods</a>
@@ -37,7 +37,18 @@
 
             <section id="boot" class="boot" aria-labelledby="boot-titel" hidden>
                 <h2 id="boot-titel" class="nur-vorlesen">Das Boot</h2>
-                <div class="boot-karte" id="boot-karte"></div>
+                <div class="boot-reihe">
+                    <div class="boot-karte" id="boot-karte"></div>
+                    <aside class="fahrt-blatt" id="fahrt" aria-labelledby="fahrt-titel" hidden>
+                        <h3 class="fahrt-titel" id="fahrt-titel"></h3>
+                        <div id="fahrt-inhalt"></div>
+                    </aside>
+                </div>
+            </section>
+
+            <section id="karriere" class="karriere-abschnitt" aria-labelledby="karriere-titel" hidden>
+                <h2 id="karriere-titel" class="abschnitt-titel">Leistungen</h2>
+                <div class="karriere" id="karriere-inhalt"></div>
             </section>
 
             <section id="besatzung" aria-labelledby="besatzung-titel">
@@ -49,15 +60,14 @@
                         <label><input type="radio" name="ort" value="an Bord"> <span>an Bord</span></label>
                         <label><input type="radio" name="ort" value="in Reserve"> <span>in Reserve</span></label>
                     </fieldset>
+                    <p class="filter-suche">
+                        <label class="nur-vorlesen" for="suche">Name suchen</label>
+                        <input type="search" id="suche" name="suche" placeholder="Name suchen …" autocomplete="off" spellcheck="false">
+                    </p>
                 </form>
                 <p class="filter-ergebnis" id="filter-ergebnis" aria-live="polite"></p>
 
                 <div id="gruppen"></div>
-            </section>
-
-            <section id="karriere" class="karriere-abschnitt" aria-labelledby="karriere-titel" hidden>
-                <h2 id="karriere-titel" class="abschnitt-titel">Karriere</h2>
-                <div class="karriere" id="karriere-inhalt"></div>
             </section>
 
             <section id="versenkungen" class="versenkungen" aria-labelledby="versenkungen-titel" hidden>
