@@ -193,7 +193,7 @@ a:focus-visible, button:focus-visible, summary:focus-visible, input:focus-visibl
 
 /* Stempel auf dem Aktendeckel */
 .kopf-innen::after {
-    content: "Stream-Kartei";
+    content: "Streng geheim";
     position: absolute;
     top: 1.2rem;
     right: 1rem;
@@ -967,8 +967,9 @@ a.kachel:hover .kachel-pfeil { text-decoration: underline; }
 /* ------------------------------------------------------------ Handy */
 
 @media (max-width: 30rem) {
-    .kopf-innen { padding: 1.1rem 1rem 1rem; }
-    .kopf-innen::after { top: .7rem; font-size: .7rem; }
+    /* oben Platz für den Stempel, damit er den Titel nicht überdeckt */
+    .kopf-innen { padding: 2.9rem 1rem 1rem; }
+    .kopf-innen::after { top: .8rem; font-size: .7rem; }
     .kopf-stand { gap: .4rem 1.25rem; }
     .filter { padding: .6rem .75rem; }
     .filter-ort { width: 100%; }
