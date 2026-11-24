@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
+  <!-- Karteikasten mit Karteikarten, Farben wie auf der Seite (Papier, Aktenkarton, Messing). Eigene Zeichnung. -->
+  <g stroke="#2b261d" stroke-width="2.5" stroke-linejoin="round">
+    <path d="M11 30V9h4V5h11v4h22v21z" fill="#e5d8b7"/>
+    <path d="M16 30V15h20v-4h11v4h7v15z" fill="#efe6cf"/>
+    <path d="M7 30V21h5v-3h9v3h27v9z" fill="#a3322b"/>
+    <path d="M4 27h56l-3 32a2 2 0 0 1-2 2H9a2 2 0 0 1-2-2z" fill="#7b4a2b"/>
+    <path d="M4 27h56v6H4z" fill="#5b3a22"/>
+    <rect x="21" y="38" width="22" height="13" rx="1" fill="#d2b26b"/>
+  </g>
+  <rect x="24.5" y="41.5" width="15" height="6" fill="#efe6cf"/>
+  <circle cx="32" cy="56" r="2.3" fill="#2b261d"/>
+</svg>
