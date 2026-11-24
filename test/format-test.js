@@ -343,11 +343,14 @@ if (extra[1]) pruefeIndexDatei(path.resolve(extra[1]));
             pruefe(fremd.length === 0, d + ': keine fremden Skripte oder Stile');
         }
     });
-    // „Stream-Kartei“ steht im Kopf nur einmal: als Stempel aus dem CSS, nicht noch als Text (Nutzer, 24.11.2026)
+    // Kopf (Nutzer, 24.11.2026): kein „Stream-Kartei“ mehr als Text, Stempel „Streng geheim“,
+    // Titel der Startseite „Aktenauskunft der Kriegsmarine“
     ['index.html', 'uboat/index.html'].forEach(d => {
         const kopf = (fs.readFileSync(path.join(WURZEL, d), 'utf8').match(/<header[\s\S]*?<\/header>/) || [''])[0];
-        pruefe(!/Stream-Kartei/.test(kopf), d + ': „Stream-Kartei“ nicht doppelt im Kopf');
+        pruefe(!/Stream-Kartei/.test(kopf), d + ': kein „Stream-Kartei“ im Kopf');
     });
+    pruefe(/<h1>Aktenauskunft der Kriegsmarine<\/h1>/.test(fs.readFileSync(path.join(WURZEL, 'index.html'), 'utf8')), 'Startseite: Titel „Aktenauskunft der Kriegsmarine“');
+    pruefe(/content: "Streng geheim"/.test(fs.readFileSync(path.join(WURZEL, 'assets/css/kartei.css'), 'utf8')), 'Stempel „Streng geheim“');
 
     // Wünsche des Nutzers vom 22.11.2026 für die UBOAT-Seite
     const uboatHtml = fs.readFileSync(path.join(WURZEL, 'uboat/index.html'), 'utf8');
