@@ -132,7 +132,7 @@ a:focus-visible, button:focus-visible, summary:focus-visible, input:focus-visibl
 }
 
 /* Papierblatt als Grundbaustein */
-.blatt, .karte, .kachel, .hinweis, .filter, .boot-karte, .karriere, .tabelle-rahmen, .mods-blatt {
+.blatt, .karte, .kachel, .hinweis, .filter, .boot-karte, .karriere, .tabelle-rahmen, .mods-blatt, .fahrt-blatt {
     color: var(--tinte);
     background-color: var(--papier);
     background-image: linear-gradient(160deg, rgba(255, 255, 255, .25), rgba(255, 255, 255, 0) 40%, rgba(120, 90, 40, .07));
@@ -405,10 +405,35 @@ a.kachel:hover .kachel-pfeil { text-decoration: underline; }
     margin: 1.5rem 0 .5rem;
     padding: .6rem 1rem .8rem;
 }
+.filter {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: flex-end;
+    gap: .45rem 1.5rem;
+}
 .filter-titel {
-    margin: 0 0 .45rem;
+    flex: 0 0 100%;
+    margin: 0;
     color: var(--tinte);
 }
+/* Dezentes Suchfeld rechts im Filterblatt */
+.filter-suche { margin: 0 0 0 auto; }
+.filter-suche input {
+    width: 14rem;
+    max-width: 100%;
+    padding: .3rem .6rem;
+    font: inherit;
+    font-family: var(--schrift-maschine);
+    font-size: .92rem;
+    color: var(--tinte);
+    background: transparent;
+    border: 0;
+    border-bottom: 1px solid var(--form-linie);
+    border-radius: 0;
+}
+.filter-suche input::placeholder { color: var(--tinte-2); opacity: .8; }
+.filter-suche input:hover { border-bottom-color: var(--form); }
+.filter-suche input:focus { outline: none; border-bottom: 2px solid var(--fokus); background: rgba(255, 252, 240, .5); }
 .filter-label {
     display: block;
     font-family: var(--schrift-schablone);
@@ -729,6 +754,23 @@ a.kachel:hover .kachel-pfeil { text-decoration: underline; }
 .boot-karte, .karriere { padding: 1.1rem 1.2rem; }
 .boot-karte { max-width: 44rem; }
 .boot { margin-top: 1.1rem; }
+/* Bootskarte und daneben die Bilanz der Feindfahrt */
+.boot-reihe {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: flex-start;
+    gap: 1.25rem 1.5rem;
+}
+.boot-reihe .boot-karte { flex: 1 1 30rem; }
+.fahrt-blatt {
+    flex: 0 1 17rem;
+    padding: .8rem 1rem 1rem;
+    border-top: 4px solid var(--stempel-rot);
+    transform: rotate(.6deg);
+}
+.fahrt-titel { margin: 0 0 .6rem; color: var(--stempel-rot); }
+.fahrt-zahlen { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+.fahrt-leer { margin: 0; font-family: var(--schrift-maschine); color: var(--tinte-2); }
 
 /* Erste Zeile: Bootsnummer, Kommandant, Feindfahrt */
 .boot-kopf {
@@ -1000,6 +1042,7 @@ a.kachel:hover .kachel-pfeil { text-decoration: underline; }
 .abschnitt-titel,
 .gruppe-name,
 .filter-titel,
+.fahrt-titel,
 .unter-titel,
 .karte-formular,
 .zeile dt,
@@ -1020,6 +1063,7 @@ a.kachel:hover .kachel-pfeil { text-decoration: underline; }
 .abschnitt-titel .anzahl { font-size: .6em; }
 .gruppe-name { font-size: 1.35rem; }
 .filter-titel { font-size: 1.35rem; }
+.fahrt-titel { font-size: 1.3rem; }
 .filter-titel .anzahl { font-size: .6em; }
 .unter-titel { font-size: 1.4rem; }
 .karte-formular { font-size: 1.15rem; margin-top: 0; }

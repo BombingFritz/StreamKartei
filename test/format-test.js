@@ -392,10 +392,10 @@ if (extra[1]) pruefeIndexDatei(path.resolve(extra[1]));
     // Wünsche des Nutzers vom 22.11.2026 für die UBOAT-Seite
     const uboatHtml = fs.readFileSync(path.join(WURZEL, 'uboat/index.html'), 'utf8');
     const uboatJs = fs.readFileSync(path.join(WURZEL, 'assets/js/uboat.js'), 'utf8');
-    pruefe(!/id="suche"/.test(uboatHtml), 'UBOAT: keine Namenssuche');
+    pruefe(/id="suche"/.test(uboatHtml), 'UBOAT: dezente Namenssuche im Filterblatt (Nutzer, 24.11.2026; ersetzt „keine Namenssuche“ vom 22.11.)');
     pruefe(!/gedenktafel/i.test(uboatHtml) && !/\.plaques\b/.test(uboatJs), 'UBOAT: keine Gedenktafeln');
     pruefe(uboatHtml.includes('Gefallene Besatzungsmitglieder'), 'UBOAT: Text der Ehrentafel');
-    pruefe(uboatHtml.indexOf('id="besatzung"') < uboatHtml.indexOf('id="karriere"'), 'UBOAT: Karriere unter der Besatzung');
+    pruefe(uboatHtml.indexOf('id="karriere"') < uboatHtml.indexOf('id="besatzung"'), 'UBOAT: Leistungen (Karriere) vor der Besatzung (Nutzer, 24.11.2026)');
     pruefe(!/stempel-(bord|reserve)/.test(uboatJs), 'UBOAT: keine Stempel für an Bord und in Reserve');
     pruefe(/el\('details', \{ className: 'gruppe /.test(uboatJs) && !/'gruppe[^']*', open/.test(uboatJs), 'UBOAT: Gruppen aufklappbar und beim Laden zu');
     pruefe(/currentPatrol/.test(uboatJs) && /Feindfahrt/.test(uboatJs), 'UBOAT: Feindfahrt beim Boot');
