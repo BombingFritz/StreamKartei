@@ -123,7 +123,7 @@ a:focus-visible, button:focus-visible, summary:focus-visible, input:focus-visibl
 }
 
 /* Papierblatt als Grundbaustein */
-.blatt, .karte, .kachel, .hinweis, .filter, .boot-karte, .karriere, .tabelle-rahmen {
+.blatt, .karte, .kachel, .hinweis, .filter, .boot-karte, .karriere, .tabelle-rahmen, .mods-blatt {
     color: var(--tinte);
     background-color: var(--papier);
     background-image: linear-gradient(160deg, rgba(255, 255, 255, .25), rgba(255, 255, 255, 0) 40%, rgba(120, 90, 40, .07));
@@ -847,6 +847,28 @@ a.kachel:hover .kachel-pfeil { text-decoration: underline; }
     .tabelle-versenkungen .spalte-nr { display: none; }
     .tabelle-versenkungen .zelle-leer { display: none; }
 }
+
+/* ------------------------------------------------------------ Aktive Mods: Beiblatt */
+
+.mods { margin: 2rem 0 0; }
+.mods-blatt { padding: 1rem 1.2rem 1.1rem; }
+.mods-satz { margin: 0 0 .8rem; font-size: .85rem; font-style: italic; color: var(--tinte-2); }
+.mods-gruppe { margin: 0 0 .9rem; }
+.mods-gruppe:last-child { margin-bottom: 0; }
+.mods-liste {
+    margin: 0;
+    padding-left: 1.6rem;
+    columns: 18rem auto;
+    column-gap: 2rem;
+    font-family: var(--schrift-maschine);
+    font-size: .88rem;
+    font-weight: 700;
+    color: var(--blau);
+}
+.mods-liste li { break-inside: avoid; margin: .1rem 0; padding-left: .2rem; overflow-wrap: anywhere; }
+.mods-liste li::marker { color: var(--form); font-weight: 400; }
+.mods-liste a { color: var(--blau); text-decoration-color: var(--form-linie); }
+.mods-liste a:hover { text-decoration-color: currentColor; }
 
 /* ------------------------------------------------------------ Ehrentafel */
 

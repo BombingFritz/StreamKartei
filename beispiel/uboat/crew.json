@@ -50,5 +50,16 @@
     {"name":"Empire Teacup","grt":7340,"kindLabel":"Frachter","cargoLabel":"Tee","convoy":"Geleitzug 61","destination":"Liverpool","patrol":2,"date":"1941-07-10","damagedOnly":false},
     {"name":"Blue Heron","grt":2240,"kindLabel":null,"cargoLabel":"Holz","convoy":null,"destination":"Belfast","patrol":3,"date":null,"damagedOnly":false},
     {"name":"Gannet Rock","grt":9880,"kindLabel":"Tanker","cargoLabel":"Öl","convoy":"Geleitzug 88","destination":"Liverpool","patrol":3,"date":"1941-10-02","damagedOnly":false}
+  ],
+  "mods": [
+    {"id":"uboat","name":"uboat","kind":"game","workshopId":null},
+    {"id":"uboat.dlc.type-ix","name":"uboat.dlc.type-ix","kind":"dlc","workshopId":null},
+    {"id":"custom-music","name":"custom-music","kind":"other","workshopId":null},
+    {"id":"steam:1000000001","name":"[2026.1] Bessere Seekarten","kind":"workshop","workshopId":"1000000001"},
+    {"id":"steam:1000000002","name":"Mehr Funksprüche","kind":"workshop","workshopId":"1000000002"},
+    {"id":"steam:1000000003","name":"Realistische Wellen","kind":"workshop","workshopId":"1000000003"},
+    {"id":"steam:1000000004","name":"Ruhigere Kombüse","kind":"workshop","workshopId":"1000000004"},
+    {"id":"steam:1000000005","name":"[2026.1] Deutsche Schiffsnamen","kind":"workshop","workshopId":"1000000005"},
+    {"id":"Beispiel-Lokalmod","name":"Beispiel-Lokalmod","kind":"other","workshopId":null}
   ]
 }

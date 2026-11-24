@@ -318,6 +318,35 @@
         });
     }
 
+    // ------------------------------------------------------ Aktive Mods
+
+    /**
+     * Mods des Spielstands unten auf der Seite. Workshop-Mods verlinken auf
+     * Steam; im Beispielmodus nicht, weil die Nummern dort erfunden sind.
+     */
+    function zeigeMods(mods, beispiel) {
+        var abschnitt = document.getElementById('mods');
+        var ziel = document.getElementById('mods-inhalt');
+        ziel.textContent = '';
+        var gruppen = K.gruppiereMods(mods);
+        var anzahl = gruppen.reduce(function (n, g) { return n + g.mods.length; }, 0);
+        abschnitt.hidden = anzahl === 0;
+        document.getElementById('sprung-mods').hidden = anzahl === 0;
+        if (!anzahl) return;
+        document.getElementById('mods-anzahl').textContent = '(' + anzahl + ')';
+        ziel.appendChild(el('p', { className: 'mods-satz', text: 'Beim Speichern im Spielstand aktiv, Reihenfolge wie im Spielstand.' }));
+        gruppen.forEach(function (g) {
+            ziel.appendChild(el('div', { className: 'mods-gruppe mods-' + g.schluessel },
+                el('h3', { className: 'merkmale-titel' }, g.titel, ' ', el('span', { className: 'anzahl', text: '(' + g.mods.length + ')' })),
+                el.apply(null, ['ol', { className: 'mods-liste' }].concat(g.mods.map(function (m) {
+                    var inhalt = m.link && !beispiel
+                        ? el('a', { href: m.link, target: '_blank', rel: 'noopener noreferrer', title: 'Im Steam Workshop ansehen', text: m.name })
+                        : el('span', { text: m.name });
+                    return el('li', null, inhalt);
+                })))));
+        });
+    }
+
     // ------------------------------------------------------- Aufbau
 
     /**
@@ -440,6 +469,7 @@
         zeigeKarriere(daten.career);
         zeigeVersenkungen(daten.sinkings);
         zeigeGefallene(daten.fallen);
+        zeigeMods(daten.mods, ergebnis.beispiel);
         seite.hidden = false;
         filtere();
     }

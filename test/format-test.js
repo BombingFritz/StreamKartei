@@ -106,6 +106,22 @@ function pruefeBootUndKarriere(j, name) {
         pruefe(s.date === null || istTag(s.date), wo + ': date JJJJ-MM-TT oder null');
         pruefe(typeof s.damagedOnly === 'boolean', wo + ': damagedOnly Wahrheitswert');
     });
+
+    // Aktive Mods (Spec „Aktive Mods“): Liste oder null; Feld darf in alten Veröffentlichungen fehlen
+    if (j.mods !== undefined && j.mods !== null) {
+        pruefe(Array.isArray(j.mods), name + ': mods Liste oder null');
+        (Array.isArray(j.mods) ? j.mods : []).forEach((m, i) => {
+            const wo = name + ' mods[' + i + '] ' + (m && m.id);
+            pruefe(m && typeof m.id === 'string' && m.id !== '' && typeof m.name === 'string' && m.name !== '', wo + ': id und name');
+            pruefe(['game', 'dlc', 'workshop', 'other'].includes(m.kind), wo + ': kind bekannt');
+            pruefe(m.workshopId === null || /^\d+$/.test(m.workshopId), wo + ': workshopId Ziffern oder null');
+            pruefe((m.kind === 'workshop') === /^steam:\d+$/.test(m.id), wo + ': workshop genau bei steam:-ID');
+            if (m.kind === 'workshop') pruefe(m.id === 'steam:' + m.workshopId, wo + ': workshopId passt zur id');
+            if (m.kind === 'dlc') pruefe(/^uboat\.dlc\./.test(m.id), wo + ': DLC-ID beginnt mit uboat.dlc.');
+            if (m.kind === 'game') pruefe(m.id === 'uboat', wo + ': Spiel hat id uboat');
+        });
+        pruefe(Array.isArray(j.mods) && j.mods.some(m => m.id === 'uboat'), name + ': mods enthält uboat');
+    }
 }
 
 function pruefeCrewDatei(datei, alsBeispiel) {
@@ -156,6 +172,9 @@ function pruefeCrewDatei(datei, alsBeispiel) {
         pruefe(fahrten.includes(0) && fahrten.includes(1) && fahrten.some(n => n > 1) && fahrten.includes(null), name + ': patrols mit 0, 1, mehreren und null');
         pruefe(crew.every(p => p.patrols === null || p.patrols <= j.career.currentPatrol), name + ': niemand hat mehr Feindfahrten als das Boot');
         pruefe((j.fallen || []).every(p => 'patrols' in p), name + ': auch Gefallene haben patrols');
+        // Aktive Mods: alle Arten vertreten
+        const arten = (j.mods || []).map(m => m.kind);
+        pruefe(['game', 'dlc', 'workshop', 'other'].every(a => arten.includes(a)), name + ': mods mit allen Arten');
         const s = j.sinkings || [];
         pruefe(s.length >= 8, name + ': mehrere Versenkungen');
         pruefe(s.some(x => x.name === null) && s.some(x => x.damagedOnly) && s.some(x => x.date === null) && s.some(x => x.convoy === null) && s.some(x => x.kindLabel === null),
@@ -325,6 +344,24 @@ if (extra[1]) pruefeIndexDatei(path.resolve(extra[1]));
     pruefe(K.summeBrt(bk.sinkings) === 100, 'BRT ohne beschädigte und unbekannte');
     pruefe(K.formatZahl(1057.4, 1) === '1.057,4' && K.formatZahl(209034) === '209.034' && K.formatZahl(null) === '–', 'Zahlen deutsch');
     pruefe(K.quote(35, 51) === 69 && K.quote(1, 0) === null && K.quote(null, 5) === null, 'Trefferquote');
+
+    // Aktive Mods
+    pruefe(K.normalisiereUboat({}).mods === null && K.normalisiereUboat({ mods: null }).mods === null && K.normalisiereUboat({ mods: 'x' }).mods === null, 'mods fehlt/null/kaputt: null');
+    const md = K.normalisiereUboat({ mods: [
+        { id: 'uboat', name: 'uboat', kind: 'game', workshopId: null },
+        { id: 'uboat.dlc.type-ix', kind: 'dlc' },
+        { id: 'steam:42', name: 'Eine Mod', kind: 'workshop', workshopId: '42' },
+        { id: 'steam:43', name: 'Falsche Nummer', kind: 'workshop', workshopId: '43; javascript:' },
+        { id: 'lokal', kind: 'neu' }, null, { name: 'ohne id' }
+    ] }).mods;
+    pruefe(md.length === 5, 'mods: Einträge ohne id entfallen');
+    pruefe(md[1].name === 'uboat.dlc.type-ix' && md[4].kind === 'other' && md[3].workshopId === null, 'mods: Name aus id, unbekannte Art „other“, ungültige workshopId null');
+    pruefe(K.dlcName('uboat.dlc.type-ix') === 'Typ IX' && K.dlcName('uboat.dlc.type-viic41') === 'Typ VIIC41' && K.dlcName('uboat.dlc.wolf-pack') === 'Wolf Pack', 'DLC-Namen hübsch');
+    pruefe(K.steamLink('42') === 'https://steamcommunity.com/sharedfiles/filedetails/?id=42' && K.steamLink(null) === null, 'Steam-Link');
+    const mg = K.gruppiereMods(md);
+    pruefe(mg.map(g => g.schluessel).join(',') === 'dlc,workshop,other', 'Mods gruppiert: DLC, Workshop, Sonstige; Spiel entfällt');
+    pruefe(mg[0].mods[0].name === 'Typ IX' && mg[1].mods[0].link && !mg[1].mods[1].link, 'Mods: DLC-Name, Link nur mit gültiger Nummer');
+    pruefe(K.gruppiereMods(null).length === 0, 'Mods null: keine Gruppen');
 
     if (fehler === vorher) ok('Hilfen in assets/js/kartei.js');
 })();
