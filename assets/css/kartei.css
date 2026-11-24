@@ -1,7 +1,7 @@
 /*
  * Stream-Kartei – Gestaltung
  *
- * Marine der 1940er als Schreibtisch: dunkles Holz, darauf Akten und
+ * Marine der 1940er als Aktenablage: Unterlage aus Aktenkarton, darauf Akten und
  * Formulare aus vergilbtem Papier, Schreibmaschinenschrift, Stempel,
  * Seekarten-Raster und Messing. Alles mit CSS, ohne Bilder.
  *
@@ -21,11 +21,19 @@
 }
 
 :root {
-    /* Schreibtisch */
-    --tisch: #3a3128;
-    --tisch-2: #2e2720;
-    --auf-tisch: #ece1c6;
-    --auf-tisch-2: #bcae8f;
+    /* Unterlage: Aktenkarton (Kraftpapier), passend zum Papier der Akten */
+    --tisch: #c7b28a;
+    --tisch-2: #b9a27a;
+    --tisch-faser: rgba(90, 65, 30, .035);
+    --auf-tisch: #2f2618;       /* Schrift direkt auf der Unterlage */
+    --auf-tisch-2: #5b4a31;
+    --tisch-akzent: #7b4a2b;    /* Gruppentitel, Links auf der Unterlage */
+    --tisch-linie: rgba(90, 60, 25, .35);
+    --fokus: #1f3a6b;
+
+    /* Kopf (marineblauer Aktendeckel) */
+    --auf-marine: #ece1c6;
+    --auf-marine-2: #bcae8f;
 
     /* Papier */
     --papier: #efe6cf;
@@ -70,8 +78,14 @@
 
 @media (prefers-color-scheme: dark) {
     :root {
-        --tisch: #221d18;
-        --tisch-2: #1a1612;
+        /* Im Dunkeln: derselbe Karton, nur gedämpft, damit das Papier nicht blendet */
+        --tisch: #8f7d5c;
+        --tisch-2: #7f6d4e;
+        --tisch-faser: rgba(40, 28, 10, .045);
+        --auf-tisch: #1f1810;
+        --auf-tisch-2: #3a2e1d;
+        --tisch-akzent: #4f2c14;
+        --tisch-linie: rgba(40, 25, 8, .4);
         --papier: #d9ceb2;
         --papier-2: #cdbf9d;
         --papier-rand: #a9976f;
@@ -93,16 +107,18 @@ body {
     font-size: 1rem;
     line-height: 1.5;
     background-color: var(--tisch);
-    /* Holzmaserung */
+    /* Kartonfasern und leichte Abdunklung zum Rand */
     background-image:
-        repeating-linear-gradient(92deg, rgba(255, 255, 255, .018) 0 2px, transparent 2px 9px, rgba(0, 0, 0, .05) 9px 11px, transparent 11px 23px),
+        repeating-linear-gradient(37deg, var(--tisch-faser) 0 1px, transparent 1px 7px),
+        repeating-linear-gradient(-53deg, var(--tisch-faser) 0 1px, transparent 1px 11px),
+        radial-gradient(ellipse at 50% 30%, rgba(255, 245, 220, .18), transparent 65%),
         linear-gradient(180deg, var(--tisch) 0%, var(--tisch-2) 100%);
     background-attachment: fixed;
 }
 
 a { color: var(--blau); }
 a:focus-visible, button:focus-visible, summary:focus-visible, input:focus-visible {
-    outline: 3px solid var(--messing-hell);
+    outline: 3px solid var(--fokus);
     outline-offset: 2px;
 }
 
@@ -120,7 +136,7 @@ a:focus-visible, button:focus-visible, summary:focus-visible, input:focus-visibl
 
 .kopf {
     position: relative;
-    color: var(--auf-tisch);
+    color: var(--auf-marine);
     background-color: var(--marine);
     background-image:
         repeating-linear-gradient(45deg, rgba(255, 255, 255, .025) 0 1px, transparent 1px 4px),
@@ -173,7 +189,7 @@ a:focus-visible, button:focus-visible, summary:focus-visible, input:focus-visibl
     letter-spacing: .14em;
     color: var(--form);
 }
-.kopf-satz { margin: .8rem 0 0; max-width: 42rem; color: var(--auf-tisch-2); }
+.kopf-satz { margin: .8rem 0 0; max-width: 42rem; color: var(--auf-marine-2); }
 
 /* Stempel auf dem Aktendeckel */
 .kopf-innen::after {
@@ -207,10 +223,11 @@ a:focus-visible, button:focus-visible, summary:focus-visible, input:focus-visibl
     font-size: .72rem;
     letter-spacing: .16em;
     text-transform: uppercase;
-    color: var(--auf-tisch-2);
+    color: var(--auf-marine-2);
 }
 .kopf-stand dd { margin: 0; font-family: var(--schrift-maschine); font-weight: 700; }
-.kopf-stand .alter { font-weight: 400; color: var(--auf-tisch-2); }
+.kopf-stand .alter { font-weight: 400; color: var(--auf-marine-2); }
+.kopf a:focus-visible { outline-color: var(--messing-hell); }
 
 /* ------------------------------------------------------------ Inhalt */
 
@@ -257,10 +274,11 @@ a:focus-visible, button:focus-visible, summary:focus-visible, input:focus-visibl
     letter-spacing: .14em;
     text-transform: uppercase;
     text-decoration: none;
-    border: 1px solid rgba(236, 225, 198, .35);
+    border: 1px solid var(--tisch-linie);
+    background: rgba(255, 248, 230, .2);
     border-radius: 2px;
 }
-.sprung a:hover { border-color: var(--messing-hell); color: var(--messing-hell); }
+.sprung a:hover { border-color: var(--tisch-akzent); color: var(--tisch-akzent); }
 
 /* ------------------------------------------------------------ Hinweise: Notizzettel */
 
@@ -303,7 +321,7 @@ a:focus-visible, button:focus-visible, summary:focus-visible, input:focus-visibl
     padding: .4rem .9rem;
     border: 1px solid var(--marine-2);
     background: var(--marine-2);
-    color: var(--auf-tisch);
+    color: var(--auf-marine);
     border-radius: 2px;
     cursor: pointer;
 }
@@ -324,7 +342,8 @@ a:focus-visible, button:focus-visible, summary:focus-visible, input:focus-visibl
     min-height: 10rem;
     padding: 1.2rem 1.2rem 1rem;
     color: var(--tinte);
-    background-color: #c9b27e; /* Aktendeckel */
+    background-color: #e6d4a6; /* Aktendeckel, heller als die Unterlage */
+    border: 1px solid rgba(110, 80, 35, .35);
     text-decoration: none;
     transform: rotate(-.6deg);
     transition: transform .15s;
@@ -365,7 +384,7 @@ a.kachel:hover .kachel-pfeil { text-decoration: underline; }
     font-size: .85rem;
     color: var(--form);
 }
-.kachel-ohne-seite { background-color: #b9ad94; }
+.kachel-ohne-seite { background-color: #d6ccb4; }
 .kachel-ohne-seite .kachel-pfeil { color: var(--tinte-2); }
 
 /* ------------------------------------------------------------ Filter */
@@ -404,9 +423,9 @@ a.kachel:hover .kachel-pfeil { text-decoration: underline; }
 .filter-ort input:checked + span {
     background: var(--marine-2);
     border-color: var(--marine-2);
-    color: var(--auf-tisch);
+    color: var(--auf-marine);
 }
-.filter-ort input:focus-visible + span { outline: 3px solid var(--messing-hell); outline-offset: 2px; }
+.filter-ort input:focus-visible + span { outline: 3px solid var(--fokus); outline-offset: 2px; }
 .filter-ergebnis { min-height: 1.5em; margin: 0 0 .5rem; color: var(--auf-tisch-2); font-family: var(--schrift-maschine); font-size: .95rem; }
 
 /* ------------------------------------------------------------ Gruppen */
@@ -425,13 +444,13 @@ a.kachel:hover .kachel-pfeil { text-decoration: underline; }
 .gruppe-kopf::-webkit-details-marker { display: none; }
 .gruppe-kopf::before {
     content: "▸";
-    color: var(--messing-hell);
+    color: var(--tisch-akzent);
     font-size: 1.1rem;
     transition: transform .15s;
 }
 .gruppe[open] > .gruppe-kopf::before { transform: rotate(90deg); }
 .gruppe-kopf:hover .gruppe-titel > span:first-child { text-decoration: underline; text-decoration-thickness: 1px; }
-.gruppe-kopf:focus-visible { outline: 3px solid var(--messing-hell); outline-offset: 2px; }
+.gruppe-kopf:focus-visible { outline: 3px solid var(--fokus); outline-offset: 2px; }
 .gruppe[open] > .karten { margin-top: .5rem; }
 .gruppe-titel {
     flex: 1;
@@ -444,13 +463,13 @@ a.kachel:hover .kachel-pfeil { text-decoration: underline; }
     font-size: 1rem;
     letter-spacing: .2em;
     text-transform: uppercase;
-    color: var(--messing-hell);
+    color: var(--tisch-akzent);
 }
 .gruppe-titel .anzahl { color: var(--auf-tisch-2); }
 .gruppe-titel::after {
     content: "";
     flex: 1;
-    border-bottom: 1px solid rgba(210, 178, 107, .35);
+    border-bottom: 1px solid var(--tisch-linie);
     transform: translateY(-.3em);
 }
 
@@ -476,7 +495,7 @@ a.kachel:hover .kachel-pfeil { text-decoration: underline; }
 .reserve-trenner::before, .reserve-trenner::after {
     content: "";
     flex: 1;
-    border-top: 1px dashed rgba(236, 225, 198, .3);
+    border-top: 1px dashed var(--tisch-linie);
 }
 
 /* ------------------------------------------------------------ Personenkarte: Soldbuchseite */
@@ -938,11 +957,11 @@ a.kachel:hover .kachel-pfeil { text-decoration: underline; }
     max-width: 72rem;
     margin: 0 auto;
     padding: 1rem 1rem 2.5rem;
-    border-top: 1px solid rgba(236, 225, 198, .2);
+    border-top: 1px solid var(--tisch-linie);
     color: var(--auf-tisch-2);
     font-size: .88rem;
 }
-.fuss a { color: var(--messing-hell); }
+.fuss a { color: var(--tisch-akzent); }
 .fuss p { margin: .3rem 0; }
 
 /* ------------------------------------------------------------ Handy */
