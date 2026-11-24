@@ -200,8 +200,10 @@
     }
 
     /**
-     * Boot oben: Nummer der laufenden bzw. letzten Feindfahrt (career.currentPatrol)
-     * prominent, darunter Name, Typ und Kennzahlen. Gedenktafeln (plaques) zeigt
+     * Boot oben als Seekarte (Anordnung nach Entwurf des Nutzers, 24.11.2026):
+     * erste Zeile Bootsnummer, Kommandant und Nummer der laufenden bzw. letzten
+     * Feindfahrt (career.currentPatrol), darunter Typ, Indienststellung und
+     * Stärke der Besatzung, dann die Kennzahlen. Gedenktafeln (plaques) zeigt
      * die Seite nicht (Wunsch des Nutzers, 22.11.2026).
      */
     function zeigeBoot(daten) {
@@ -212,25 +214,51 @@
         var sichtbar = !!b || feindfahrt !== null;
         document.getElementById('boot').hidden = !sichtbar;
         document.getElementById('sprung-boot').hidden = !sichtbar;
+        // Die Stärke der Besatzung steht in der Bootskarte, sonst am Titel der Liste.
+        crewAnzahl.hidden = sichtbar && daten.crew.length > 0;
         if (!sichtbar) return;
 
+        var kopf = el('div', { className: 'boot-kopf' });
+        if (b) kopf.appendChild(el('p', { className: 'boot-name', text: b.name || 'Boot ohne Namen' }));
+        var kommandant = kommandantText(daten.crew);
+        if (kommandant) kopf.appendChild(el('p', { className: 'boot-kommandant', text: kommandant }));
         if (feindfahrt !== null) {
-            bootKarte.appendChild(el('p', { className: 'boot-feindfahrt' },
+            kopf.appendChild(el('p', { className: 'boot-feindfahrt' },
                 el('span', { className: 'boot-feindfahrt-nr', text: K.formatZahl(feindfahrt) + '.' }),
                 ' ', el('span', { className: 'boot-feindfahrt-wort', text: 'Feindfahrt' })));
         }
+        bootKarte.appendChild(kopf);
+
+        var zeile = el('div', { className: 'boot-zeile' });
+        var teile = [];
+        if (b && b.typeLabel) teile.push(b.typeLabel);
+        if (b && b.commissioned) teile.push('in Dienst gestellt am ' + K.formatKalenderdatum(b.commissioned));
+        if (teile.length) zeile.appendChild(el('p', { className: 'boot-daten', text: teile.join(' · ') }));
+        if (daten.crew.length) {
+            zeile.appendChild(el('p', { className: 'boot-besatzung' },
+                el('a', { href: '#besatzung', className: 'boot-besatzung-wort', text: 'Besatzung' }), ' ',
+                el('span', { className: 'anzahl', text: '(' + daten.crew.length + ')' })));
+        }
+        if (zeile.childNodes.length) bootKarte.appendChild(zeile);
+
         if (!b) return;
-        var zeilen = [];
-        if (b.typeLabel) zeilen.push(b.typeLabel);
-        if (b.commissioned) zeilen.push('in Dienst gestellt am ' + K.formatKalenderdatum(b.commissioned));
         var zahlen = el('dl', { className: 'kennzahlen' });
         if (b.tonnageSunk !== null) zahlen.appendChild(kennzahl('Versenkte Tonnage', K.formatZahl(b.tonnageSunk), 'BRT'));
         if (b.merchantShipsSunk !== null) zahlen.appendChild(kennzahl('Handelsschiffe versenkt', K.formatZahl(b.merchantShipsSunk)));
         if (b.warshipsSunk !== null) zahlen.appendChild(kennzahl('Kriegsschiffe versenkt', K.formatZahl(b.warshipsSunk)));
         if (b.aircraftShotDown !== null) zahlen.appendChild(kennzahl('Flugzeuge abgeschossen', K.formatZahl(b.aircraftShotDown)));
-        bootKarte.appendChild(el('p', { className: 'boot-name', text: b.name || 'Boot ohne Namen' }));
-        if (zeilen.length) bootKarte.appendChild(el('p', { className: 'boot-zeile', text: zeilen.join(' · ') }));
         if (zahlen.childNodes.length) bootKarte.appendChild(zahlen);
+    }
+
+    /**
+     * Kommandant für die Bootskarte. Das Spiel kennt keine Dienstgrade; ein
+     * U-Boot-Kommandant war üblicherweise Kapitänleutnant (Nutzer, 24.11.2026).
+     */
+    function kommandantText(crew) {
+        var k = crew.filter(function (p) { return p.typeLabel === 'Kommandant' && p.name; });
+        if (!k.length) return null;
+        var anBord = k.filter(function (p) { return p.statusLabel === 'an Bord'; });
+        return 'KptLn. ' + (anBord.length ? anBord : k)[0].name;
     }
 
     /** Karriere als eigener Abschnitt unter der Besatzung. */
@@ -358,10 +386,10 @@
         karten = [];
         gruppenKnoten = [];
         crewAnzahl.textContent = crew.length ? '(' + crew.length + ')' : '';
+        filterForm.querySelector('.filter-ort').hidden = !crew.length;
         if (!crew.length) {
             gruppenZiel.appendChild(K.hinweis('info', 'Keine Besatzung im Spielstand.',
                 'Im gelesenen Spielstand ist niemand an Bord oder in Reserve.'));
-            filterForm.hidden = true;
             return;
         }
         K.gruppiereCrew(crew).forEach(function (g) {
@@ -369,7 +397,8 @@
             var raster = el('div', { className: 'karten' });
             var abschnitt = el('details', { className: 'gruppe gruppe-' + g.schluessel },
                 el('summary', { className: 'gruppe-kopf' },
-                    el('h3', { className: 'gruppe-titel' }, el('span', { text: g.titel }), ' ', zaehler)),
+                    el('h3', { className: 'gruppe-titel' },
+                        el('span', { className: 'gruppe-reiter' }, el('span', { className: 'gruppe-name', text: g.titel }), ' ', zaehler))),
                 raster);
             // Die Reserve steht am Ende der Gruppe (Sortierung in gruppiereCrew),
             // davor eine Trennlinie, wenn es auch Leute an Bord gibt.
