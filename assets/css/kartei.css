@@ -840,7 +840,7 @@ a.kachel:hover .kachel-pfeil { text-decoration: underline; }
     gap: .2rem 2rem;
     margin: .7rem 0 .8rem;
 }
-.boot-zeile p { margin: 0; }
+.boot-zeile p { margin: 0; padding: .1rem .45rem; background: rgba(239, 230, 207, .85); }
 .boot-daten { font-family: var(--schrift-maschine); font-weight: 700; }
 .boot-besatzung-wort {
     font-family: var(--schrift-fraktur);
