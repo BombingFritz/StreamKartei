@@ -183,12 +183,16 @@
 
     // ------------------------------------------------- Boot und Karriere
 
-    /** Kennzahl: großer Wert, kleine Beschriftung, optional Zusatz. */
-    function kennzahl(beschriftung, wert, zusatz) {
+    /**
+     * Kennzahl: großer Wert, kleine Beschriftung, optional Zusatz. Mit
+     * `zusatzUnten` steht der Zusatz (Prozent) immer in einer eigenen Zeile
+     * (Nutzer, 24.11.2026).
+     */
+    function kennzahl(beschriftung, wert, zusatz, zusatzUnten) {
         return el('div', { className: 'kennzahl' },
             el('dt', { text: beschriftung }),
             el('dd', null, el('span', { className: 'kennzahl-wert', text: wert }),
-                zusatz ? el('span', { className: 'kennzahl-zusatz', text: ' ' + zusatz }) : null));
+                zusatz ? el('span', { className: zusatzUnten ? 'kennzahl-zusatz kennzahl-zusatz-unten' : 'kennzahl-zusatz', text: ' ' + zusatz }) : null));
     }
 
     function trefferText(treffer, gesamt) {
@@ -289,9 +293,14 @@
         var brt = K.summeBrt(liste);
         if (brt) zahlen.appendChild(kennzahl('Tonnage', K.formatZahl(brt), 'BRT'));
         if (beschaedigt) zahlen.appendChild(kennzahl('beschädigt', K.formatZahl(beschaedigt)));
+        // Spätestes Datum, unabhängig von der Reihenfolge im Spielstand.
         var letzte = null;
-        liste.forEach(function (s) { if (s.date) letzte = s; });
-        if (letzte) zahlen.appendChild(kennzahl('Zuletzt', K.formatKalenderdatum(letzte.date)));
+        liste.forEach(function (s) {
+            if (!s.date) return;
+            var d = s.date;
+            if (!letzte || d.jahr * 10000 + d.monat * 100 + d.tag > letzte.jahr * 10000 + letzte.monat * 100 + letzte.tag) letzte = d;
+        });
+        if (letzte) zahlen.appendChild(kennzahl('Zuletzt', K.formatKalenderdatum(letzte)));
         ziel.appendChild(zahlen);
     }
 
@@ -308,18 +317,18 @@
         ziel.textContent = '';
         var liste = el('dl', { className: 'kennzahlen kennzahlen-klein' });
         if (c) {
-            var dazu = function (beschriftung, wert, zusatz) {
+            var dazu = function (beschriftung, wert, zusatz, zusatzUnten) {
                 if (wert === null || wert === undefined) return;
-                liste.appendChild(kennzahl(beschriftung, wert, zusatz));
+                liste.appendChild(kennzahl(beschriftung, wert, zusatz, zusatzUnten));
             };
             dazu('Übernahm das Kommando am', c.startDate ? K.formatKalenderdatum(c.startDate) : null);
             var torpedo = trefferText(c.torpedoHits, c.torpedoesFired);
-            if (torpedo) dazu('Torpedotreffer', torpedo.wert, torpedo.zusatz);
+            if (torpedo) dazu('Torpedotreffer', torpedo.wert, torpedo.zusatz, true);
             dazu('Weitester Torpedotreffer', c.farthestTorpedoHitM !== null ? K.formatZahl(c.farthestTorpedoHitM) : null, 'm');
             var deck = trefferText(c.deckGunHits, c.deckGunShots);
-            if (deck) dazu('Treffer Deckgeschütz', deck.wert, deck.zusatz);
+            if (deck) dazu('Treffer Deckgeschütz', deck.wert, deck.zusatz, true);
             var flak = trefferText(c.flakHits, c.flakShots);
-            if (flak) dazu('Treffer Flak', flak.wert, flak.zusatz);
+            if (flak) dazu('Treffer Flak', flak.wert, flak.zusatz, true);
             dazu('Größte Tiefe', c.maximumDepthM !== null ? K.formatZahl(c.maximumDepthM) : null, 'm');
             dazu('Stunden auf See', c.hoursAtSea !== null ? K.formatZahl(c.hoursAtSea, 1) : null, 'h');
             dazu('davon getaucht', c.hoursUnderWater !== null ? K.formatZahl(c.hoursUnderWater, 1) : null, 'h');
