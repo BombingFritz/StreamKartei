@@ -791,9 +791,7 @@ a.kachel:hover .kachel-pfeil { text-decoration: underline; }
     align-items: baseline;
     gap: .3rem;
     margin: 0;
-    padding: .1rem .5rem;
     color: var(--stempel-rot);
-    background: rgba(239, 230, 207, .6);
 }
 .boot-feindfahrt-nr {
     font-family: var(--schrift-schablone);

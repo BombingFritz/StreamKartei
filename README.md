@@ -51,6 +51,7 @@ Weitere Hinweise auf der Seite:
 | `index.html` | Startseite |
 | `uboat/index.html` | UBOAT-Seite |
 | `assets/css/kartei.css` | Gestaltung im Stil der Marine der 1940er: Unterlage aus Aktenkarton, Akten, Soldbuch-Formular, Seekarte, Stempel; nur CSS, ohne Bilder und ohne Hoheitszeichen (hell und dunkel nach Systemeinstellung, Handy und PC) |
+| `assets/img/favicon.svg` | Seitensymbol: Karteikasten in den Farben der Seite (eigene Zeichnung, ohne Hoheitszeichen) |
 | `assets/fonts/` | Frakturschrift UnifrakturMaguntia für Vordrucke und Titel (SIL Open Font License 1.1, Lizenz daneben); liegt hier, damit kein fremder Server abgerufen wird |
 | `assets/js/kartei.js` | Gemeinsame Hilfen: Laden mit Beispiel-Rückfall, Aufbereiten, Datum, Sortierung; läuft auch in Node für die Tests |
 | `assets/js/start.js`, `assets/js/uboat.js` | Aufbau der beiden Seiten |
