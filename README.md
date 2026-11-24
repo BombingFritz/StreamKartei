@@ -10,7 +10,8 @@
   - die ganze Besatzung in den Gruppen Kommandant, Offiziere, Matrosen; die Gruppen sind beim Laden zugeklappt. In jeder Gruppe steht die Reserve am Ende. Filter nach Aufenthalt; je Person die Zahl der eigenen Feindfahrten (gut sichtbar unter dem Namen), Orden und eine aufklappbare Akte mit Lebenslauf und Leistungen (nach Art gruppiert),
   - darunter die Karriere (Treffer, Tiefe, Stunden auf See …),
   - die Liste der Versenkungen (am Handy als Karten),
-  - die Ehrentafel der Gefallenen.
+  - die Ehrentafel der Gefallenen,
+  - ganz unten die aktiven Mods des Spielstands (DLC, Steam Workshop mit Link, Sonstige; ohne das Spiel selbst). Im Beispielmodus ohne Links, weil die Workshop-Nummern dort erfunden sind.
   - Nicht angezeigt: die zurückgelegte Strecke (`distanceTravelled`, Einheit ungeklärt) und die Gedenktafeln (`plaques`, Wunsch des Nutzers).
 - **RimWorld** folgt später als eigene Seite.
 

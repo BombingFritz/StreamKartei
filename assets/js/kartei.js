@@ -251,8 +251,67 @@
             boat: boot(json.boat),
             career: karriere(json.career),
             plaques: gedenktafeln(json.plaques),
-            sinkings: versenkungen(json.sinkings)
+            sinkings: versenkungen(json.sinkings),
+            mods: modListe(json.mods)
         };
+    }
+
+    // ------------------------------------------------------ Aktive Mods
+
+    var MOD_ARTEN = ['game', 'dlc', 'workshop', 'other'];
+
+    /**
+     * `mods` → Liste oder null (Feld fehlt, null oder keine Liste: der Server
+     * konnte die Liste nicht sicher lesen). Reihenfolge wie geliefert.
+     */
+    function modListe(liste) {
+        if (!Array.isArray(liste)) return null;
+        return liste.filter(istObjekt).map(function (m) {
+            var id = text(m.id);
+            if (id === null) return null;
+            var art = text(m.kind);
+            var workshopId = text(m.workshopId);
+            return {
+                id: id,
+                name: text(m.name) || id,
+                kind: art && MOD_ARTEN.indexOf(art) >= 0 ? art : 'other',
+                workshopId: workshopId && /^\d+$/.test(workshopId) ? workshopId : null
+            };
+        }).filter(function (m) { return m !== null; });
+    }
+
+    /** DLC-ID hübscher: „uboat.dlc.type-ix“ → „Typ IX“. */
+    function dlcName(id) {
+        var rest = String(id).replace(/^uboat\.dlc\./, '');
+        return rest.split(/[-_.\s]+/).filter(Boolean).map(function (wort) {
+            if (/^type$/i.test(wort)) return 'Typ';
+            if (/^[ivxlc]+$/i.test(wort) || /\d/.test(wort)) return wort.toUpperCase();
+            return wort.charAt(0).toUpperCase() + wort.slice(1);
+        }).join(' ') || String(id);
+    }
+
+    function steamLink(workshopId) {
+        return workshopId ? 'https://steamcommunity.com/sharedfiles/filedetails/?id=' + encodeURIComponent(workshopId) : null;
+    }
+
+    /**
+     * Mods für die Anzeige gruppieren: DLC, Workshop, Sonstige. Das Spiel selbst
+     * (`game`) entfällt. Innerhalb der Gruppe Reihenfolge wie im Spielstand.
+     */
+    function gruppiereMods(mods) {
+        var gruppen = [
+            { schluessel: 'dlc', titel: 'Erweiterungen (DLC)', mods: [] },
+            { schluessel: 'workshop', titel: 'Steam Workshop', mods: [] },
+            { schluessel: 'other', titel: 'Sonstige', mods: [] }
+        ];
+        (mods || []).forEach(function (m) {
+            if (m.kind === 'game') return;
+            var name = m.kind === 'dlc' ? dlcName(m.id) : m.name;
+            for (var i = 0; i < gruppen.length; i++) {
+                if (gruppen[i].schluessel === m.kind) { gruppen[i].mods.push({ name: name, link: steamLink(m.workshopId), id: m.id }); return; }
+            }
+        });
+        return gruppen.filter(function (g) { return g.mods.length > 0; });
     }
 
     function istObjekt(wert) {
@@ -574,6 +633,9 @@
         auszeichnungenText: auszeichnungenText,
         absaetze: absaetze,
         feindfahrtenText: feindfahrtenText,
+        dlcName: dlcName,
+        steamLink: steamLink,
+        gruppiereMods: gruppiereMods,
         gruppiereLeistungen: gruppiereLeistungen,
         schiffsname: schiffsname,
         summeBrt: summeBrt,
