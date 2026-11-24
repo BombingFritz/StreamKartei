@@ -870,6 +870,8 @@ a.kachel:hover .kachel-pfeil { text-decoration: underline; }
 .kennzahl-wert { white-space: nowrap; }
 .kennzahlen-klein { grid-template-columns: repeat(auto-fill, minmax(10.5rem, 1fr)); }
 .kennzahl-zusatz-unten { display: block; }
+/* Einzeilige Werte stehen in der Mitte des Feldes, nicht unten (Nutzer, 24.11.2026) */
+.kennzahlen-klein .kennzahl dd { margin: auto 0; }
 .kennzahl-zusatz { color: var(--tinte-2); font-size: .85rem; }
 .fussnote { margin: .8rem 0 0; font-size: .78rem; font-style: italic; color: var(--tinte-2); }
 
