@@ -19,7 +19,7 @@
 - Unbekannte Felder ignorieren. `schemaVersion` größer als unterstützt: Hinweis zeigen, nicht abbrechen.
 - Ohne Daten oder bei Ladefehler: freundlicher Hinweis, nie eine leere Seite.
 - Beispieldaten in `beispiel/` sind erfunden (ausgedachte Namen), im Format des Vertrags, und werden mit „Beispieldaten“ gekennzeichnet.
-- Handy und PC, hell und dunkel. Gestaltung im Stil der Marine der 1940er als Schreibtisch mit Akten, Formularen (Soldbuch), Seekarte, Stempeln und Schreibmaschinenschrift, nur mit CSS. Ohne Markenlogos oder Spielgrafiken und **ohne Hoheitszeichen, Adler, Hakenkreuze, Ordensbilder oder Farben historischer Orden**; Ordensnamen aus den Daten nur als Text. Hakenkreuze niemals verwenden oder anzeigen, auch nicht in Bildern, Schriften oder Vorlagen (Nutzer, 22.11.2026).
+- Handy und PC, hell und dunkel. Gestaltung im Stil der Marine der 1940er als Aktenablage auf Karton (Unterlage farblich passend zum Papier, Nutzer 24.11.2026) mit Akten, Formularen (Soldbuch), Seekarte, Stempeln und Schreibmaschinenschrift, nur mit CSS. Ohne Markenlogos oder Spielgrafiken und **ohne Hoheitszeichen, Adler, Hakenkreuze, Ordensbilder oder Farben historischer Orden**; Ordensnamen aus den Daten nur als Text. Hakenkreuze niemals verwenden oder anzeigen, auch nicht in Bildern, Schriften oder Vorlagen (Nutzer, 22.11.2026).
 
 ## Arbeitsweise
 - Eigener Branch vom aktuellen `main` (`git checkout --no-track -b <name> origin/main`), kleine Commits.
