@@ -1,0 +1,1302 @@
+{
+  "schemaVersion": 1,
+  "game": "uboat",
+  "savedAt": "2026-11-25T00:51:51.328Z",
+  "gameVersion": "2026.1 Patch 21",
+  "crew": [
+    {
+      "name": "Fritz Unsinkbar",
+      "typeLabel": "Kommandant",
+      "classLabel": "Befehlshaber",
+      "level": 4,
+      "experiencePoints": 521,
+      "experiencePointsFromLastPatrol": 440,
+      "born": "1911-09-08",
+      "decorations": 4,
+      "statusLabel": "an Bord",
+      "woundLabel": null,
+      "traits": [],
+      "skills": [
+        "Spanischsprachig",
+        "Führung"
+      ],
+      "patrols": 3,
+      "background": null,
+      "decorationNames": [
+        "Eisernes Kreuz 2. Klasse",
+        "Eisernes Kreuz 1. Klasse",
+        "Deutsches Kreuz in Gold",
+        "U-Boot-Kriegsabzeichen"
+      ],
+      "accomplishments": [
+        {
+          "kind": "Sunk Ship Freighter",
+          "text": "Versenkung von Frachter \"Samythian\"."
+        },
+        {
+          "kind": "Torpedo Course",
+          "text": "Torpedo Ziellösung \"Samythian\" Frachter."
+        },
+        {
+          "kind": "Sunk Ship Freighter",
+          "text": "Versenkung von Frachter \"Empire Defender\"."
+        },
+        {
+          "kind": "Torpedo Course",
+          "text": "Torpedo Ziellösung \"Empire Defender\" Frachter."
+        },
+        {
+          "kind": "Sunk Ship Freighter",
+          "text": "Versenkung von Frachter \"William Peffer\"."
+        },
+        {
+          "kind": "Torpedo Course",
+          "text": "Torpedo Ziellösung \"William Peffer\" Frachter."
+        },
+        {
+          "kind": "Sunk Ship Destroyer",
+          "text": "Versenkung von Zerstörer \"Tribal-Klasse\"."
+        },
+        {
+          "kind": "Torpedo Course",
+          "text": "Torpedo Ziellösung \"Tribal-Klasse\" Zerstörer."
+        },
+        {
+          "kind": "Sunk Ship Freighter",
+          "text": "Versenkung von Frachter \"Wallace R. Farrington\"."
+        },
+        {
+          "kind": "Torpedo Course",
+          "text": "Torpedo Ziellösung \"Wallace R. Farrington\" Frachter."
+        },
+        {
+          "kind": "Sunk Ship Freighter",
+          "text": "Versenkung von Frachter \"Christopher S. Flanagan\"."
+        },
+        {
+          "kind": "Torpedo Course",
+          "text": "Torpedo Ziellösung \"Christopher S. Flanagan\" Frachter."
+        },
+        {
+          "kind": "Sunk Ship Freighter",
+          "text": "Versenkung von Frachter \"SS A. J. Cassatt\"."
+        },
+        {
+          "kind": "Torpedo Course",
+          "text": "Torpedo Ziellösung \"SS A. J. Cassatt\" Frachter."
+        },
+        {
+          "kind": "Assignment Completed",
+          "text": "Auftrag abgeschlossen."
+        },
+        {
+          "kind": "Assignment Completed",
+          "text": "Auftrag abgeschlossen."
+        },
+        {
+          "kind": "Sunk Ship Freighter",
+          "text": "Versenkung von Frachter \"Gilbert Stuart\"."
+        },
+        {
+          "kind": "Torpedo Course",
+          "text": "Torpedo Ziellösung \"Gilbert Stuart\" Frachter."
+        },
+        {
+          "kind": "Sunk Ship Freighter",
+          "text": "Versenkung von Frachter \"SS A. J. Cassatt\"."
+        },
+        {
+          "kind": "Sunk Ship Freighter",
+          "text": "Versenkung von Frachter \"Empire Buckler\"."
+        },
+        {
+          "kind": "Torpedo Course",
+          "text": "Torpedo Ziellösung \"Empire Buckler\" Frachter."
+        },
+        {
+          "kind": "Sunk Ship Freighter",
+          "text": "Versenkung von Frachter \"Robert F. Broussard\"."
+        },
+        {
+          "kind": "Torpedo Course",
+          "text": "Torpedo Ziellösung \"Robert F. Broussard\" Frachter."
+        },
+        {
+          "kind": "Sunk Ship Freighter",
+          "text": "Versenkung von Frachter \"Florence Martus\"."
+        },
+        {
+          "kind": "Torpedo Course",
+          "text": "Torpedo Ziellösung \"Florence Martus\" Frachter."
+        },
+        {
+          "kind": "Sunk Ship Freighter",
+          "text": "Versenkung von Frachter \"SS A. J. Cassatt\"."
+        },
+        {
+          "kind": "Torpedo Course",
+          "text": "Torpedo Ziellösung \"SS A. J. Cassatt\" Frachter."
+        },
+        {
+          "kind": "Sunk Ship Tanker",
+          "text": "Versenkung von Tanker \"Tacito\"."
+        },
+        {
+          "kind": "Assignment Completed",
+          "text": "Auftrag abgeschlossen."
+        },
+        {
+          "kind": "Assignment Completed",
+          "text": "Auftrag abgeschlossen."
+        },
+        {
+          "kind": "Sunk Ship Freighter",
+          "text": "Versenkung von Frachter \"Empire Trumpet\"."
+        },
+        {
+          "kind": "Torpedo Course",
+          "text": "Torpedo Ziellösung \"Empire Trumpet\" Frachter."
+        }
+      ]
+    },
+    {
+      "name": "Alpaka",
+      "typeLabel": "Offizier",
+      "classLabel": "Funker",
+      "level": 3,
+      "experiencePoints": 604,
+      "experiencePointsFromLastPatrol": 260,
+      "born": "1915-08-07",
+      "decorations": 1,
+      "statusLabel": "an Bord",
+      "woundLabel": null,
+      "traits": [],
+      "skills": [
+        "Spanischsprachig",
+        "Gutes Gehör",
+        "Erkennung von Schiffsschrauben"
+      ],
+      "patrols": 3,
+      "background": null,
+      "decorationNames": [
+        "U-Boot-Kriegsabzeichen"
+      ],
+      "accomplishments": [
+        {
+          "kind": "Assignment Completed",
+          "text": "Auftrag abgeschlossen."
+        },
+        {
+          "kind": "Assignment Completed",
+          "text": "Auftrag abgeschlossen."
+        }
+      ]
+    },
+    {
+      "name": "Binggeli4",
+      "typeLabel": "Offizier",
+      "classLabel": "Befehlshaber",
+      "level": 2,
+      "experiencePoints": 314,
+      "experiencePointsFromLastPatrol": 170,
+      "born": "1910-10-09",
+      "decorations": 0,
+      "statusLabel": "an Bord",
+      "woundLabel": null,
+      "traits": [],
+      "skills": [
+        "Händler",
+        "Persönliche Fertigkeiten"
+      ],
+      "patrols": 3,
+      "background": "Binggeli4 hatte nie etwas mit Seefahrt im Sinn. Seine Eltern haben ein Gasthaus in der Nähe von München. Er half schon in seiner Jugend regelmäßig in der Küche aus und lernte die Küchenarbeit früh kennen. Der Kriegsbeginn änderte jedoch den Plan, irgendwann das Gasthaus zu übernehmen. Er wurde zum Militärdienst berufen und als Küchenhelfer bei einem Infanteriebataillon eingesetzt. Nur Linsensuppe mit Speck aus der Gulaschkanone war ihm jedoch zu wenig, also bewarb er sich als Schiffskoch bei der Marine.\nBinggeli4 ist immer gut gelaunt und hat ein unerschöpfliches Repertoire an Witzen. Hat in den letzten Jahren enorm zugenommen, was gerade den höheren Offizieren der Marineführung missfällt. Ist von den meisten Kapitänen aber trotzdem hoch geschätzt, weil er durch seine Kochkünste und seine erfrischende Art die Moral auch in schwierigen Lagen hoch hält. Deshalb drücken sie auch ein Auge bei seinem Gewichtsproblem zu. Kennt sich gut mit der Lagerung von Lebensmitteln aus.",
+      "decorationNames": [],
+      "accomplishments": []
+    },
+    {
+      "name": "BSAngelus",
+      "typeLabel": "Offizier",
+      "classLabel": "Befehlshaber",
+      "level": 3,
+      "experiencePoints": 134,
+      "experiencePointsFromLastPatrol": 90,
+      "born": "1919-08-06",
+      "decorations": 2,
+      "statusLabel": "an Bord",
+      "woundLabel": null,
+      "traits": [],
+      "skills": [
+        "Taucher",
+        "Fokus",
+        "Navigator"
+      ],
+      "patrols": 3,
+      "background": null,
+      "decorationNames": [
+        "Eisernes Kreuz 2. Klasse",
+        "U-Boot-Kriegsabzeichen"
+      ],
+      "accomplishments": [
+        {
+          "kind": "Sunk Ship Participation",
+          "text": "Beteiligung an Versenkung \"Samythian\" Frachter."
+        },
+        {
+          "kind": "Torpedo Course",
+          "text": "Torpedo Ziellösung \"Wallace R. Farrington\" Frachter."
+        },
+        {
+          "kind": "Assignment Completed",
+          "text": "Auftrag abgeschlossen."
+        },
+        {
+          "kind": "Assignment Completed",
+          "text": "Auftrag abgeschlossen."
+        }
+      ]
+    },
+    {
+      "name": "Lumpenhund82",
+      "typeLabel": "Offizier",
+      "classLabel": "Ingenieur",
+      "level": 3,
+      "experiencePoints": 87,
+      "experiencePointsFromLastPatrol": 125,
+      "born": "1914-05-11",
+      "decorations": 1,
+      "statusLabel": "an Bord",
+      "woundLabel": null,
+      "traits": [],
+      "skills": [
+        "Gute Beziehungen!",
+        "Gründliche Überprüfung",
+        "Torpedooffizier"
+      ],
+      "patrols": 3,
+      "background": null,
+      "decorationNames": [
+        "U-Boot-Kriegsabzeichen"
+      ],
+      "accomplishments": [
+        {
+          "kind": "Assignment Completed",
+          "text": "Auftrag abgeschlossen."
+        },
+        {
+          "kind": "Assignment Completed",
+          "text": "Auftrag abgeschlossen."
+        }
+      ]
+    },
+    {
+      "name": "Maxztt",
+      "typeLabel": "Offizier",
+      "classLabel": "Funker",
+      "level": 3,
+      "experiencePoints": 165,
+      "experiencePointsFromLastPatrol": 15,
+      "born": "1913-10-07",
+      "decorations": 0,
+      "statusLabel": "in Reserve",
+      "woundLabel": null,
+      "traits": [],
+      "skills": [
+        "Hart im Nehmen",
+        "Sanitäter",
+        "Gutes Gehör"
+      ],
+      "patrols": 0,
+      "background": "Maxztt stammt aus einer Seefahrerfamilie in der Nähe von Bremen. Sein Vater ist bereits Offizier bei der Marine und seine beiden Brüder dienen ebenfalls auf einem U-Boot. In der Kaserne munkelt man, dass er nur durch die Beziehungen seines Vaters die Rekrutierungsanforderungen bestanden hat. Leicht war sein Weg in der Ausbildung daher nicht. Er ist sehr ehrgeizig und arbeitet hart um zu zeigen, dass er es aus eigener Kraft geschafft hat. Seine Leidenschaft ist Lesen und schreibt derzeit an einem eigenen Roman. Wegen seiner strengen katholischen Erziehung wird er oft von anderen belächelt.",
+      "decorationNames": [],
+      "accomplishments": []
+    },
+    {
+      "name": "Siegfried Waltke",
+      "typeLabel": "Offizier",
+      "classLabel": "Ingenieur",
+      "level": 3,
+      "experiencePoints": 12,
+      "experiencePointsFromLastPatrol": 50,
+      "born": "1911-08-08",
+      "decorations": 1,
+      "statusLabel": "an Bord",
+      "woundLabel": null,
+      "traits": [],
+      "skills": [
+        "Koch",
+        "Motorenspezialist",
+        "Wiederverwertung"
+      ],
+      "patrols": 3,
+      "background": null,
+      "decorationNames": [
+        "U-Boot-Kriegsabzeichen"
+      ],
+      "accomplishments": [
+        {
+          "kind": "Assignment Completed",
+          "text": "Auftrag abgeschlossen."
+        },
+        {
+          "kind": "Assignment Completed",
+          "text": "Auftrag abgeschlossen."
+        }
+      ]
+    },
+    {
+      "name": "Beauty_shot",
+      "typeLabel": "Matrose",
+      "classLabel": null,
+      "level": 0,
+      "experiencePoints": 0,
+      "experiencePointsFromLastPatrol": 0,
+      "born": "1888-08-12",
+      "decorations": 0,
+      "statusLabel": "in Reserve",
+      "woundLabel": null,
+      "traits": [],
+      "skills": [
+        "Experte"
+      ],
+      "patrols": 0,
+      "background": "Der Sohn eines Apothekers. Er ist des Geldes wegen in der Armee. Nach seiner Rückkehr will er seinen Vater geschäftlich unterstützen.",
+      "decorationNames": [],
+      "accomplishments": []
+    },
+    {
+      "name": "binneo_",
+      "typeLabel": "Matrose",
+      "classLabel": null,
+      "level": 0,
+      "experiencePoints": 0,
+      "experiencePointsFromLastPatrol": 0,
+      "born": "1907-08-09",
+      "decorations": 0,
+      "statusLabel": "in Reserve",
+      "woundLabel": null,
+      "traits": [],
+      "skills": [
+        "Händler"
+      ],
+      "patrols": 0,
+      "background": "Er wurde als ältestes von vier Kindern geboren. Seine Eltern ließen sich um 1928 scheiden. Die allein erziehende Mutter zog nach Embsen bei Lüneburg. Nach acht Jahren Schule begann binneo_ eine Lehre als Schmied. Mit seinem Fahrrad unternahm er zahlreiche Radtouren, die ihn auch nach Hamburg führten. Nach der Besichtigung des Hamburger Hafens beschloss er, Seemann zu werden. Der Kriegsbeginn durchkreuzte seine Pläne. Er meldete sich freiwillig zum Dienst bei der U-Boot-Waffe.",
+      "decorationNames": [],
+      "accomplishments": []
+    },
+    {
+      "name": "CombatWombat",
+      "typeLabel": "Matrose",
+      "classLabel": null,
+      "level": 0,
+      "experiencePoints": 0,
+      "experiencePointsFromLastPatrol": 0,
+      "born": "1902-08-10",
+      "decorations": 0,
+      "statusLabel": "in Reserve",
+      "woundLabel": null,
+      "traits": [],
+      "skills": [
+        "Hart im Nehmen"
+      ],
+      "patrols": 0,
+      "background": "Aufgewachsen in den Bergen im elterlichen Bauernbetrieb lernte CombatWombat die harte Arbeit.\nDen Drang in der Natur zu sein, frei zu sein und die Jagd, entschloss sich CombatWombat, etwas Neues zu erleben und meldete sich freiwillig, seinen Land zu dienen und ging zur Kriegsmarine.",
+      "decorationNames": [],
+      "accomplishments": []
+    },
+    {
+      "name": "DasSpeziExtra",
+      "typeLabel": "Matrose",
+      "classLabel": null,
+      "level": 0,
+      "experiencePoints": 0,
+      "experiencePointsFromLastPatrol": 0,
+      "born": "1909-08-08",
+      "decorations": 0,
+      "statusLabel": "an Bord",
+      "woundLabel": null,
+      "traits": [],
+      "skills": [
+        "Spanischsprachig"
+      ],
+      "patrols": 3,
+      "background": "DasSpeziExtra stammt aus einer preußischen Offiziersfamilie. Eigentlich wollte auch er die Offiziersschule besuchen. Doch er brennt darauf den Tommys die Schmach des Ersten Weltkriegs heimzahlen, in dem sein Onkel auf See gefallen ist. Da er ohne Offizierspatent von seinem Vater keine Anerkennung hat tut er alles dafür möglichst schnell den Rang des Obermaat zu erreichen und Orden zu bekommen. Dabei sind ihm alle Mittel recht, was ihn bei seinen Kameraden unbeliebt macht.",
+      "decorationNames": [],
+      "accomplishments": []
+    },
+    {
+      "name": "Dierk Maas",
+      "typeLabel": "Matrose",
+      "classLabel": null,
+      "level": 0,
+      "experiencePoints": 0,
+      "experiencePointsFromLastPatrol": 0,
+      "born": "1898-08-10",
+      "decorations": 0,
+      "statusLabel": "an Bord",
+      "woundLabel": null,
+      "traits": [],
+      "skills": [
+        "Taucher"
+      ],
+      "patrols": 3,
+      "background": "Geboren in Osterfeld wurde er früh von seinem Vater getrennt und wuchs bei seinem Großonkel Hans in Lübeck auf. Er verließ früh wieder das Gymnasium und trat der Handelsmarine bei, wurde schnell Kapitän und anschließend für längere Zeit arbeitslos. Auf Grund fehlender Perspektiven trat er der Kriegsmarine als Fähnrich zur See bei.",
+      "decorationNames": [],
+      "accomplishments": []
+    },
+    {
+      "name": "EdvanStoned",
+      "typeLabel": "Matrose",
+      "classLabel": null,
+      "level": 0,
+      "experiencePoints": 0,
+      "experiencePointsFromLastPatrol": 0,
+      "born": "1885-08-13",
+      "decorations": 0,
+      "statusLabel": "in Reserve",
+      "woundLabel": null,
+      "traits": [],
+      "skills": [
+        "Portugiesischsprachig"
+      ],
+      "patrols": 0,
+      "background": "EdvanStoned ist in einem kleinen Dorf in Österreich aufgewachsen und hat schon in seiner Jugendzeit an Motorrädern herumgeschraubt. Vom Onkel zum Eintritt in die Kriegsmarine überredet versucht er nun dort mit seinem Mechanikerwissen als Maschinist sein Glück. In der Ausbildung war er immer sehr vorbildhaft und kann mit einem Stück Draht fast alles reparieren. Er ist bei den meisten Matrosen sehr beliebt und spielt gerne Karten.",
+      "decorationNames": [],
+      "accomplishments": []
+    },
+    {
+      "name": "F4bi",
+      "typeLabel": "Matrose",
+      "classLabel": null,
+      "level": 0,
+      "experiencePoints": 0,
+      "experiencePointsFromLastPatrol": 0,
+      "born": "1887-08-13",
+      "decorations": 0,
+      "statusLabel": "in Reserve",
+      "woundLabel": null,
+      "traits": [],
+      "skills": [
+        "Händler"
+      ],
+      "patrols": 0,
+      "background": "Er hatte eine sehr glückliche Kindheit und wuchs auf dem Land auf. Nach einer Bäckerlehre eröffnete er in Freiburg an der Elbe eine kleine Konditorei. Als diese durch einen Brand zerstört wurde, verlor er seine gesamte Existenzgrundlage. Daraufhin entschloss er sich, sich als Matrose bei der Marine zu melden, und wurde umgehend in die U-Boot-Ausbildungsflottille aufgenommen. Nach achtmonatiger Grundausbildung wurde er zum Torpedomechaniker.\nEr ist in der Lage, einen Torpedo im Alleingang zu laden. Unter den Männern ist er beliebt und macht gerne Witze über die Offiziere.",
+      "decorationNames": [],
+      "accomplishments": []
+    },
+    {
+      "name": "Filoen",
+      "typeLabel": "Matrose",
+      "classLabel": null,
+      "level": 0,
+      "experiencePoints": 0,
+      "experiencePointsFromLastPatrol": 0,
+      "born": "1912-08-07",
+      "decorations": 0,
+      "statusLabel": "an Bord",
+      "woundLabel": null,
+      "traits": [],
+      "skills": [
+        "Läufer"
+      ],
+      "patrols": 3,
+      "background": "Filoen ist in einem kleinen Dorf in Österreich aufgewachsen und hat schon in seiner Jugendzeit an Motorrädern herumgeschraubt. Vom Onkel zum Eintritt in die Kriegsmarine überredet versucht er nun dort mit seinem Mechanikerwissen als Maschinist sein Glück. In der Ausbildung war er immer sehr vorbildhaft und kann mit einem Stück Draht fast alles reparieren. Er ist bei den meisten Matrosen sehr beliebt und spielt gerne Karten.",
+      "decorationNames": [],
+      "accomplishments": []
+    },
+    {
+      "name": "German_Sheeps",
+      "typeLabel": "Matrose",
+      "classLabel": null,
+      "level": 0,
+      "experiencePoints": 0,
+      "experiencePointsFromLastPatrol": 0,
+      "born": "1910-08-08",
+      "decorations": 0,
+      "statusLabel": "an Bord",
+      "woundLabel": null,
+      "traits": [],
+      "skills": [
+        "Läufer"
+      ],
+      "patrols": 3,
+      "background": "Schläger. Wenn es zum Kampf kommt, ist er in der ersten Reihe. Der geborene Soldat. Putzt jeden Tag seine Schuhe.",
+      "decorationNames": [],
+      "accomplishments": []
+    },
+    {
+      "name": "Kobold",
+      "typeLabel": "Matrose",
+      "classLabel": null,
+      "level": 0,
+      "experiencePoints": 0,
+      "experiencePointsFromLastPatrol": 0,
+      "born": "1915-08-07",
+      "decorations": 0,
+      "statusLabel": "an Bord",
+      "woundLabel": null,
+      "traits": [],
+      "skills": [
+        "Hart im Nehmen"
+      ],
+      "patrols": 3,
+      "background": "Kobold stammt aus einer Seefahrerfamilie in der Nähe von Bremen. Sein Vater ist bereits Offizier bei der Marine und seine beiden Brüder dienen ebenfalls auf einem U-Boot. In der Kaserne munkelt man, dass er nur durch die Beziehungen seines Vaters die Rekrutierungsanforderungen bestanden hat. Leicht war sein Weg in der Ausbildung daher nicht. Er ist sehr ehrgeizig und arbeitet hart um zu zeigen, dass er es aus eigener Kraft geschafft hat. Seine Leidenschaft ist Lesen und schreibt derzeit an einem eigenen Roman. Wegen seiner strengen katholischen Erziehung wird er oft von anderen belächelt.",
+      "decorationNames": [],
+      "accomplishments": []
+    },
+    {
+      "name": "LupoNero",
+      "typeLabel": "Matrose",
+      "classLabel": null,
+      "level": 0,
+      "experiencePoints": 25,
+      "experiencePointsFromLastPatrol": 25,
+      "born": "1919-08-06",
+      "decorations": 0,
+      "statusLabel": "an Bord",
+      "woundLabel": null,
+      "traits": [],
+      "skills": [
+        "Händler"
+      ],
+      "patrols": 3,
+      "background": "Schwerenöter und Zecher. Er schloss sich der Armee an, weil Frauen auf Uniformen stehen. Er nimmt sich oft zu wichtig.",
+      "decorationNames": [],
+      "accomplishments": []
+    },
+    {
+      "name": "Major Mac",
+      "typeLabel": "Matrose",
+      "classLabel": null,
+      "level": 0,
+      "experiencePoints": 0,
+      "experiencePointsFromLastPatrol": 0,
+      "born": "1887-08-13",
+      "decorations": 0,
+      "statusLabel": "an Bord",
+      "woundLabel": null,
+      "traits": [],
+      "skills": [
+        "Englischsprachig"
+      ],
+      "patrols": 3,
+      "background": "Major Mac kommt aus armen Verhältnissen. Sein Vater schickte ihn zur Armee, um Disziplin zu lernen. Er hasst den Militärdienst.",
+      "decorationNames": [],
+      "accomplishments": []
+    },
+    {
+      "name": "Marcello",
+      "typeLabel": "Matrose",
+      "classLabel": null,
+      "level": 0,
+      "experiencePoints": 0,
+      "experiencePointsFromLastPatrol": 0,
+      "born": "1903-08-10",
+      "decorations": 0,
+      "statusLabel": "an Bord",
+      "woundLabel": null,
+      "traits": [],
+      "skills": [
+        "Hart im Nehmen"
+      ],
+      "patrols": 3,
+      "background": "Der Sohn eines Apothekers. Er ist des Geldes wegen in der Armee. Nach seiner Rückkehr will er seinen Vater geschäftlich unterstützen.",
+      "decorationNames": [],
+      "accomplishments": []
+    },
+    {
+      "name": "Markushatdiegansgestohlen",
+      "typeLabel": "Matrose",
+      "classLabel": null,
+      "level": 0,
+      "experiencePoints": 0,
+      "experiencePointsFromLastPatrol": 0,
+      "born": "1911-08-08",
+      "decorations": 0,
+      "statusLabel": "an Bord",
+      "woundLabel": null,
+      "traits": [],
+      "skills": [
+        "Spanischsprachig"
+      ],
+      "patrols": 3,
+      "background": "Der Krieg nahm ihm alles. Er mag Menschen nicht und ist trotzdem beim Militär. Komischer Vogel.",
+      "decorationNames": [],
+      "accomplishments": []
+    },
+    {
+      "name": "Mustermann",
+      "typeLabel": "Matrose",
+      "classLabel": null,
+      "level": 0,
+      "experiencePoints": 0,
+      "experiencePointsFromLastPatrol": 0,
+      "born": "1888-08-12",
+      "decorations": 0,
+      "statusLabel": "an Bord",
+      "woundLabel": null,
+      "traits": [],
+      "skills": [
+        "Läufer"
+      ],
+      "patrols": 3,
+      "background": "Aufgewachsen in den Bergen im elterlichen Bauernbetrieb lernte Mustermann die harte Arbeit.\nDen Drang in der Natur zu sein, frei zu sein und die Jagd, entschloss sich Mustermann, etwas Neues zu erleben und meldete sich freiwillig, seinen Land zu dienen und ging zur Kriegsmarine.",
+      "decorationNames": [],
+      "accomplishments": []
+    },
+    {
+      "name": "Seeker11",
+      "typeLabel": "Matrose",
+      "classLabel": null,
+      "level": 0,
+      "experiencePoints": 0,
+      "experiencePointsFromLastPatrol": 0,
+      "born": "1906-08-09",
+      "decorations": 0,
+      "statusLabel": "an Bord",
+      "woundLabel": null,
+      "traits": [],
+      "skills": [
+        "Händler"
+      ],
+      "patrols": 3,
+      "background": "Als Sohn eines Lehrerehepaares hat Seeker11 viel gelesen. Am meisten faszinieren ihn Bücher über die Abenteuer von Seehelden wie Admiral Nelson. Er ist musikalisch begabt und spielt mehrere Instrumente. Vor die Wahl gestellt ob er Musiker werden oder lieber zur See fahren wolle, entschied er sich für die Marine. Seine seemännische Grundausbildung erhielt er im Gegensatz zu vielen seiner Kameraden auf einem Segelschulschiff, stellte dabei aber fest, das er Höhenangst hat und nicht gut in der Takelage arbeiten konnte. So meldete er sich nach Abschluss der Ausbildung zur weiteren Verwendung bei der U-Boot-Flotte und schloss dort seine Ausbildung mit Auszeichnung ab.\nIm Kameradenkreis wegen seines musikalischen Talentes sehr geschätzt, und sorgt öfter mit musikalischen Einlagen auf der Mundharmonika für Abwechslung an Bord.",
+      "decorationNames": [],
+      "accomplishments": []
+    },
+    {
+      "name": "TrakkarLP",
+      "typeLabel": "Matrose",
+      "classLabel": null,
+      "level": 0,
+      "experiencePoints": 75,
+      "experiencePointsFromLastPatrol": 75,
+      "born": "1908-08-08",
+      "decorations": 0,
+      "statusLabel": "an Bord",
+      "woundLabel": null,
+      "traits": [],
+      "skills": [
+        "Hart im Nehmen"
+      ],
+      "patrols": 3,
+      "background": "Handwerker. Im Zivilleben war er Automechaniker. Mit einem Stück Metall und Draht kann er alles machen. Sehr beliebt unter seinen Kollegen in der Kaserne.",
+      "decorationNames": [],
+      "accomplishments": []
+    },
+    {
+      "name": "Trollcano",
+      "typeLabel": "Matrose",
+      "classLabel": null,
+      "level": 0,
+      "experiencePoints": 0,
+      "experiencePointsFromLastPatrol": 0,
+      "born": "1903-08-10",
+      "decorations": 0,
+      "statusLabel": "an Bord",
+      "woundLabel": null,
+      "traits": [],
+      "skills": [
+        "Experte"
+      ],
+      "patrols": 3,
+      "background": "Geboren in Berlin / Neukölln in unmittelbarer Nähe des Flughafens Tempelhof war Trollcano seit seiner Jugend fasziniert von den Flugzeugen. Er lernte viel über Motoren und Technik und meldete sich, sobald er sein Abitur erworben hatte, freiwillig zur Luftwaffe zur Pilotenausbildung. Er wurde allerdings nicht gemustert, weil er zu klein für das Cockpit sei. Stattdessen kommandierte man ihn wegen seiner Größe ab zur U-Boot-Schule nach Kiel ab. Er trat seinen Dienst widerwillig an, arrangierte sich aber im Laufe der Ausbildung mit der Situation und fand Gefallen an der U-Boot-Technik. Erwarb gute Kenntnisse in Navigation und wurde als Steuermann ausgebildet. Ist bei den Kameraden anerkannt, tut was man ihm sagt, zeigt aber selten Eigeninitiative.",
+      "decorationNames": [],
+      "accomplishments": []
+    },
+    {
+      "name": "TweedFoot",
+      "typeLabel": "Matrose",
+      "classLabel": null,
+      "level": 0,
+      "experiencePoints": 0,
+      "experiencePointsFromLastPatrol": 0,
+      "born": "1910-08-08",
+      "decorations": 0,
+      "statusLabel": "an Bord",
+      "woundLabel": null,
+      "traits": [],
+      "skills": [
+        "Läufer"
+      ],
+      "patrols": 3,
+      "background": "Ein Deutscher österreichischer Abstammung. Ein Waffennarr und Jäger. Der Militärdienst ist sein Traum. Ambitioniert. Er rechnet mit schneller Beförderung in der Militärhierarchie.",
+      "decorationNames": [],
+      "accomplishments": []
+    },
+    {
+      "name": "xKyoSatou",
+      "typeLabel": "Matrose",
+      "classLabel": null,
+      "level": 0,
+      "experiencePoints": 0,
+      "experiencePointsFromLastPatrol": 0,
+      "born": "1900-08-10",
+      "decorations": 0,
+      "statusLabel": "an Bord",
+      "woundLabel": null,
+      "traits": [],
+      "skills": [
+        "Englischsprachig"
+      ],
+      "patrols": 3,
+      "background": "Aus dem Schwarzwald stammend. Ist bereits als Kind mit seinen Eltern an die Ostseeküste gezogen. War als Junge lange Fischer auf dem Boot seines Vaters und ging sehr bald zur Marine. Zur U-Boot Flotte hat es ihn immer schon hingezogen. Seine Ausbilder an der U-Boot-Schule in Kiel beeindruckte er durch seine Erfahrungen auf See. Er ist eher introvertiert und zieht sich bei Konflikten gerne zurück. Ansonsten ein sehr gehorsamer Matrose.",
+      "decorationNames": [],
+      "accomplishments": []
+    },
+    {
+      "name": "ZT",
+      "typeLabel": "Matrose",
+      "classLabel": null,
+      "level": 0,
+      "experiencePoints": 0,
+      "experiencePointsFromLastPatrol": 0,
+      "born": "1910-10-09",
+      "decorations": 0,
+      "statusLabel": "an Bord",
+      "woundLabel": null,
+      "traits": [],
+      "skills": [
+        "Hart im Nehmen"
+      ],
+      "patrols": 3,
+      "background": "Aufgewachsen im Hunsrück zog es den gelernten Elektrotechniker aus Liebe an die See. Als am 18.12.1939 seine Frau und Tochter bei einem Luftangriff der RAF auf Wilhelmshaven ums Leben kamen, wobei er auch nur knapp überlebte, bot er seine Fähigkeiten in Elektrotechnik umgehend der Marine an und trat die Ausbildung in der Unterseebootschulflottille an.",
+      "decorationNames": [],
+      "accomplishments": []
+    },
+    {
+      "name": "Zwergwildsau",
+      "typeLabel": "Matrose",
+      "classLabel": null,
+      "level": 0,
+      "experiencePoints": 0,
+      "experiencePointsFromLastPatrol": 0,
+      "born": "1914-08-07",
+      "decorations": 0,
+      "statusLabel": "an Bord",
+      "woundLabel": null,
+      "traits": [],
+      "skills": [
+        "Hart im Nehmen"
+      ],
+      "patrols": 3,
+      "background": "Verwaist und obdachlos. Die Militärkommission nahm ihn aus Mitleid auf. Er will sich in der Kriegsmarine ein neues Leben aufbauen.",
+      "decorationNames": [],
+      "accomplishments": []
+    }
+  ],
+  "fallen": [],
+  "boat": {
+    "name": "U-68",
+    "typeLabel": "Typ IXC",
+    "commissioned": "1939-08-01",
+    "tonnageSunk": 209034,
+    "merchantShipsSunk": 29,
+    "warshipsSunk": 2,
+    "aircraftShotDown": 0
+  },
+  "career": {
+    "startDate": "1941-08-01",
+    "currentPatrol": 3,
+    "torpedoesFired": 52,
+    "torpedoHits": 36,
+    "farthestTorpedoHitM": 1555,
+    "deckGunShots": 60,
+    "deckGunHits": 42,
+    "flakShots": 270,
+    "flakHits": 134,
+    "distanceTravelled": 17314,
+    "fuelConsumedLitres": 96020,
+    "maximumDepthM": 204,
+    "hoursUnderWater": 66.8,
+    "hoursAtSea": 1420.5,
+    "casualties": 0
+  },
+  "plaques": [
+    {
+      "boat": "U-38",
+      "port": "Hafen von Wilhelmshaven"
+    },
+    {
+      "boat": "U-68",
+      "port": "Hafen von Brest"
+    }
+  ],
+  "sinkings": [
+    {
+      "name": "Gilbert Stuart",
+      "grt": 7775,
+      "kindLabel": "Frachter",
+      "cargoLabel": "Werkzeuge",
+      "convoy": "Geleitzug 148",
+      "destination": "Liverpool",
+      "patrol": 1,
+      "date": "1941-08-07",
+      "damagedOnly": false
+    },
+    {
+      "name": "SS A. J. Cassatt",
+      "grt": 7177,
+      "kindLabel": "Frachter",
+      "cargoLabel": "Rohstoffe",
+      "convoy": "Geleitzug 148",
+      "destination": "Liverpool",
+      "patrol": 1,
+      "date": "1941-08-07",
+      "damagedOnly": false
+    },
+    {
+      "name": "Christopher S. Flanagan",
+      "grt": 7824,
+      "kindLabel": "Frachter",
+      "cargoLabel": "Werkzeuge",
+      "convoy": "Geleitzug 148",
+      "destination": "Liverpool",
+      "patrol": 1,
+      "date": "1941-08-07",
+      "damagedOnly": false
+    },
+    {
+      "name": "Wallace R. Farrington",
+      "grt": 7829,
+      "kindLabel": "Frachter",
+      "cargoLabel": "Munition",
+      "convoy": "Geleitzug 148",
+      "destination": "Liverpool",
+      "patrol": 1,
+      "date": "1941-08-07",
+      "damagedOnly": false
+    },
+    {
+      "name": null,
+      "grt": null,
+      "kindLabel": null,
+      "cargoLabel": null,
+      "convoy": "Geleitzug 148",
+      "destination": "Liverpool",
+      "patrol": 1,
+      "date": "1941-08-07",
+      "damagedOnly": false
+    },
+    {
+      "name": "William Peffer",
+      "grt": 7826,
+      "kindLabel": "Frachter",
+      "cargoLabel": "Tee",
+      "convoy": "Geleitzug 148",
+      "destination": "Liverpool",
+      "patrol": 1,
+      "date": "1941-08-07",
+      "damagedOnly": false
+    },
+    {
+      "name": "Empire Defender",
+      "grt": 5880,
+      "kindLabel": "Frachter",
+      "cargoLabel": "Lebensmittel",
+      "convoy": "Geleitzug 148",
+      "destination": "Liverpool",
+      "patrol": 1,
+      "date": "1941-08-07",
+      "damagedOnly": false
+    },
+    {
+      "name": "Arthur J. Tyrer",
+      "grt": 7805,
+      "kindLabel": null,
+      "cargoLabel": "Gummi",
+      "convoy": "Geleitzug 148",
+      "destination": "Belfast",
+      "patrol": 1,
+      "date": "1941-08-08",
+      "damagedOnly": false
+    },
+    {
+      "name": "Samythian",
+      "grt": 7783,
+      "kindLabel": "Frachter",
+      "cargoLabel": "Werkzeuge",
+      "convoy": "Geleitzug 148",
+      "destination": "Belfast",
+      "patrol": 1,
+      "date": "1941-08-08",
+      "damagedOnly": false
+    },
+    {
+      "name": "Empire Trumpet",
+      "grt": 5822,
+      "kindLabel": "Frachter",
+      "cargoLabel": "Rohstoffe",
+      "convoy": null,
+      "destination": "Liverpool",
+      "patrol": 2,
+      "date": "1941-08-30",
+      "damagedOnly": false
+    },
+    {
+      "name": null,
+      "grt": 2252,
+      "kindLabel": null,
+      "cargoLabel": "Werkzeuge",
+      "convoy": null,
+      "destination": "Halifax",
+      "patrol": 2,
+      "date": "1941-09-12",
+      "damagedOnly": false
+    },
+    {
+      "name": "Tacito",
+      "grt": 10137,
+      "kindLabel": "Tanker",
+      "cargoLabel": "Öl",
+      "convoy": null,
+      "destination": "Liverpool",
+      "patrol": 2,
+      "date": "1941-09-13",
+      "damagedOnly": false
+    },
+    {
+      "name": "SS A. J. Cassatt",
+      "grt": 7198,
+      "kindLabel": "Frachter",
+      "cargoLabel": "Wertsachen",
+      "convoy": "Geleitzug 250",
+      "destination": "Halifax",
+      "patrol": 2,
+      "date": "1941-09-14",
+      "damagedOnly": false
+    },
+    {
+      "name": "Florence Martus",
+      "grt": 7783,
+      "kindLabel": "Frachter",
+      "cargoLabel": "Rohstoffe",
+      "convoy": "Geleitzug 250",
+      "destination": "Halifax",
+      "patrol": 2,
+      "date": "1941-09-14",
+      "damagedOnly": false
+    },
+    {
+      "name": "Robert F. Broussard",
+      "grt": 7826,
+      "kindLabel": "Frachter",
+      "cargoLabel": "Werkzeuge",
+      "convoy": "Geleitzug 250",
+      "destination": "Halifax",
+      "patrol": 2,
+      "date": "1941-09-14",
+      "damagedOnly": false
+    },
+    {
+      "name": "Empire Buckler",
+      "grt": 6217,
+      "kindLabel": "Frachter",
+      "cargoLabel": "Rohstoffe",
+      "convoy": "Geleitzug 250",
+      "destination": "Halifax",
+      "patrol": 2,
+      "date": "1941-09-14",
+      "damagedOnly": false
+    },
+    {
+      "name": "Olynthus",
+      "grt": 9777,
+      "kindLabel": null,
+      "cargoLabel": "Öl",
+      "convoy": null,
+      "destination": "Liverpool",
+      "patrol": 3,
+      "date": "1941-10-25",
+      "damagedOnly": false
+    },
+    {
+      "name": "Monte Galera",
+      "grt": 4020,
+      "kindLabel": null,
+      "cargoLabel": "Werkzeuge",
+      "convoy": null,
+      "destination": "Liverpool",
+      "patrol": 3,
+      "date": "1941-10-28",
+      "damagedOnly": false
+    },
+    {
+      "name": "Bear Paw",
+      "grt": 10177,
+      "kindLabel": null,
+      "cargoLabel": "Öl",
+      "convoy": "Geleitzug 452",
+      "destination": "Liverpool",
+      "patrol": 3,
+      "date": "1941-10-30",
+      "damagedOnly": false
+    },
+    {
+      "name": "SS A. J. Cassatt",
+      "grt": 7209,
+      "kindLabel": "Frachter",
+      "cargoLabel": "Lebensmittel",
+      "convoy": "Geleitzug 452",
+      "destination": "Liverpool",
+      "patrol": 3,
+      "date": "1941-10-30",
+      "damagedOnly": false
+    },
+    {
+      "name": "Empire Nomad",
+      "grt": 5768,
+      "kindLabel": null,
+      "cargoLabel": "Munition",
+      "convoy": "Geleitzug 452",
+      "destination": "Liverpool",
+      "patrol": 3,
+      "date": "1941-10-30",
+      "damagedOnly": false
+    },
+    {
+      "name": "McDowell",
+      "grt": 10150,
+      "kindLabel": null,
+      "cargoLabel": "Öl",
+      "convoy": "Geleitzug 452",
+      "destination": "Liverpool",
+      "patrol": 3,
+      "date": "1941-10-30",
+      "damagedOnly": false
+    },
+    {
+      "name": "Empire Tiger",
+      "grt": 3285,
+      "kindLabel": null,
+      "cargoLabel": "Munition",
+      "convoy": null,
+      "destination": "Liverpool",
+      "patrol": 3,
+      "date": "1941-11-01",
+      "damagedOnly": false
+    },
+    {
+      "name": "War Bharata",
+      "grt": 6220,
+      "kindLabel": null,
+      "cargoLabel": "Öl",
+      "convoy": null,
+      "destination": "Liverpool",
+      "patrol": 3,
+      "date": "1941-11-02",
+      "damagedOnly": false
+    },
+    {
+      "name": "Jonquil",
+      "grt": 980,
+      "kindLabel": null,
+      "cargoLabel": null,
+      "convoy": "Geleitzug 479",
+      "destination": "Liverpool",
+      "patrol": 3,
+      "date": "1941-11-03",
+      "damagedOnly": false
+    },
+    {
+      "name": "Broomdale",
+      "grt": 11365,
+      "kindLabel": null,
+      "cargoLabel": "Öl",
+      "convoy": "Geleitzug 479",
+      "destination": "Liverpool",
+      "patrol": 3,
+      "date": "1941-11-03",
+      "damagedOnly": false
+    },
+    {
+      "name": "Empire Industry",
+      "grt": 4003,
+      "kindLabel": null,
+      "cargoLabel": "Tee",
+      "convoy": "Geleitzug 479",
+      "destination": "Liverpool",
+      "patrol": 3,
+      "date": "1941-11-03",
+      "damagedOnly": false
+    },
+    {
+      "name": "Empire Commerce",
+      "grt": 4544,
+      "kindLabel": null,
+      "cargoLabel": "Werkzeuge",
+      "convoy": "Geleitzug 479",
+      "destination": "Liverpool",
+      "patrol": 3,
+      "date": "1941-11-03",
+      "damagedOnly": false
+    },
+    {
+      "name": "Denbydale",
+      "grt": 11503,
+      "kindLabel": null,
+      "cargoLabel": "Öl",
+      "convoy": "Geleitzug 479",
+      "destination": "Liverpool",
+      "patrol": 3,
+      "date": "1941-11-03",
+      "damagedOnly": false
+    },
+    {
+      "name": "Empire Eland",
+      "grt": 5657,
+      "kindLabel": null,
+      "cargoLabel": "medizinische Versorgungsgüter",
+      "convoy": "Geleitzug 479",
+      "destination": "Liverpool",
+      "patrol": 3,
+      "date": "1941-11-03",
+      "damagedOnly": false
+    },
+    {
+      "name": "Empire Swan",
+      "grt": 7242,
+      "kindLabel": null,
+      "cargoLabel": "Munition",
+      "convoy": "Geleitzug 479",
+      "destination": "Liverpool",
+      "patrol": 3,
+      "date": "1941-11-03",
+      "damagedOnly": false
+    }
+  ],
+  "mods": [
+    {
+      "id": "custom-music",
+      "name": "custom-music",
+      "kind": "other",
+      "workshopId": null
+    },
+    {
+      "id": "uboat",
+      "name": "uboat",
+      "kind": "game",
+      "workshopId": null
+    },
+    {
+      "id": "uboat.dlc.supporter-pack",
+      "name": "uboat.dlc.supporter-pack",
+      "kind": "dlc",
+      "workshopId": null
+    },
+    {
+      "id": "uboat.dlc.type-ix",
+      "name": "uboat.dlc.type-ix",
+      "kind": "dlc",
+      "workshopId": null
+    },
+    {
+      "id": "Uboat-Smutje",
+      "name": "Uboat-Smutje",
+      "kind": "other",
+      "workshopId": null
+    },
+    {
+      "id": "steam:3728656615",
+      "name": "[2026.1] No Auto Alarm",
+      "kind": "workshop",
+      "workshopId": "3728656615"
+    },
+    {
+      "id": "steam:3746846377",
+      "name": "Long Distance Terrain Loader",
+      "kind": "workshop",
+      "workshopId": "3746846377"
+    },
+    {
+      "id": "steam:3761081574",
+      "name": "[2026.1] Historical Weather Overhaul",
+      "kind": "workshop",
+      "workshopId": "3761081574"
+    },
+    {
+      "id": "steam:3793096780",
+      "name": "[2026.1] EscortBehaviourMod",
+      "kind": "workshop",
+      "workshopId": "3793096780"
+    },
+    {
+      "id": "steam:3758192379",
+      "name": "[2026.1] Shadow Zone",
+      "kind": "workshop",
+      "workshopId": "3758192379"
+    },
+    {
+      "id": "steam:3758902752",
+      "name": "[2026.1] Depth Charge Guesswork",
+      "kind": "workshop",
+      "workshopId": "3758902752"
+    },
+    {
+      "id": "steam:3807468714",
+      "name": "Realistic torpedo reload and maintenance time",
+      "kind": "workshop",
+      "workshopId": "3807468714"
+    },
+    {
+      "id": "steam:3843459058",
+      "name": "Scope TDC Controls",
+      "kind": "workshop",
+      "workshopId": "3843459058"
+    },
+    {
+      "id": "steam:3828471821",
+      "name": "Where is My Roleplay",
+      "kind": "workshop",
+      "workshopId": "3828471821"
+    },
+    {
+      "id": "steam:3835631819",
+      "name": "U-boat Customizer",
+      "kind": "workshop",
+      "workshopId": "3835631819"
+    },
+    {
+      "id": "steam:3816694902",
+      "name": "[2026.1] Wind and Waves",
+      "kind": "workshop",
+      "workshopId": "3816694902"
+    },
+    {
+      "id": "steam:3798112566",
+      "name": "[2026.1] Hull Roll",
+      "kind": "workshop",
+      "workshopId": "3798112566"
+    },
+    {
+      "id": "steam:3810668782",
+      "name": "Nimm Bitte Platz: Hydrophone Fix (Beta)",
+      "kind": "workshop",
+      "workshopId": "3810668782"
+    },
+    {
+      "id": "steam:3394866297",
+      "name": "Attack Disc Remastered",
+      "kind": "workshop",
+      "workshopId": "3394866297"
+    },
+    {
+      "id": "steam:3419126557",
+      "name": "Das Book",
+      "kind": "workshop",
+      "workshopId": "3419126557"
+    },
+    {
+      "id": "steam:3342143865",
+      "name": "World War Radio",
+      "kind": "workshop",
+      "workshopId": "3342143865"
+    },
+    {
+      "id": "steam:3768412570",
+      "name": "[2026.1] Type IX Flooding Fix",
+      "kind": "workshop",
+      "workshopId": "3768412570"
+    }
+  ],
+  "publishedAt": "2026-11-25T00:57:31.658Z"
+}
